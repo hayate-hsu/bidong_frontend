@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>壁咚WiFi</title>
+<link rel="Shortcut Icon" href="/images/bidong.ico" />
+<link rel="Bookmark" href="/images/bidong.ico" />
+<script type="text/javascript" src="/js/html5shiv.js"></script>
+<link rel="stylesheet" href="/css/main.css" />
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/query.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+</head>
+
+<body>
+	<header class="contentHeader">
+    	<nav>
+        	<a href="javascript:void(0);" class="logo">壁咚WiFi</a>
+            <ul>
+            	<li><a href="javascript:void(0);">首页</a></li>
+                <!--<li><a href="joinus.html">加入壁咚</a></li>-->
+                <li><a href="javascript:void(0);" id="mybd" class="actived">我的壁咚</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <aside>
+        <div><img src="/images/face.jpg" />大白(●—●)</div>
+        <ul class="dongbi">
+            <!-- <li><label>壁咚WiFi</label><span>28/40</span></li>
+            <li><div class="line"></div></li> -->
+            <li><label>可上网时间</label><span>${days}天 + ${hours}</span></li>
+            <!-- <li><label>上网时间</label><span>50小时+<i>00:18</i></span></li> -->
+        </ul>
+        % if mask>>3 & 1:
+        <a href="/holder/${user}?token=${token}" class="fdgl">房东管理</a>
+        % endif
+    </aside>
+
+    <section class="seclg">
+        <ul>
+            <li>
+                <p class="s1">当前咚币</p>
+                <p class="s2">${coin}</p>
+                <p>1RMB=10咚币</p>
+                <p>1咚币可免费上网10分钟</p>
+                <input type="button" value="充值" class="srg" />
+            </li>
+            <li>
+                <p class="s3" style="text-indent: 48px;">租户可向房东索要充值密码</p>
+                <p style="text-indent: 48px;">（仅限壁咚WiFi已覆盖楼体）</p>
+                <div id="formCag">
+                    <input type="text" placeholder="请输入房间号" class="ipu_text" value="" />
+                    <input type="password" placeholder="请输入充值密码" class="ipu_text" value="" />
+                    <input type="submit" value="连接上网" class="ipu_submit" />
+                </div>
+            </li>
+            <li style="border-left: 1px solid #ececec; padding: 0 0 0 35px;">
+                <p class="s3">手机上网指南</p>
+                <img src="/images/ewm02.png" width="150" height="150" />
+                <p class="s4">关注微信公众号，一键上网</p>
+                <p class="s5">壁咚WiFi</p>
+            </li>
+        </ul>
+    </section>
+    
+    <figure>
+    	<a href="javascript:void(0);" class="apply">在线申请</a>
+    	<img src="/images/ad01.jpg" width="1002" height="348" />
+    </figure>
+    
+    <figure>
+    	<a href="javascript:void(0);" class="buy">在线申请</a>
+    	<img src="/images/ad02.jpg" width="1002" height="348" />
+    </figure>
+    
+    <footer>
+    	<p>ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
+        <p>地址：北京市海淀区中关村南四街4号</p>
+        <p>电话：+86-10-58813000　邮箱：iot_support@cnnic.cn</p>
+    </footer>
+
+    <div class="rechargebox">
+        <h2>咚币充值<em>1元=10咚币</em><a href="#">X</a></h2>
+        <div>
+            <input type="text" placeholder="输入充值金额（最低5元）" />
+            <p>选择支付方式</p>
+            <input type="button" class="zf on" value="微信支付" style="margin-right: 9px;" /> <input type="button" class="zf" value="支付宝支付" />
+            <input type="button" class="charge" value="立即支付" />
+            <span class="errorMsg"><em>!</em>请输入充值金额！</span>
+        </div>
+    </div>
+</body>
+</html>

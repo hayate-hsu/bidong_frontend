@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<title>壁咚-房东管理</title>
+    <link rel="Shortcut Icon" href="/images/bidong.ico" />
+    <link rel="Bookmark" href="/images/bidong.ico" />
+    <link rel="stylesheet" href="/css/weixin.css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/json2.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <style type="text/css">
+        .clientbox table td{
+            text-align: center;
+            width: 20%;
+        }
+        .clientbox input[type="text"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 90px;
+        }
+
+        .clientbox input[type="number"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 50px;
+        }
+        .clientbox input[type="date"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+	<div class="wrapper" id="wrapper">
+    	<ul class="wlist slist">
+        	<li class="wmid">
+            	<div class="notlink">
+                	<img src="/images/tt2.png" />
+                    <div class="wtext">
+                        <h1 id="fduser">${realname}(${user})</h1>
+                        <p>${mobile}</p>
+                    </div>
+                    <div class="hid" id="fdtoken">${token}</div>
+                </div>
+                <div class="line"></div>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="/images/ico015.png" class="wshort" />
+                    <div class="wtext">
+                        <h1>${address}</h1>
+                    </div>
+                    <span>&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="wlist">
+        	<li>
+                <a href="#">
+                    <img src="/images/ico012.png" class="wshort"  onClick="addShade()"/>
+                    <div class="wtext">
+                        <h1>推荐成功赠送一年免费维护</h1>
+                    </div>
+                    <span>&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+             
+        <div class="wtable" id="wtable">
+        	<p>租客列表<!--<input type="button" value="提交" id="subAll" class="fdbtn" disabled />--><input class="search" type="search" placeholder="搜索房号" /></p>
+            <ul>
+                <li>房号</li>
+                <li>密码</li>
+                <li>到期时间</li>
+                <li>网络</li>
+                <li>操作</li>
+            </ul>
+            <div class="clientbox">       	
+                <input type="hidden" id="curent_date"  value="${date}" />
+                <table>
+                    <tr>
+                        <td><input type="text" class="ronum" placeholder="请输入房间号" /></td>
+                        <td><input type="text" class="fdpwd" placeholder="请输入密码" /></td>
+                        <td><input type="date" class="datepicker" value="${date}" /></td>
+                        <td><input type="number" class="ends" value="2" min="1" /></td>
+                        <td> 
+                            <input type="button" class="case" value="提交" />
+                            <div class="hid">258</div>
+                        </td>
+                    </tr>
+                    % for renter in renters:
+                    <tr>
+                        <td>${renter['room']}</td>
+                        <td><input type="text" class="fdpwd" value="${renter['password']}" /></td>
+                        <td><input type="date" class="datepicker" value="${renter['expire_date']}" /></td>
+                        <td><input type="number" class="ends" value="${renter['ends']}" /></td>
+                        <td>
+                            % if renter['mask']>>30 & 1:
+                            <input type="button" class="usable frozen" value="禁用" />
+                            % else:
+                            <input type="button" class="usable" value="禁用" />
+                            % endif
+                            <div class="hid">${renter['mask']}</div>
+                        </td>
+                    </tr>
+                    % endfor
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function ajaxSubmit(arr){
+            var str = $('#fduser').html();
+            var $length =  str.length;
+            var index = str.indexOf('(');
+            var id = str.substring(index+1, $length-1);
+
+            $.ajax({
+                type: "PUT",
+                url: "/holder/" + id + "/room",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(GetFDData(arr)),
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.Code == 200) {
+                        $arr = {};
+                    } else {
+                        alert(msg.Msg);
+                    }
+                },
+                error: function(msg){
+                    alert("error");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

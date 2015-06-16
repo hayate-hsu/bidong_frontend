@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>壁咚WiFi</title>
+    <link rel="Shortcut Icon" href="/images/bidong.ico" />
+    <link rel="Bookmark" href="/images/bidong.ico" />
+    <script type="text/javascript" src="/js/html5shiv.js"></script>
+    <link rel="stylesheet" href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/json2.js"></script>
+    <script type="text/javascript" src="/js/msg.js"></script>
+    <script type="text/javascript" src="/js/setAmount.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/query.js"></script>
+</head>
+
+<body>
+    <header class="contentHeader">
+        <nav>
+            <a href="javascript:void(0);" class="logo">壁咚WiFi</a>
+            <ul>
+                <li><a href="javascript:void(0);">首页</a></li>
+                <li><a href="#" id="mybd" class="actived">我的壁咚</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <aside>
+        <div><img src="/images/face.jpg" />${realname}</div>
+        <ul>
+            <li style="width: 202px;"><label>联系电话</label>${mobile}</li>
+            <li><div class="line"></div></li>
+            <li><label>详细地址</label>${address}<a href="#">编辑</a></li>
+        </ul>
+        <div class="hid" id="fdtoken">${token}</div>
+        <div class="hid" id="user">${user}</div>
+    </aside>
+
+    <section class="clientbox">
+        <p>租客信息<a href="#" id="addpeo">增加租客</a></p>
+        <div class="search"><span><input type="search" placeholder="搜索房号" /></span></div>
+        <table>
+            <tr>
+                <th width="15%">房号</th>
+                <th width="23%">密码</th>
+                <th width="23%">到期时间</th>
+                <th width="23%">可用终端数</th>
+                <th width="16%">操作</th>
+            </tr>
+            % for renter in renters:
+            <tr>
+                <td>${renter['room']}</td>
+                <td><input type="text" class="fdpwd" value="${renter['password']}" /></td>
+                <td><input type="text" class="datepicker" value="${renter['expire_date']}" /></td>
+                <td>
+                    <div class="amountbox">
+                        <div class="amount">
+                            <input type="text" value="${renter['ends']}" class="JV_Amount" />
+                            <a href="javascript:void(0);" class="btnadd">+</a>
+                            <a href="javascript:void(0);" class="btnreduce">-</a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    % if renter['mask']>>30 & 1:
+                    <input type="button" class="usable frozen" value="禁用" />
+                    % else:
+                    <input type="button" class="usable" value="禁用" />
+                    % endif
+                    <span>|</span><a href="javascript:void(0);" class="delete">删除</a><div class="hid">${renter['mask']}</div>
+                </td>
+            </tr>
+            % endfor
+            <!--<tr>-->
+                <!--<td>0101</td>-->
+                <!--<td><input type="text" class="fdpwd" value="11223344" /></td>-->
+                <!--<td><input type="text" class="datepicker" value="2015-05-14" /></td>-->
+                <!--<td>-->
+                    <!--<div class="amountbox">-->
+                        <!--<div class="amount">-->
+                            <!--<input type="text" value="2" class="JV_Amount" />-->
+                            <!--<a href="javascript:void(0);" class="btnadd">+</a>-->
+                            <!--<a href="javascript:void(0);" class="btnreduce">-</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<input type="button" class="usable" value="禁用" /><span>|</span>-->
+                    <!--<a href="javascript:void(0);" class="delete">删除</a>-->
+                    <!--<div class="hid">256</div>-->
+                <!--</td>-->
+            <!--</tr>-->
+        </table>
+    </section>
+
+    <footer>
+        <p>ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
+        <p>地址：北京市海淀区中关村南四街4号</p>
+        <p>电话：+86-10-58813000　邮箱：iot_support@cnnic.cn</p>
+    </footer>
+
+    <div class="addbox">
+        <h2>增加租户<a href="#" class="close">X</a></h2>
+        <div class="addGroup">
+            <input type="text" placeholder="输入4位数字房间号（例如：0001）" id="room" />
+            <input type="text" placeholder="设置4-8位的数字密码" id="pwd" />
+            <div><input type="text" class="datepicker2" value="" id="sdate" placeholder="选择到期时间" /><i></i></div>
+            <div class="amount" style="text-indent: 15px;">
+                设置可用终端数
+                <input type="text" value="2" id="ends" />
+                <a href="javascript:void(0);" class="btnadd">+</a>
+                <a href="javascript:void(0);" class="btnreduce">-</a>
+            </div>
+            <input type="hidden" id="mask" value="258" />
+            <input type="button" class="case" value="确定" />
+            <span class="errorMsg"></span>
+        </div>
+    </div>
+
+    <script src="js/custom.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.datepicker, .datepicker2').datepicker({ dateFormat: 'yy-mm-dd' });
+        })
+    </script>
+</body>
+</html>

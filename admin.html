@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>壁咚WiFi后台管理</title>
+    <script type="text/javascript" src="/js/html5shiv.js"></script>
+    <link rel="stylesheet" href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/json2.js"></script>
+    <script type="text/javascript" src="/js/msg.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/admin.js"></script>
+</head>
+
+<body>
+	<header>
+        <span>壁咚WIFI</span>
+        <nav>
+            <ul>
+                <li><a href="javascript:void(0);" class="actived">房东管理</a></li>
+                <li><a href="javascript:void(0);">AP管理</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="bread">
+            <label>房东管理操作</label>
+            <!--<div>-->
+                <!--<input type="text" class="ipu_txt" placeholder="输入搜索关键字" />-->
+                <!--<input type="button" class="ipu_search" />-->
+            <!--</div>-->
+            <div class="filters">
+                选择过滤条件：<select id="shCheck"><option value="0">未审核</option><option value="1">已审核</option></select>
+            </div>
+            <span><input type="button" value="添加房东" class="ipubtn" /></span>
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>联系人</th>
+                <th>联系电话</th>
+                <th>详细地址</th>
+                <th>到期时间</th>
+                <th>操作</th>
+            </tr>
+            <!--<tr>-->
+                <!--<td>1</td>-->
+                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
+                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
+                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
+                <!--<td><input type="text" value="" class="dpicker" /></td>-->
+                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>2</td>-->
+                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
+                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
+                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
+                <!--<td><input type="text" value="" class="dpicker" /></td>-->
+                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>3</td>-->
+                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
+                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
+                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
+                <!--<td><input type="text" value="2015-04-15" class="dpicker" /></td>-->
+                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>1</td>-->
+                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
+                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
+                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
+                <!--<td><input type="text" value="2015-04-15" class="dpicker" /></td>-->
+                <!--<td><a href="javascript:void(0);" class="slideH">展开</a></td>-->
+                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
+            <!--</tr>-->
+        </table>
+        <div class="page">
+            <input type="button" value="提交" class="ipubtn" style="margin-left: 0;" id="subH" />
+            <span><input type="button" value="上一页" class="ipusmall" /><input type="button" value="1" class="ipusmall" /><input type="button" value="2" class="ipusmall" /><input type="button" value="3" class="ipusmall" /><input type="button" value="末页" class="ipusmall" /><input type="button" value="下一页" class="ipusmall" /></span>
+        </div>
+        <input type="hidden" value="${manager}" id="manager" />
+        <input type="hidden" value="${token}" id="token" />
+    </section>
+
+    <section>
+        <div class="bread">
+            <label>AP管理操作</label>
+            <div class="filters">
+                选择过滤条件：<select><option>--请选择--</option><option>MAC</option><option>房东ID</option></select>
+            </div>
+            <span><input type="button" value="添加AP" class="ipubtn" /></span>
+        </div>
+        <table>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>房东</th>
+                <th>MAC</th>
+                <th>型号</th>
+                <th>厂商</th>
+                <th>策略</th>
+                <th>操作</th>
+            </tr>
+
+        </table><!--<tr>-->
+        <!--<td><input type="checkbox" class="ckb" /></td>-->
+        <!--<td>0011</td>-->
+        <!--<td>10016</td>-->
+        <!--<td>ACBACCDD20008477088</td>-->
+        <!--<td>CC-bbs</td>-->
+        <!--<td>汉明</td>-->
+        <!--<td>策略内容</td>-->
+        <!--<td><a href="javascript:void(0);">解绑</a><span>|</span><a href="javascript:void(0);">删除</a></td>-->
+        <!--</tr>-->
+        <div class="page">
+            <input type="button" value="绑定" class="ipubtn" style="margin-left: 0;" id="bindCheck" />
+            <span><input type="button" value="上一页" class="ipusmall" /><input type="button" value="1" class="ipusmall" /><input type="button" value="2" class="ipusmall" /><input type="button" value="3" class="ipusmall" /><input type="button" value="下一页" class="ipusmall" /></span>
+        </div>
+    </section>
+
+    <footer>
+        请在chrome及相同内核浏览器下使用本系统！
+    </footer>
+
+    <aside id="asbox">
+        <h2>添加房东<span class="errorMsg"></span><span title="关闭" class="closed">X</span></h2>
+        <div>
+            <ul>
+                <li><label>联系人：</label><input type="text" class="asipu" id="lxr" /></li>
+                <li><label>联系电话：</label><input type="text" class="asipu" id="lxdh" /></li>
+                <li><label>详细地址：</label><textarea id="xxdz"></textarea></li>
+                <li><label>到期时间：</label><input type="text" class="dpicker asipu" id="dqsj" /></li>
+                <li><input type="button" value="添加" class="ipubtn" id="addHolder" /></li>
+            </ul>
+        </div>
+
+        <h2>添加AP<span class="errorMsg"></span><span title="关闭" class="closed">X</span></h2>
+        <div>
+            <ul>
+                <li><label>MAC：</label><input type="text" class="asipu" /></li>
+                <li><label>型号：</label><input type="text" class="asipu" /></li>
+                <li><label>厂商：</label><input type="text" class="asipu" /></li>
+                <li><label>策略：</label><input type="text" class="asipu" /></li>
+                <li><input type="button" value="添加" class="ipubtn" id="addAP" /></li>
+            </ul>
+        </div>
+    </aside>
+
+    <script type="text/javascript" src="/js/custom.min.js"></script>
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function(){-->
+            <!--$('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });-->
+        <!--})-->
+    <!--</script>-->
+</body>
+</html>

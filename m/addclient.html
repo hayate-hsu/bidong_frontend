@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<title>壁咚-房东管理</title>
+    <!--<link rel="stylesheet" href="js/bootstrap/css/bootstrap.css" media="screen">-->
+    <link rel="stylesheet" href="/css/weixin.css" />
+    <!--<link rel="stylesheet" href="js/bootstrap/css/bootstrap-datetimepicker.css" media="screen">-->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/json2.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <style type="text/css">
+        .clientbox table td{
+            text-align: center;
+            width: 20%;
+        }
+        .clientbox input[type="text"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 90px;
+        }
+
+        .clientbox input[type="number"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 50px;
+        }
+        .clientbox input[type="date"]{
+            height: 32px;
+            line-height: 32px;
+            border: 1px solid #d6d6d6;
+            text-align: center;
+            width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+	<div class="wrapper" id="wrapper">
+    	<ul class="wlist slist">
+        	<li class="wmid">
+            	<div class="notlink">
+                	<img src="/images/face.jpg" />
+                    <div class="wtext">
+                        <h1>${realname}(${user})</h1>
+                        <p>${mobile}</p>
+                    </div>
+                    <div style="display:none;" id="fdtoken">${token}</div>                 
+                </div>
+                <div class="line"></div>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="/images/ico015.png" class="wshort" />
+                    <div class="wtext">
+                        <h1>${address}</h1>
+                    </div>
+                    <span>&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="wlist">
+        	<li>
+                <a href="#">
+                    <img src="/images/ico012.png" class="wshort"  onClick="addShade()"/>
+                    <div class="wtext">
+                        <h1>推荐成功赠送一年免费维护</h1>
+                    </div>
+                    <span>&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+             
+        <div class="wtable" id="wtable">
+        	<p>租客列表<input class="search" type="search" placeholder="搜索房号" /></p>
+            <ul>
+                <li>房号</li>
+                <li>密码</li>
+                <li>到期时间</li>
+                <li>网络</li>
+                <li>操作</li>
+            </ul>
+            <div class="clientbox">       	
+                <table>
+                    % for renter in renters:
+                    <tr>
+                        <td>${renter['room']}</td>
+                        <td><input type="text" class="fdpwd" value="${renter['password']}" /></td>
+                        <td><input type="date" class="datepicker" value="${renter['expire_date']}" /></td>
+                        <td>${renter['ends']}</td>
+                        <td>
+                            % if renter['mask']>>30 & 1:
+                            <input type="button" class="usable frozen" value="禁用" />
+                            % else:
+                            <input type="button" class="usable" value="禁用" />
+                            % endif
+                            <div class="hid">${renter['mask']}</div>
+                        </td>
+                    </tr>
+                    % endfor
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--<script type="text/javascript" src="js/bootstrap/js/bootstrap.js"></script>-->
+    <!--<script type="text/javascript" src="js/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>-->
+    <!--<script type="text/javascript" src="js/datetime.js" charset="UTF-8"></script>-->
+</body>
+</html>
