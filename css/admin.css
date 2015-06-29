@@ -170,7 +170,7 @@ section .page{  overflow: hidden;  }
     margin-left: 5px;
     cursor: pointer;
 }
-input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn{
+input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.policybtn, input.fmbtn{
     height: 27px;
     width: 120px;
     text-align: center;

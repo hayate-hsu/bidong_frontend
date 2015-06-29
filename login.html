@@ -12,6 +12,8 @@
 <script type="text/javascript" src="/js/msg.js"></script>
 <script type="text/javascript" src="/js/query.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
+<!--[if lt IE 10]><script type="text/javascript" src="/js/placeholder.js"></script><![endif]-->
+<script type="text/javascript" src="/js/checkFunc.js"></script>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
             </div>
             <div id="formTxt">
             	<input type="text" placeholder="请输入门牌号/电脑上网账号" class="ipu_text" value="10000" id="user" />
-                <input type="password" placeholder="请输入密码" class="ipu_text" value="" id="password" />
+                <input type="password" placeholder="请输入密码" class="ipu_text showPH" value="" id="password" />
                 <input type="submit" value="连接上网" class="ipu_submit" id="sub" />
                 <span class="errorMsg"></span>
             </div>
@@ -65,16 +67,30 @@
     	<img src="/images/ad01.jpg" width="1002" height="348" />
     </figure>
     
-    <figure>
-    	<a href="javascript:void(0);" class="buy">在线申请</a>
-    	<img src="/images/ad02.jpg" width="1002" height="348" />
-    </figure>
+    <!--<figure>-->
+    	<!--<a href="javascript:void(0);" class="buy">立即购买</a>-->
+    	<!--<img src="/images/ad02.jpg" width="1002" height="348" />-->
+    <!--</figure>-->
     
     <footer>
-    	<p>ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
-        <p>地址：北京市海淀区中关村南四街4号</p>
-        <p>电话：+86-10-58813000　邮箱：iot_support@cnnic.cn</p>
+        <p>ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心</p>
+        <p>地址：广州市南沙区环市大道南资讯科技园软件南楼203</p>
+        <p>电话：+86-20-39393309　邮箱：bidong@niot.cn</p>
     </footer>
+
+    <div class="addressbox">
+        <h2>在线申请<a href="javascript:void(0);" class="close">X</a></h2>
+        <div class="addGroup">
+            <input type="text" placeholder="输入联系人" id="atten" />
+            <input type="text" placeholder="输入联系电话" id="tel" />
+            <div><select id="selpro"></select><i></i></div>
+            <div><select id="selcity"></select><i></i></div>
+            <div><select id="selarea"></select><i></i></div>
+            <input type="text" placeholder="输入详细地址" style="margin-bottom: 0;" id="addrDet" />
+            <input type="button" class="applyok" value="确定" />
+            <span class="errorMsg"></span>
+        </div>
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function(){
@@ -84,7 +100,7 @@
                     $("#sub").click();
                 }
             })
-        })
+        });
     </script>
 </body>
 </html>

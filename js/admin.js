@@ -9,8 +9,10 @@ $(document).ready(function(e) {
     var arrList = [];
     var orrList = [];
     var arr = [];     //房东管理-提交前保存的对象数组
+    var ap  = [];     //AP管理-MAC地址数组
+    var ides = [];    //AP管理-绑定index位置
 
-    //后台房东管理、AP管理切换
+    //房东管理、AP管理切换
     $('nav a').click(function(){
         var index = $(this).parent().index();
         $('section').hide().eq(index).show();
@@ -19,6 +21,8 @@ $(document).ready(function(e) {
 
         if(index==0){
             shCheckFunc(0);
+        }else{
+            arr=[];
         }
     });
 
@@ -28,14 +32,15 @@ $(document).ready(function(e) {
         shCheckFunc(sh);
     });
 
-    //绑定
+    //AP管理-AP绑定
     $('#bindCheck').click(function(){
-        var _html = "<tr><th>ID</th><th>MAC</th></tr>", id="", mac="", t="";
+        var _html = "<tr><th>MAC</th></tr>", mac="", t="";
+        ap = [];
         $('section table :checkbox').each(function(index, element){
             if(element.checked){
-                id = $(this).parent().parent().find('td:eq(1)').html();
-                mac = $(this).parent().parent().find('td:eq(3)').html();
-                t += "<tr><td>"+id+"</td><td>"+mac+"</td></tr>";
+                mac = $(this).parent().parent().find('td:eq(2)').html();
+                t += "<tr><td>"+mac+"</td></tr>";
+                ap.push(mac);
             }
         });
         if(t==""){
@@ -47,8 +52,206 @@ $(document).ready(function(e) {
         }
     });
     $('#asAP .closed').click(function(){
+        $(this).parent().find('input').val("");
         $('#asAP').hide();
         $('#asAP table').empty();
+        ap = [];
+    });
+    $('#bindToH').click(function(){
+        var $t = $(this);
+        var holder = $t.parent().siblings("p").find("input").val();
+
+        $.ajax({
+            type: "PUT",
+            url: "/manager/bind_ap",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(bindData(ap, holder)),
+            dataType: "json",
+            success: function (msg) {
+                if(msg.Code == 200){
+                    $.MsgBox.Alert("绑定成功");
+                    $t.parent().siblings("p").find("input").val("");
+                    $('#asAP').hide();
+                    ap = [];
+                }else{
+                    $.MsgBox.Alert(msg.Msg);
+                }
+            },
+            error: function(msg){
+                $.MsgBox.Alert("绑定失败");
+            }
+        });
+    });
+
+    //AP管理-AP解绑
+    $(document).on('click', '.polH', function(){
+        ap = [];
+        var $t = $(this);
+        var holder = $t.parent().parent().find("td:eq(1)").text();
+        var mac = $t.parent().parent().find("td:eq(2)").text();
+        ap.push(mac);
+
+        $.ajax({
+            type: "PUT",
+            url: "/manager/unbind_ap",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(bindData(ap, holder)),
+            dataType: "json",
+            success: function (msg) {
+                if(msg.Code == 200){
+                    $.MsgBox.Alert("解绑成功");
+                    $t.parent().parent().find("td:eq(1)").html("");
+                    ap = [];
+                }else{
+                    $.MsgBox.Alert(msg.Msg);
+                }
+            },
+            error: function(msg){
+                $.MsgBox.Alert("解绑失败");
+            }
+        });
+    });
+
+    //AP管理-AP删除
+    $(document).on('click', '.delapH', function(){
+        ap = [];
+        var $t = $(this);
+        var mac = $t.parent().parent().find("td:eq(2)").text();
+        ap.push(mac);
+
+        $.MsgBox.Confirm("是否确定删除该用户？", function () {
+            $.ajax({
+                type: "DELETE",
+                url: "/manager/ap",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(apData(ap)),
+                success: function(msg){
+                    if(msg.Code == 200){
+                        $t.parent().parent().remove();
+                        $.MsgBox.Alert("删除成功！");
+                    }else{
+                        $.MsgBox.Alert("删除失败！");
+                    }
+                },
+                error: function(msg){
+                    $.MsgBox.Alert("请求失败！");
+                }
+            })
+        });
+    });
+
+    //AP管理-AP搜索
+    $("#apSearch").click(function(){
+        var manager = $("#manager").val();
+        var token = $("#token").val();
+        var s = $(this).siblings(".ipu_txt").val(), result="";
+        var ss = $.trim(s);
+        var obj = {};
+        obj.manager = manager;
+        obj.token = token;
+
+        if(ss.length==12){
+            for(var i=0;i<ss.length-1;i++){
+                result += ss[i];
+                if(i % 2 == 1) result += ':';
+            }
+            result += ss[ss.length-1];
+            ss = result;
+        }
+
+        obj.field = ss;
+
+        $.ajax({
+            type: "GET",
+            url: "/manager/ap",
+            data: obj,
+            dataType: "json",
+            success: function (msg) {
+                if(msg.Code == 200){
+                    $('section:eq(1) table tr:not(:first)').remove();
+                    var t=h=ysh="";
+                    for(var i=0; i<msg.aps.length; i++){
+                        h = apLoad(msg.aps[i].holder, msg.aps[i].mac, msg.aps[i].vendor, msg.aps[i].model, msg.aps[i].fm, msg.aps[i].profile, ysh);
+                        t += h;
+                    }
+                    $('section:eq(1) table').append(t);
+                }else{
+                    $.MsgBox.Alert("没有数据");
+                }
+            },
+            error: function(msg){
+                $.MsgBox.Alert("服务器繁忙，请重新搜索！");
+            }
+        });
+    });
+
+    //AP管理-添加AP
+    $('#addAP').click(function(){
+        var mac = $('#admac').val();
+        var vendor = $('#vendor').val();
+        var model = $('#model').val();
+        var fm = $('#fm').val();
+        var profile = $('#profile').val();
+
+        if(mac=="" || mac==null){
+            showError("填写MAC");$('#admac').focus();
+        }else if(vendor=="" || vendor==null){
+            showError("填写厂商");$('#vendor').focus();
+        }else if(model=="" || model==null){
+            showError("填写型号");$('#model').focus();
+        }else if(fm=="" || fm==null){
+            showError("填写固件版本");$('#fm').focus();
+        }else if(profile=="" || profile==null){
+            showError("填写策略");$('#profile').focus();
+        }else{
+            clearError();
+            var a = addAPData(mac, vendor, model, fm, profile);
+
+            $.ajax({
+                type: "POST",
+                url: "/manager/ap",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(apData(a)),
+                dataType: "json",
+                success: function (msg) {
+                    if(msg.Code == 200){
+                        var holder="", ysh="ysh";
+                        var h = apLoad(holder, mac, vendor, model, fm, profile, ysh);
+                        $('section:eq(1) table tr:eq(0)').after(h);
+                        $.MsgBox.Alert("添加成功");
+                        $('#asbox').hide();unmask("#shade");
+                        $('#admac').val("");$('#vendor').val("");$('#model').val("");$('#fm').val("");$('#profile').val("");
+                    }else{
+                        $.MsgBox.Alert(msg.Msg);
+                    }
+                },
+                error: function(msg){
+                    $.MsgBox.Alert("添加失败");
+                }
+            });
+        }
+    });
+
+    //AP管理-提交
+    $(document).on('click', '#apsunH', function(){
+        $.ajax({
+            type: "PUT",
+            url: "/manager/ap",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(apData(arr)),
+            dataType: "json",
+            success: function (msg) {
+                if(msg.Code == 200){
+                    $.MsgBox.Alert("提交成功");
+                    arr = [];
+                }else{
+                    $.MsgBox.Alert(msg.Msg);
+                }
+            },
+            error: function(msg){
+                $.MsgBox.Alert("提交失败");
+            }
+        });
     });
 
     //展开加载房间管理
@@ -155,7 +358,7 @@ $(document).ready(function(e) {
 		$(this).parent().remove();
 	});
 
-    //添加房东
+    //房东管理-添加房东
     $('#addHolder').click(function(){
         var lxr = $('#lxr').val();
         var lxdh = $('#lxdh').val();
@@ -171,29 +374,28 @@ $(document).ready(function(e) {
         }else if(dqsj=="" || dqsj==null){
             showError("填写截止时间");
         }else{
+            clearError();
+            var a = addHolderData(lxr, lxdh, xxdz, dqsj);
             $.ajax({
                 type: "POST",
                 url: "/manager/holder",
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(addHolderData(lxr, lxdh, xxdz, dqsj)),
+                data: JSON.stringify(roomData(a)),
                 dataType: "json",
                 success: function (msg) {
                     if(msg.Code == 200){
-                        var t,h;
-                        h = '<tr>'+
-                                '<td>'+msg.Holders[i].id+'</td>'+
-                                '<td><input type="text" class="realnamebtn" value="'+msg.Holders[i].realname+'" /><div class="hidden">'+msg.Holders[i].mask+'</div></td>'+
-                                '<td><input type="text" class="mobilebtn" value="'+msg.Holders[i].mobile+'" /></td>'+
-                                '<td><input type="text" class="addressbtn" value="'+msg.Holders[i].address+'" /></td>'+
-                                '<td><input type="text" class="dpicker" value="'+msg.Holders[i].expire_date+'" /></td>'+
-                                '<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>'+
-                                '</tr>';
-                        t += h;
-                        $('table tr:eq(1)').before(t);
-                        $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");
+                        //var flag=0, ysh="ysh", fol="";
+                        //var h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, flag, ysh, fol);
+                        //$('section:eq(0) table tr:eq(1)').before(h);
+                        $.MsgBox.Alert("添加成功");
+                        $('#asbox').hide();unmask("#shade");
+                        $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");
                     }else{
                         $.MsgBox.Alert(msg.Msg);
                     }
+                },
+                error: function(msg){
+                    $.MsgBox.Alert("添加失败");
                 }
             });
         }
@@ -203,7 +405,7 @@ $(document).ready(function(e) {
     $(document).on('click', '.folH', function(){
         var $t = $(this);
         $.MsgBox.Confirm("是否确定要冻结该用户？", function(){
-            var drr=[], num=1, idx=5, n;
+            var drr=[], num=1, idx=7, n;
             var id = $t.parent().parent().find("td:first-child").text();
             var mask = $t.parent().parent().find('td:eq(1) div').text();
                 mask = mask | 1<<30;
@@ -251,7 +453,7 @@ $(document).ready(function(e) {
 
     //房东管理-解冻用户
     $(document).on('click', '.unfolH', function(){
-        var $t = $(this), drr = [], num=0, idx=5;
+        var $t = $(this), drr = [], num=0, idx=7;
         var id = $t.parent().parent().find("td:first-child").text();
         var mask = $t.parent().parent().find('td:eq(1) div').text();
             mask = mask & (~(1<<30));
@@ -285,7 +487,7 @@ $(document).ready(function(e) {
         });
     });
 
-    //删除用户
+    //房东管理-删除用户
     $(document).on('click', '.delH', function(){
         var $t = $(this);
         var id = $t.parent().parent().find('td:first-child').text();
@@ -389,6 +591,15 @@ $(document).ready(function(e) {
         changeData(arr, id, mask, num, idx);
     });
 
+    //AP管理-固件版本、策略更改
+    $(document).on("change", '.fmbtn, .policybtn', function() {
+        var mac = $(this).parent().parent().find('td:eq(2)').text();
+        var num = $(this).val();
+        var idx = $(this).parent().index();
+
+        changeAPData(arr, mac, num, idx);
+    });
+
 });
 
 function changeData(arr, id, mask, num, idx){    //arr需要提交的数据,   id:房东ID,   num:改动的数据，   idx：改动数据的位置（realname,expire_date,address）
@@ -430,6 +641,12 @@ function pushToArr(a,b,i){    //b为旧数据，a为新数据
             a.expire_date  = b.num;
             break;
         case 5:
+            a.fm = b.num;
+            break;
+        case 6:
+            a.profile = b.num;
+            break;
+        case 7:
             a.frozen = b.num;
             break;
         default :
@@ -450,13 +667,15 @@ function roomData(a){
 }
 
 function addHolderData(realname, mobile, address, expire_date){
+    var a = [];
     var holderObj = {
-        Realname: realname,
-        Mobile: mobile,
-        Address: address,
-        Expire_date: expire_date
+        realname: realname,
+        mobile: mobile,
+        address: address,
+        expire_date: expire_date
     };
-    return holderObj;
+    a.push(holderObj);
+    return a;
 }
 
 function delHolderData(id){
@@ -488,45 +707,31 @@ function shCheckFunc(verifyed){
         success: function (msg) {
             if(msg.Code == 200){
                 $('section:eq(0) table tr:not(:first)').remove();
-                var h="", t="";
+                var h=t=ysh=fol="";
                 if(verifyed==0){
                     for(var i=0; i<msg.Holders.length; i++){
-                        h = '<tr>'+
-                        '<td>'+msg.Holders[i].id+'</td>'+
-                        '<td><input type="text" class="realnamebtn" value="'+msg.Holders[i].realname+'" /><div class="hidden">'+msg.Holders[i].mask+'</div></td>'+
-                        '<td><input type="text" class="mobilebtn" value="'+msg.Holders[i].mobile+'" /></td>'+
-                        '<td><input type="text" class="addressbtn" value="'+msg.Holders[i].address+'" /></td>'+
-                        '<td><input type="text" class="dpicker" value="'+msg.Holders[i].expire_date+'" /></td>'+
-                        '<td><a href="javascript:void(0);" class="chbH">审核</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a></td>'+
-                        '</tr>';
+                        h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
                         t += h;
                     }
                 }else{
                     for(var i=0; i<msg.Holders.length; i++){
                         if((msg.Holders[i].mask>>30&1)==0){
-                            h = '<tr>'+
-                            '<td>'+msg.Holders[i].id+'</td>'+
-                            '<td><input type="text" class="realnamebtn" value="'+msg.Holders[i].realname+'" /><div class="hidden">'+msg.Holders[i].mask+'</div></td>'+
-                            '<td><input type="text" class="mobilebtn" value="'+msg.Holders[i].mobile+'" /></td>'+
-                            '<td><input type="text" class="addressbtn" value="'+msg.Holders[i].address+'" /></td>'+
-                            '<td><input type="text" class="dpicker" value="'+msg.Holders[i].expire_date+'" /></td>'+
-                            '<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a></td>'+
-                            '</tr>';
+                            fol="";
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
                             t += h;
                         }else {
-                            h = '<tr>'+
-                            '<td class="fol">'+msg.Holders[i].id+'</td>'+
-                            '<td class="fol"><input disabled type="text" class="realnamebtn" value="'+msg.Holders[i].realname+'" /><div class="hidden">'+msg.Holders[i].mask+'</div></td>'+
-                            '<td class="fol"><input disabled type="text" class="mobilebtn" value="'+msg.Holders[i].mobile+'" /></td>'+
-                            '<td class="fol"><input disabled type="text" class="addressbtn" value="'+msg.Holders[i].address+'" /></td>'+
-                            '<td class="fol"><input disabled type="text" class="dpicker" value="'+msg.Holders[i].expire_date+'" /></td>'+
-                            '<td class="fol"><a href="javascript:void(0);" class="unfolH">解冻</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a></td>'+
-                            '</tr>';
+                            fol = "fol";
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
                             t += h;
                         }
                     }
                 }
                 $('section:eq(0) table').append(t);
+                $("section:eq(0) table td").each(function(index){
+                    if($(this).hasClass("fol")){
+                        $(this).find('input').attr("disabled", "disabled");
+                    }
+                });
                 $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });
             }else{
                 $.MsgBox.Alert("没有数据");
@@ -536,6 +741,99 @@ function shCheckFunc(verifyed){
             $.MsgBox.Alert("请求失败");
         }
     });
+}
+
+function moduleLoad(a, b, c, d, e, f, g, h, i){
+    var t = '<tr class="'+ h +'">'+
+            '<td class="'+i+'">'+a+'</td>'+
+            '<td class="'+i+'"><input type="text" class="realnamebtn" value="'+b+'" /><div class="hidden">'+f+'</div></td>'+
+            '<td class="'+i+'"><input type="text" class="mobilebtn" value="'+c+'" /></td>'+
+            '<td class="'+i+'"><input type="text" class="addressbtn" title="'+d+'" value="'+d+'" /></td>'+
+            '<td class="'+i+'"><input type="text" class="dpicker" value="'+e+'" /></td><td class="'+i+'">';
+    if(g == 0){
+        t += '<a href="javascript:void(0);" class="chbH">审核</a>';
+    }else if(i==""){
+        t += '<a href="javascript:void(0);" class="folH">冻结</a>';
+    }else{
+        t += '<a href="javascript:void(0);" class="unfolH">解冻</a>';
+    }
+    t += '<span>|</span><a href="javascript:void(0);" class="delH">删除</a></td></tr>';
+    return t;
+}
+
+function apLoad(a, b, c, d, e, f, g){   //a:房东， b:MAC, c:厂商， d:型号， e:固件版本， f:策略
+    var h = "";
+    h = '<tr class="'+g+'">'+
+            '<td><input type="checkbox" class="ckb" /></td>'+
+            '<td>'+a+'</td>'+
+            '<td>'+b+'</td>'+
+            '<td>'+c+'</td>'+
+            '<td>'+d+'</td>'+
+            '<td><input type="text" value="'+e+'" class="policybtn" /></td>'+
+            '<td><input type="text" value="'+f+'" class="policybtn" /></td>'+
+            '<td><a href="javascript:void(0);" class="polH">解绑</a><span>|</span><a href="javascript:void(0);" class="delapH">删除</a></td></tr>';
+    return h;
+}
+
+function addAPData(mac, vendor, model, fm, profile){
+    var a = [];
+    var apObj = {
+        mac: mac,
+        vendor: vendor,
+        model: model,
+        fm: fm,
+        profile: profile
+    };
+    a.push(apObj);
+    return a;
+}
+
+function apData(a){
+    var manager = $("#manager").val();
+    var token = $("#token").val();
+
+    var apObj = {
+        manager: manager,
+        token: token,
+        aps: a
+    };
+    return apObj;
+}
+
+function changeAPData(arr, mac, num, idx){    //arr需要提交的数据,    num:改动的数据，   idx：改动数据的位置
+    var orr = {}, drr = {};
+    var flag = true;                       //判断arr中是否存在同一条ID数据的标记
+    orr.mac = drr.mac = mac;
+    orr.num = num;
+    if(arr.length>0){                      //arr是否为空
+        $(arr).each(function(index){       //遍历arr
+            var val = arr[index];          //arr[index]，index多条数据
+            if(val.mac == orr.mac){
+                pushToArr(val, orr, idx);
+                flag = false;
+            }
+        });
+        if(flag){
+            pushToArr(drr, orr, idx);
+            arr.push(drr);
+        }
+    }else{
+        pushToArr(drr, orr, idx);
+        arr.push(drr);
+    }
+}
+
+function bindData(a, h){
+    var manager = $("#manager").val();
+    var token = $("#token").val();
+
+    var apObj = {
+        manager: manager,
+        token: token,
+        aps: a,
+        holder: h
+    };
+    return apObj;
 }
 
 //function showPages(len){

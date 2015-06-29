@@ -3,11 +3,8 @@
 $(document).ready(function() {
 
     $('#mybd').click(function(){
-        var url = $(this).attr("href");
-        if(url == ""){
-            $.MsgBox.Alert("请登录！");
-            return false;
-        }
+        $.MsgBox.Alert("请登录！");
+        return false;
     });
 
     //后台地址添加title
@@ -32,17 +29,20 @@ $(document).ready(function() {
     $('#asbox .closed').click(function(){
         $('#asbox').fadeOut();
         unmask('#shade');
+        clearError();
     });
 
     //侧边工具栏定位
     $(window).scroll(function(){
-        var scrollTop = $(this).scrollTop();
-        var windowHeight = $(window).height();
+        var scrollTop = $(this).scrollTop();      //滚动高度
+        var windowHeight = $(window).height();    //屏幕高度
 
-        if(scrollTop > windowHeight){
-            $('.suspend').fadeIn();
+        if(scrollTop > 480){
+            $('.suspend').addClass('suspendFixed');
+            $('#toTop').fadeIn();
         }else{
-            $('.suspend').fadeOut();
+            $('.suspend').removeClass('suspendFixed');
+            $('#toTop').fadeOut();
         }
     });
     $('#toTopFix').hover(
@@ -66,7 +66,7 @@ $(document).ready(function() {
         function () {
             var $this 		= $(this);
             var $slidelem 	= $this.prev();
-            $slidelem.stop().animate({'width':'227px'}, 300);
+            $slidelem.stop().animate({'width':'230px'}, 300);
             $slidelem.find('p').stop(true,true).fadeIn();
             $this.addClass('on');
         },
@@ -104,7 +104,7 @@ $(document).ready(function() {
     });
 
     //主页放大图片
-    $('#catbox .cat').hover(function(){
+    $('#catbox .cat img').hover(function(){
         //var d = $(this).index();
         //d += 1;
         //switch (d){
@@ -127,7 +127,7 @@ $(document).ready(function() {
         //}
 
         $('div.zk').hide();
-        $(this).find('div.zk').show();
+        $(this).parent().find('div.zk').show();
     });
     $('#catbox .cat').mouseleave(function(){
         $('div.zk').hide();
@@ -141,14 +141,25 @@ $(document).ready(function() {
         $(this).hide();
     });
 
-    //增加租客addbox显示与隐藏
+    //增加租客addbox在线申请addressbox显示与隐藏
     $('#addpeo').click(function(){
-        $('.addbox').fadeIn();
-        shade();
+        $('.addbox').fadeIn();shade();
     });
-    $('.close').click(function(){
-        $('.addbox').fadeOut();
-        unmask('#shade');
+    $('.addbox .close').click(function(){
+        $('.addbox').fadeOut();unmask('#shade');clearError();
+    });
+    $('.apply').click(function(){
+        $('.addressbox').fadeIn();shade();
+    });
+    $('.addressbox .close').click(function(){
+        $('.addressbox').fadeOut();unmask('#shade');clearError();
+    });
+    //投资项目显示与隐藏
+    $("#touzi").click(function(){
+        $("#noticebox").fadeIn();
+    });
+    $("#noticebox input").click(function(){
+        $("#noticebox").fadeOut();
     });
 
     //主页登录input【type=text】focus&blur
@@ -229,25 +240,63 @@ $(document).ready(function() {
 	});
 	
 	//选择城市
-	$('#selectcitybtn').click(function(){
-		var province = $('.province').val();
-		var city = $('.city').val();
-		var area = $('.area').val();
-		
-		if($(".area").prop('disabled')){
-			$('#addr').html(province + '-' + city);
-		}else{
-			$('#addr').html(province + '-' + city + '-' + area);
-		}
-		
-		$('#seladdr').hide();
-		$('#shade').remove();
-	});
-	
-	$('#address').click(function(){
-		$('#seladdr').show();
-        shade();
-	});
+    //$.getJSON('/js/cityData.json', function(data){
+    //
+     //   var arr = [0,1,8,32,33];
+    //
+     //   var indcity = $('#selcity').val();
+     //   var indpro = $('#selpro').val();
+    //
+     //   $('#selpro').change(function(){
+     //       $("#selcity").empty();
+     //       $("#selarea").empty();
+     //       indpro = $('#selpro').val();
+     //       for(var j=0; j<data[indpro].s.length; j++){
+     //           $("#selcity").append('<option value="'+ j +'">'+ data[indpro].s[j].n +'</option>');
+     //       }
+     //       $('#selcity option:eq(0)').prop("selected", "selected");
+     //       if($.inArray(parseInt(indpro), arr)<0){
+     //           if($('#selarea').length<1){
+     //               $('#selcity').parent().after('<li class="arrow"><select id="selarea"></select></li>');
+     //           }
+     //           indcity = $('#selcity').val();
+     //           for(var k=0; k<data[indpro].s[indcity].s.length; k++){
+     //               $("#selarea").append('<option value="'+ k +'">'+ data[indpro].s[indcity].s[k].n +'</option>');
+     //           }
+     //           $('#selarea option:eq(0)').prop("selected", "selected");
+     //       }else{
+     //           $('#selarea').parent().remove();
+     //       }
+     //   });
+    //
+     //   $('#selcity').change(function(){
+     //       $("#selarea").empty();
+     //       indpro = $('#selpro').val();
+     //       indcity = $('#selcity').val();
+    //
+     //       if($('#selarea').length>0){
+     //           for(var k=0; k<data[indpro].s[indcity].s.length; k++){
+     //               $("#selarea").append('<option value="'+ k +'">'+ data[indpro].s[indcity].s[k].n +'</option>');
+     //           }
+     //           $('#selarea option:eq(0)').prop("selected", "selected");
+     //       }
+     //   });
+    //
+     //   for(var i=0; i<data.length; i++){  //默认显示省份
+     //       $("#selpro").append('<option value="'+ i +'">'+ data[i].n +'</option>');
+     //   }
+     //   for(var j=0; j<data[18].s.length; j++){  //默认显示广东省的市级
+     //       $("#selcity").append('<option value="'+ j +'">'+ data[18].s[j].n +'</option>');
+     //   }
+     //   for(var k=0; k<data[18].s[0].s.length; k++){  //默认显示广州市的所有区级
+     //       $("#selarea").append('<option value="'+ k +'">'+ data[18].s[0].s[k].n +'</option>');
+     //   }
+    //
+     //   $('#selpro option:eq(18)').prop("selected", "selected");
+     //   $('#selcity option:eq(0)').prop("selected", "selected");
+     //   $('#selarea option:eq(0)').prop("selected", "selected");
+    //});
+
 });
 
 //咚币range
@@ -300,6 +349,9 @@ function submitDisable(){
 function showError(msg){
     var h = "<em>!</em>" + msg;
     $('span.errorMsg').html(h);
+}
+function clearError(){
+    $('span.errorMsg').html("");
 }
 
 function urlChange(url){

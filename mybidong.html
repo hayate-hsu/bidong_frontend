@@ -11,6 +11,9 @@
 <script type="text/javascript" src="/js/json2.js"></script>
 <script type="text/javascript" src="/js/query.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/msg.js"></script>
+<!--[if lt IE 10]><script type="text/javascript" src="/js/placeholder.js"></script><![endif]-->
+<script type="text/javascript" src="/js/checkFunc.js"></script>
 </head>
 
 <body>
@@ -19,18 +22,17 @@
         	<a href="/" class="logo">壁咚WiFi</a>
             <ul>
             	<li><a href="/">首页</a></li>
-                <li><a href="" id="mybd" class="actived">我的壁咚</a></li>
+                <li><a href="javascript:void(0);" class="actived">我的壁咚</a></li>
             </ul>
         </nav>
     </header>
 
     <aside>
-        <div><img src="/images/face.jpg" />大白(●—●)</div>
+        <div><img src="/images/face.jpg" />&nbsp;</div>
         <ul class="dongbi">
             <!-- <li><label>壁咚WiFi</label><span>28/40</span></li>
             <li><div class="line"></div></li> -->
-            <li><label>可上网时间</label><span>${days}天 + ${hours}</span></li>
-            <!-- <li><label>上网时间</label><span>50小时+<i>00:18</i></span></li> -->
+            <li class="firstLi"><label>可上网时间</label><span>${days}天 + ${hours}</span></li>
         </ul>
         % if mask>>3 & 1:
         <a href="/holder/${user}?token=${token}" class="fdgl">房东管理</a>
@@ -50,8 +52,8 @@
                 <p class="s3" style="text-indent: 48px;">租户可向房东索要充值密码</p>
                 <p style="text-indent: 48px;">（仅限壁咚WiFi已覆盖楼体）</p>
                 <div id="formCag">
-                    <input type="text" placeholder="请输入房间号" class="ipu_text" value="" />
-                    <input type="password" placeholder="请输入充值密码" class="ipu_text" value="" />
+                    <input type="text" placeholder="请输入房间号" class="ipu_text" value="" id="reRoom" />
+                    <input type="password" placeholder="请输入充值密码" class="ipu_text showPH" value="" id="rePwd" />
                     <input type="submit" value="连接上网" class="ipu_submit" />
                 </div>
             </li>
@@ -70,18 +72,18 @@
     </figure>
     
     <!--<figure>-->
-    	<!--<a href="javascript:void(0);" class="buy">在线申请</a>-->
+    	<!--<a href="javascript:void(0);" class="buy">立即购买</a>-->
     	<!--<img src="/images/ad02.jpg" width="1002" height="348" />-->
     <!--</figure>-->
     
     <footer>
-    	<p>ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
-        <p>地址：北京市海淀区中关村南四街4号</p>
-        <p>电话：+86-10-58813000　邮箱：iot_support@cnnic.cn</p>
+        <p>ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心</p>
+        <p>地址：广州市南沙区环市大道南资讯科技园软件南楼203</p>
+        <p>电话：+86-20-39393309　邮箱：bidong@niot.cn</p>
     </footer>
 
     <div class="rechargebox">
-        <h2>咚币充值<em>1元=10咚币</em><a href="#">X</a></h2>
+        <h2>咚币充值<em>1元=10咚币</em><a href="javascript:void(0);">X</a></h2>
         <div>
             <input type="text" placeholder="输入充值金额（最低5元）" />
             <p>选择支付方式</p>
@@ -90,5 +92,27 @@
             <span class="errorMsg"><em>!</em>请输入充值金额！</span>
         </div>
     </div>
+
+    <div class="addressbox">
+        <h2>在线申请<a href="javascript:void(0);" class="close">X</a></h2>
+        <div class="addGroup">
+            <input type="text" placeholder="输入联系人" id="atten" />
+            <input type="text" placeholder="输入联系电话" id="tel" />
+            <div><select id="selpro"></select><i></i></div>
+            <div><select id="selcity"></select><i></i></div>
+            <div><select id="selarea"></select><i></i></div>
+            <input type="text" placeholder="输入详细地址" style="margin-bottom: 0;" id="addrDet" />
+            <input type="button" class="applyok" value="确定" />
+            <span class="errorMsg"></span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".srg").click(function(){
+                $.MsgBox.Alert("暂未开通");
+            });
+        })
+    </script>
 </body>
 </html>

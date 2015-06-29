@@ -56,20 +56,5 @@
         </section>
         <p>壁咚君正在为您连接网络，请耐心等待...</p>
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var interval = setInterval(increment, 100);
-            var current = 0;
-
-            function increment() {
-                current++;
-                $('#count').html(current + '%');
-                if (current == 100) {
-                    clearInterval(interval);
-                }
-            }
-        })
-    </script>
 </body>
 </html>

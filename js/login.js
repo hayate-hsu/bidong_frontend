@@ -239,6 +239,7 @@ $(document).ready(function(e) {
     $('#sublogin').click(function(){
 		var $user = $('#user').val();
 		var $pwd = $('#password').val();
+        var interval;
 		
 		if($user==""  || $user==null){
             $.MsgBox.WXbox("请输入门牌号/电脑上网账号！");
@@ -246,22 +247,49 @@ $(document).ready(function(e) {
 		}else if($pwd=="" || $pwd==null){
             $.MsgBox.WXbox("请输入密码");
             return false;
-		}else{		
+		}else{
 			$.ajax({
 				type: "POST",
 				url: "/account",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(PortalData()),
 				dataType: "json",
-				success: function (msg) {				
+                beforeSend: function () {
+                    // 禁用按钮防止重复提交
+                    $("#sublogin").attr({ disabled: "disabled" });
+
+                    $(".loading").show();
+                    $(".loading .expand").addClass("expand99");
+                    $('.expand #count').addClass("count");
+
+                    var $c = $('#count');
+                    var current = 0;
+                    interval = setInterval(function(){
+                        current++;
+                        $c.html(current + '%');
+                        if (current == 99 || !($c.parent().hasClass('expand99'))) {
+                            clearInterval(interval);
+                        }
+                    }, 100);
+                },
+				success: function (msg) {
 					if(msg.Code == 200){
-                        window.location.href= "http://www.bidongwifi.com/account/"+msg.User+"?token="+msg.Token;
+                        clearInterval(interval);
+                        $('.expand').removeClass("expand99").css("width", "100%");
+                        $('.expand #count').html("100%").css("left", 237).removeClass('count');
+                        setTimeout(function(){
+                            window.location.href= "http://www.bidongwifi.com/account/"+msg.User+"?token="+msg.Token;
+                        }, 1000);
 					}else{
-                        $.MsgBox.WXbox(msg.Msg);
+                        alert(msg.Msg);
 					}
 				},
+                complete: function () {
+                    $("#sublogin").removeAttr("disabled");
+                },
 				error: function (msg) {
-                    $.MsgBox.WXbox(msg.responseJSON.Msg);
+                    $(".loading").hide();
+                    alert(msg.responseJSON.Msg);
 				}
 			});
 		}

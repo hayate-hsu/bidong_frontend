@@ -8,7 +8,51 @@ $(document).ready(function(e) {
     $(document).on('focus', '.fdpwd', function(){
 		$oldpwd = $(this).val();
 	});
-	
+
+    //在线申请
+    $('.applyok').click(function(){
+        var $atten = $('#atten').val();
+        var $tel = $('#tel').val();
+        var $addr = "";
+        var $selpro = $('#selpro option:selected').text();
+        var $selcity = $('#selcity option:selected').text();
+        var $selarea = $('#selarea option:selected').text();
+        var $addrDet = $('#addrDet').val();
+
+        $addr = $selpro+$selcity+$selarea+$addrDet;
+
+        var pattern = /^1\d{10}$/;   //检测电话号码有效性
+
+        if($atten=="" || $atten==null){
+            showError("请输入联系人！");
+        }else if($tel=="" || $tel==null){
+            showError("请输入联系电话！");
+        }else if(!pattern.test($tel)){
+            showError("请输入有效的联系电话");$('#tel').focus();
+        }else if($addrDet=="" || $addrDet==null){
+            showError("请输入详细地址！");
+        }else{
+            clearError();
+            $.ajax({
+                type: "POST",
+                url: "/holder/",
+                data: {realname:$atten, mobile:$tel, address:$addr},
+                success: function (msg) {
+                    if(msg.Code == 200){
+                        $.MsgBox.Alert("提交成功");
+                        $('#atten').val("");$('#tel').val("");$('#addrDet').val("");
+                        $('.addressbox').fadeOut();unmask("#shade");
+                    }else{
+                        $.MsgBox.Alert(msg.Msg);
+                    }
+                },
+                error: function(msg){
+                    $.MsgBox.Alert("请求失败");
+                }
+            })
+        }
+    });
+
 	//禁用租户上网状态
     $(document).on('click', '.usable', function(){
         var $room = $(this).parent().parent().find('td:first').html();
@@ -51,20 +95,6 @@ $(document).ready(function(e) {
             });
         }
 	});
-
-    //可用终端数更改
-    //$(document).on('change', '.ends', function(){
-    //    var $room = $(this).parent().parent().find('td:first').html();
-    //    var $pwd = $(this).parent().parent().find('td:eq(1) input').val();
-    //    var $date = $(this).parent().parent().find('td:eq(2) input').val();
-    //    var $mask = $(this).parent().parent().find('td:eq(4) div').html();
-    //
-    //    var $ends = $(this).val();
-    //
-    //    addData($arr, $room, $pwd, $date, $mask, $ends);
-    //
-    //    ajaxSubmit($arr);
-    //});
 
     //可用终端数更改
     $(document).on('click', '.clientbox .btnadd', function(){
@@ -178,26 +208,21 @@ $(document).ready(function(e) {
         if($room=="" || $room==null || $room=='0000'){
             showError("输入4位数字房间号");
             $('#room').focus();
-            return false;
         }else if(!pattern.test($room)){
             showError("输入4位数字房间号！");
             $('#room').val("").focus();
-            return false;
         }else if($.inArray($room, allRooms()) != -1){
             showError("房间号已经存在，请输入其他房间号！");
             $('#room').focus();
-            return false;
         }else if (pwdCorrect($pwd)){
             $('#room').val($room);
             showError("输入4-8位密码");
             $('#pwd').focus();
-            return false;
         }else if($date=="" || $date==null){
             showError("选择到期时间");
-            return false;
         }else{
             $('#room').val($room);
-            $('.addbox div span').html("");
+            clearError();
             addData($arr, $room, $pwd, $date, $mask, $ends);
 
             if(id==10000){

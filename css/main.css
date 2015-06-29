@@ -18,6 +18,7 @@ input{ font-family:"microsoft yahei",Arial, Helvetica, sans-serif; }
     opacity: .70;
     filter: alpha(opacity=70);
 }
+.hidePH{ color: #999;}
 
 /*官网头部*/
 header {
@@ -61,6 +62,7 @@ nav li a {
 	font-size:20px;
 	background:rgba(0,0,0,0.1);
 	border:3px solid rgba(255,255,255,0.8);
+    border:3px solid #fff\0;
 	-moz-border-radius:25px;
 	-webkit-border-radius:25px;
 	-o-border-radius:25px;
@@ -423,13 +425,13 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
 /************2015-05-14新增-结束****************/
 
 /*addbox*/
-.addbox, .rechargebox{
+.addbox, .rechargebox, .addressbox{
     position: fixed;
     width: 624px;
-    height: 484px;
+    height: auto;        /*484px*/
     margin-left: -312px;
-    margin-top: -242px;
-    top: 50%;
+    /*margin-top: -242px;*/
+    top: 10%;
     left: 50%;
     background: #fff;
     border:1px solid #e6e6e6;
@@ -439,32 +441,52 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     display: none;
     z-index: 1002;
 }
-.addbox h2, .rechargebox h2{
+.addbox h2, .rechargebox h2, .addressbox h2{
     font-size: 30px;
     color: #ff6138;
     font-weight: normal;
     padding: 30px 50px;
     position: relative;
 }
-.addbox .addGroup, .rechargebox div{
+.addbox .addGroup, .rechargebox div, .addressbox .addGroup{
     width: 390px;
     margin: 0 auto;
     text-align: center;
 }
-.addbox .addGroup input, .rechargebox div input{
+.addbox .addGroup input, .rechargebox div input, .addressbox div input, .addressbox select{
     width: 388px;
     height: 48px;
+    *height: 47px;
     border: 1px solid #ceced1;
     font-size: 16px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
     text-indent: 15px;
+    *text-indent: 0;
     margin-bottom: 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    font-family: "microsoft yahei";
+    line-height: 48px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+.addressbox select{
+    text-indent: 0;
+    padding-left: 11px;
+    width: 410px\0;
+    *width: 410px;
+    border: none;
+    margin-bottom: 0;
+    padding: 10px 0 10px 11px\0;
 }
 .addbox .addGroup input[type=date]{
     text-indent: 7px;
 }
-.addbox .addGroup .case, .rechargebox .charge{
+.addbox .addGroup .case, .rechargebox .charge, .addressbox .applyok{
     background: url("../images/sprite.png") no-repeat;
     width: 390px;
     height: 50px;
@@ -472,9 +494,9 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     text-indent: -9999px;
     margin-top: 13px;
 }
-.addbox .addGroup .case{ background-position: 0 -680px;}
+.addbox .addGroup .case, .addressbox .applyok{ background-position: 0 -680px;}
 .rechargebox .charge{ background-position: 0 -730px;}
-.addbox a.close, .rechargebox a{
+.addbox a.close, .rechargebox a, .addressbox a{
     display: block;
     width: 24px;
     height: 24px;
@@ -484,7 +506,7 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     top: 20px;
     right: 20px;
 }
-.addbox a.close:hover, .rechargebox a:hover{
+.addbox a.close:hover, .rechargebox a:hover, .addressbox a:hover{
     background: url("../images/sprite02.png") 0 -176px no-repeat;
 }
 .addbox .addGroup .amount{
@@ -504,7 +526,20 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
 .addbox .addGroup div{
     position: relative;
 }
-.addbox .addGroup div i {
+.addressbox .addGroup div{
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ceced1;
+    margin-bottom: 12px;
+    line-height: 48px;
+    height: 48px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+.addbox .addGroup div i, .addressbox .addGroup div i  {
     background: url("../images/sprite02.png") 0 -24px no-repeat;
     width: 24px;
     height: 24px;
@@ -514,16 +549,18 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
 }
 .addbox #ends{
     width: 240px;
+    *width: 232px;
     border-radius: 0;
     margin-left: 15px;
 }
 
-#msgbox span, span.errorMsg, #confirmbox span{
+#msgbox span, span.errorMsg, #confirmbox span, .addressbox span{
     color: #df5a5a;
-    margin-top: 7px;
+    margin: 7px 0 20px;
     display: block;
     position: relative;
     text-align: center;
+    visibility: visible;
 }
 #msgbox span em, span.errorMsg em, #confirmbox span em{
     color: #fff;
@@ -614,6 +651,54 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
 #msgbox #mb_btn_no, #confirmbox #mb_btn_no{
     background: #ccc;
 }
+#noticebox{
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    border:1px solid #e6e6e6;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow: 0 0 3px 3px rgba(4, 0 , 0, 0.1);
+    z-index: 1002;
+
+    width: 438px;
+    margin-left: -219px;
+    margin-top: -114px;
+    text-align: center;
+    position: fixed;
+
+    display: none;
+}
+#noticebox h2{
+    font-size: 30px;
+    margin: 30px;
+    color: #ff6138;
+    font-weight: normal;
+}
+#noticebox p{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+#noticebox p span{
+    color: #333;
+}
+#noticebox input{
+    background: #ff6138;
+    width: 326px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    color: #fff;
+    border: none;
+    margin-bottom: 30px;
+    cursor: pointer;
+    *margin-left: 219px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
 
 /*dongbi*/
 .dongbi li{
@@ -621,11 +706,11 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     color: #333;
     text-indent: 60px;
 }
-.dongbi li:first-child{
+.dongbi li:last-child{
     background: url("../images/sprite.png") -250px 32px no-repeat;
     width: 260px;
 }
-.dongbi li:last-child{
+.dongbi li:first-child, .dongbi li.firstLi{
     background: url("../images/sprite.png") -250px -37px no-repeat;
     width: 400px;
 }
@@ -904,10 +989,11 @@ aside a.fdgl:hover{
     padding-left: 28px;
     line-height: 24px;
     display: inline-block;
+    margin: 10px 0;
 }
 .tz01{
     background-position: 0 -48px;
-    margin: 10px 30px 10px 0;
+    margin-right: 30px;
 }
 .tz02{
     background-position: 0 -344px;
@@ -918,6 +1004,8 @@ aside a.fdgl:hover{
     height: 72px;
     border: none;
     cursor: pointer;
+    text-indent: -9999px;
+    display: block;
 }
 .touzidown input:hover{
     background: url("../images/sprite.png") 0 -852px no-repeat;
@@ -977,7 +1065,7 @@ aside a.fdgl:hover{
 .ccbox #catbox{
     margin-top: 10px;
     position: relative;
-    z-index: 995;
+    /*z-index: 995;*/
     overflow: hidden;
 }
 .ccbox #catbox div{
@@ -985,16 +1073,20 @@ aside a.fdgl:hover{
     height: 142px;
     float: left;
     position: relative;
+    z-index: 995;
 }
 .ccbox div img{
     width: 142px;
     height: 142px;
     cursor: pointer;
+    z-index: 994;
 }
 .ccbox #catbox #imgbig{
     position: absolute;
     z-index: 996;
     display: none;
+    top: 0;
+    left: 0;
 }
 .ccbox #catbox #imgbig img{
     width: 304px;
@@ -1002,6 +1094,7 @@ aside a.fdgl:hover{
 }
 .ccbox #catbox div.zk{
     background: rgba(0,0,0,0.4) url("../images/darrow.png") no-repeat 55px 55px;
+    background: #ccc url("../images/darrow.png") no-repeat 55px 55px\0;
     *background: #ccc url("../images/darrow.png") no-repeat 55px 55px;
     width: 142px;
     height: 142px;
@@ -1091,7 +1184,7 @@ aside a.fdgl:hover{
     right: 15px;
     top: 498px;
     z-index: 999;
-    display: none;
+    /*display: none;*/
 }
 .suspendFixed{
     position: fixed;
@@ -1099,9 +1192,10 @@ aside a.fdgl:hover{
     top: 10px;
     z-index: 999;
 }
+#toTop{ display: none;}
 #toTop, #showPhone, #showEwm{
     position: relative;
-    width: 227px;
+    width: 230px;
     height: 64px;
     margin-bottom: 10px;
     /*overflow: hidden;*/

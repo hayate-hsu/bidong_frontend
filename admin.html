@@ -27,10 +27,6 @@
     <section>
         <div class="bread">
             <label>房东管理操作</label>
-            <!--<div>-->
-                <!--<input type="text" class="ipu_txt" placeholder="输入搜索关键字" />-->
-                <!--<input type="button" class="ipu_search" />-->
-            <!--</div>-->
             <div class="filters">
                 选择过滤条件：<select id="shCheck"><option value="0">未审核</option><option value="1">已审核</option></select>
             </div>
@@ -45,28 +41,12 @@
                 <th>到期时间</th>
                 <th>操作</th>
             </tr>
-            <!--<tr>-->
+            <!--<tr class="ysh">-->
                 <!--<td>1</td>-->
-                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
+                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">1073741827</div></td>-->
                 <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
                 <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
                 <!--<td><input type="text" value="" class="dpicker" /></td>-->
-                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>2</td>-->
-                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
-                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
-                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
-                <!--<td><input type="text" value="" class="dpicker" /></td>-->
-                <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>3</td>-->
-                <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
-                <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
-                <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
-                <!--<td><input type="text" value="2015-04-15" class="dpicker" /></td>-->
                 <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
             <!--</tr>-->
             <!--<tr>-->
@@ -81,7 +61,7 @@
         </table>
         <div class="page">
             <input type="button" value="提交" class="ipubtn" style="margin-left: 0;" id="subH" />
-            <span><input type="button" value="上一页" class="ipusmall" /><input type="button" value="1" class="ipusmall" /><input type="button" value="2" class="ipusmall" /><input type="button" value="3" class="ipusmall" /><input type="button" value="末页" class="ipusmall" /><input type="button" value="下一页" class="ipusmall" /></span>
+            <!--<span><input type="button" value="上一页" class="ipusmall prev" /><input type="button" value="下一页" class="ipusmall next" /></span>-->
         </div>
         <input type="hidden" value="${manager}" id="manager" />
         <input type="hidden" value="${token}" id="token" />
@@ -90,36 +70,36 @@
     <section>
         <div class="bread">
             <label>AP管理操作</label>
-            <div class="filters">
-                选择过滤条件：<select><option>--请选择--</option><option>MAC</option><option>房东ID</option></select>
+            <div>
+                <input type="text" class="ipu_txt" placeholder="输入房东号或MAC" />
+                <input type="button" class="ipu_search" id="apSearch" />
             </div>
             <span><input type="button" value="添加AP" class="ipubtn" /></span>
         </div>
         <table>
             <tr>
                 <th></th>
-                <th>ID</th>
                 <th>房东</th>
                 <th>MAC</th>
-                <th>型号</th>
                 <th>厂商</th>
+                <th>型号</th>
+                <th>固件版本</th>
                 <th>策略</th>
                 <th>操作</th>
             </tr>
-
-        </table><!--<tr>-->
-        <!--<td><input type="checkbox" class="ckb" /></td>-->
-        <!--<td>0011</td>-->
-        <!--<td>10016</td>-->
-        <!--<td>ACBACCDD20008477088</td>-->
-        <!--<td>CC-bbs</td>-->
-        <!--<td>汉明</td>-->
-        <!--<td>策略内容</td>-->
-        <!--<td><a href="javascript:void(0);">解绑</a><span>|</span><a href="javascript:void(0);">删除</a></td>-->
-        <!--</tr>-->
+            <!--<tr>-->
+                <!--<td><input type="checkbox" class="ckb" /></td>-->
+                <!--<td>10016</td>-->
+                <!--<td>ACBACCDD20008477088</td>-->
+                <!--<td>CC-bbs</td>-->
+                <!--<td>汉明</td>-->
+                <!--<td><input type="text" value="10.1" class="fmbtn" /></td>-->
+                <!--<td><input type="text" value="1" class="policybtn" /></td>-->
+                <!--<td><a href="javascript:void(0);" class="polH">解绑</a><span>|</span><a href="javascript:void(0);" class="delapH">删除</a></td>-->
+            <!--</tr>-->
+        </table>
         <div class="page">
-            <input type="button" value="绑定" class="ipubtn" style="margin-left: 0;" id="bindCheck" />
-            <span><input type="button" value="上一页" class="ipusmall" /><input type="button" value="1" class="ipusmall" /><input type="button" value="2" class="ipusmall" /><input type="button" value="3" class="ipusmall" /><input type="button" value="下一页" class="ipusmall" /></span>
+            <input type="button" value="绑定" class="ipubtn" style="margin-left: 0;" id="bindCheck" /><input type="button" value="提交" class="ipubtn" id="apsunH" />
         </div>
     </section>
 
@@ -134,7 +114,7 @@
                 <li><label>联系人：</label><input type="text" class="asipu" id="lxr" /></li>
                 <li><label>联系电话：</label><input type="text" class="asipu" id="lxdh" /></li>
                 <li><label>详细地址：</label><textarea id="xxdz"></textarea></li>
-                <li><label>到期时间：</label><input type="text" class="dpicker asipu" id="dqsj" /></li>
+                <li><label>到期时间：</label><input type="text" class="dpicker2 asipu" id="dqsj" /></li>
                 <li><input type="button" value="添加" class="ipubtn" id="addHolder" /></li>
             </ul>
         </div>
@@ -142,20 +122,29 @@
         <h2>添加AP<span class="errorMsg"></span><span title="关闭" class="closed">X</span></h2>
         <div>
             <ul>
-                <li><label>MAC：</label><input type="text" class="asipu" /></li>
-                <li><label>型号：</label><input type="text" class="asipu" /></li>
-                <li><label>厂商：</label><input type="text" class="asipu" /></li>
-                <li><label>策略：</label><input type="text" class="asipu" /></li>
+                <li><label>MAC：</label><input type="text" class="asipu" id="admac" /></li>
+                <li><label>厂商：</label><input type="text" class="asipu" id="vendor" /></li>
+                <li><label>型号：</label><input type="text" class="asipu" id="model" /></li>
+                <li><label>固件版本：</label><input type="text" class="asipu" id="fm" /></li>
+                <li><label>策略：</label><input type="text" class="asipu" id="profile" /></li>
                 <li><input type="button" value="添加" class="ipubtn" id="addAP" /></li>
             </ul>
         </div>
     </aside>
 
+    <aside id="asAP">
+        <p>绑定以下MAC到房东<input type="text" class="asipu" placeholder="输入房东号" style="width: 100px;" /><span title="关闭" class="closed">X</span></p>
+        <div class="tablelist">
+            <table></table>
+        </div>
+        <div><input type="button" value="确定" class="ipubtn" id="bindToH" /></div>
+    </aside>
+
     <script type="text/javascript" src="/js/custom.min.js"></script>
-    <!--<script type="text/javascript">-->
-        <!--$(document).ready(function(){-->
-            <!--$('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });-->
-        <!--})-->
-    <!--</script>-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.dpicker2').datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+    </script>
 </body>
 </html>

@@ -706,7 +706,7 @@ input.case{
     margin-top: 17px;
 }
 .loading #content{
-    width:100%;
+    width: 100%;
     height: 7px;
     background:#bdbdbd;
     border-radius: 3px;
@@ -714,37 +714,43 @@ input.case{
     position: relative;
 }
 .loading .expand{
-    width:100%;
+    width: 99%;
     height: 7px;
     background:#e65029 url(../images/loading_small.png) repeat;
     position:absolute;
-    -moz-animation:fullexpand 10s linear;
-    -webkit-animation:fullexpand 10s linear;
     border-radius: inherit;
     -webkit-border-radius: inherit;
     top: 0;
     left: 0;
 }
+.loading .expand99{
+    -moz-animation:fullexpand 10s linear;
+    -webkit-animation:fullexpand 10s linear;
+    animation:fullexpand 10s linear;
+}
 .loading #count{
     position: absolute;
     top: -29px;
-    left: 237px;
+    left: 234px;     /*237px*/
     color: #fff;
     font-size: 1.4rem;
     width: 43px;
     height: 21px;
     line-height: 21px;
     text-align: center;
-    animation: counter 10s linear;
     background: #e65029;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+}
+.loading .count{
     -webkit-animation: counter 10s linear;
+    -moz-animation: counter 10s linear;
+    animation: counter 10s linear;
 }
 .loading #count:after{
     content: " ";
-    width:0px;
-    height:0px;
+    width:0;
+    height:0;
     border-bottom:5px solid transparent;
     border-top:5px solid transparent;
     border-right:5px solid #e65029;
@@ -754,7 +760,7 @@ input.case{
 }
 @-webkit-keyframes fullexpand{
     0%{width:0;}
-    100%{ width:100%;}
+    100%{ width:99%;}
 }
 @-webkit-keyframes counter {
     from {  left: 0;  }

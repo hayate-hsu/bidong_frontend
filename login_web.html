@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/js/json2.js"></script>
 <script type="text/javascript" src="/js/query.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/checkFunc2.js"></script>
 </head>
 
 <body>
@@ -62,11 +63,25 @@
     	<a href="javascript:void(0);" class="apply">在线申请</a>
     	<img src="/images/ad01.jpg" width="1002" height="348" />
     </figure>
-    
-    <figure>
-    	<a href="javascript:void(0);" class="buy">在线申请</a>
-    	<img src="/images/ad02.jpg" width="1002" height="348" />
-    </figure>
+
+    <!--<figure>-->
+    	<!--<a href="javascript:void(0);" class="buy">立即购买</a>-->
+    	<!--<img src="/images/ad02.jpg" width="1002" height="348" />-->
+    <!--</figure>-->
+
+    <div class="addressbox">
+        <h2>在线申请<a href="javascript:void(0);" class="close">X</a></h2>
+        <div class="addGroup">
+            <input type="text" placeholder="输入联系人" id="atten" />
+            <input type="text" placeholder="输入联系电话" id="tel" />
+            <div><select id="selpro"></select><i></i></div>
+            <div><select id="selcity"></select><i></i></div>
+            <div><select id="selarea"></select><i></i></div>
+            <input type="text" placeholder="输入详细地址" style="margin-bottom: 0;" id="addrDet" />
+            <input type="button" class="applyok" value="确定" />
+            <span class="errorMsg"></span>
+        </div>
+    </div>
     
     <footer>
     	<p>ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
