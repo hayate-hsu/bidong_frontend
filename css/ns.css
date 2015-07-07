@@ -1,0 +1,157 @@
+/*========= common ===========*/
+/*========= code less ===========*/
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  background: #f5f5f5 url("../images/nsimgs/nsbg.jpg") top center no-repeat;
+  color: #333;
+}
+li {
+  list-style: none;
+}
+.ipubtn {
+  background: #1bbc9b;
+  width: 74px;
+  height: 32px;
+  line-height: 32px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+.ipubtnNo {
+  background: #1bbc9b;
+  width: 74px;
+  height: 32px;
+  line-height: 32px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+.ipubtn:hover {
+  background: #29af91;
+}
+.nsWireless {
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 50px;
+  margin-bottom: 55px;
+  overflow: hidden;
+}
+.nsWireless .nsLoginMo {
+  background: #fff;
+  width: 1000px;
+}
+.nsWireless .nsLoginMo .nsLogo {
+  background: url("../images/nsimgs/nslogo.jpg") no-repeat;
+  height: 124px;
+  position: relative;
+}
+.nsWireless .nsLoginMo .nsLogo #yjsw {
+  position: absolute;
+  top: 27px;
+  right: 28px;
+  background: url("../images/nsimgs/nsyjsw00.png") 0 0 no-repeat;
+  text-indent: -9999px;
+  width: 262px;
+  height: 68px;
+}
+.nsWireless .nsLoginMo .nsLogo #yjsw:hover {
+  background-position: 0 -68px;
+}
+.nsWireless .nsLoginMo .nsLogo ul {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  display: none;
+}
+.nsWireless .nsLoginMo .nsLogo ul li {
+  float: left;
+  color: #fff;
+  height: 66px;
+  line-height: 66px;
+  margin-left: 24px;
+}
+.nsWireless .nsLoginMo .nsLogo ul li.nsadr {
+  border-right: 1px solid #6bdcc5;
+  background: url("../images/nsimgs/ns00.png") 0 20px no-repeat;
+  text-indent: 25px;
+  width: 140px;
+}
+.nsWireless .nsLoginMo .nsLogo ul li span {
+  font-size: 28px;
+  line-height: 56px;
+}
+.nsWireless .nsLoginMo .nsLogo ul li a {
+  color: #fff;
+}
+.nsWireless .nsNews {
+  background: #fff;
+  padding: 40px;
+}
+.nsWireless .nsNews .nsNewsHeader {
+  height: 54px;
+  border-bottom: 1px solid #e9e9e9;
+  font-size: 16px;
+}
+.nsWireless .nsNews .nsNewsHeader .nsLeft {
+  font-size: 20px;
+  color: #1bbc9b;
+  border-bottom: 1px solid #1bbc9b;
+  float: left;
+  line-height: 54px;
+  font-weight: bold;
+}
+.nsWireless .nsNews .nsNewsHeader .nsRight {
+  float: right;
+  line-height: 54px;
+}
+.nsWireless .nsNews .nsNewsHeader .nsRight span {
+  display: inline-block;
+  margin-left: 10px;
+}
+.nsWireless .nsNews .nsContent {
+  padding: 0 110px;
+}
+.nsWireless .nsNews .nsContent h2 {
+  width: 410px;
+  margin: 60px 0 45px;
+  display: none;
+}
+.nsWireless .nsNews .nsContent p {
+  font-size: 14px;
+  line-height: 36px;
+}
+.nsWireless .nsNews .nsContent p.nsTextM {
+  margin-bottom: 30px;
+  display: none;
+}
+.nsWireless .nsNews .nsContent p.nsTextR {
+  color: #666;
+  text-align: right;
+}
+.nsfooter {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  padding-bottom: 50px;
+}
+.nsfooter p {
+  line-height: 24px;
+}

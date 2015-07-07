@@ -2,7 +2,7 @@
 
 $(window).load(function() {
     $('section').eq(0).show();
-    shCheckFunc(0);
+    shCheckFunc(0, 1);
 });
 
 $(document).ready(function(e) {
@@ -20,7 +20,8 @@ $(document).ready(function(e) {
         $(this).addClass("actived");
 
         if(index==0){
-            shCheckFunc(0);
+            $('#shCheck option:eq(0)').prop("selected", "selected");
+            shCheckFunc(0, 1);
         }else{
             arr=[];
         }
@@ -29,18 +30,54 @@ $(document).ready(function(e) {
     //房东管理-过滤条件-审核
     $('#shCheck').change(function(){
         var sh = $(this).val();
-        shCheckFunc(sh);
+        shCheckFunc(sh, 1);
+    });
+
+    //翻页
+    $(document).on('click', '.ipusmall', function(){    //跳转到指定页
+        var sh = $('#shCheck').val();
+        var page = $(this).text();
+        shCheckFunc(sh, parseInt(page));
+    });
+    $(document).on('click', '.phead', function(){       //跳转到首页
+        var sh = $('#shCheck').val();
+        shCheckFunc(sh, 1);
+    });
+    $(document).on('click', '.pfoot', function(){       //跳转到尾页
+        var sh = $('#shCheck').val();
+        var max = $('#footPage').val();  //房东管理-最后一页
+        shCheckFunc(sh, parseInt(max));
+    });
+    $(document).on('click', '.next', function(){        //跳转到下一页
+        var sh = $('#shCheck').val();
+        var page = $('.ipunone').text();
+        var max = $('#footPage').val();
+        page = parseInt(page)+1;
+        if(page>parseInt(max)){
+            page = max;
+        }
+        shCheckFunc(sh, page);
+    });
+    $(document).on('click', '.prev', function(){        //跳转到上一页
+        var sh = $('#shCheck').val();
+        var page = $('.ipunone').text();
+        page = parseInt(page)-1;
+        if(page<1){
+            page = 1;
+        }
+        shCheckFunc(sh, page);
     });
 
     //AP管理-AP绑定
     $('#bindCheck').click(function(){
         var _html = "<tr><th>MAC</th></tr>", mac="", t="";
-        ap = [];
+        ap = []; ides = [];
         $('section table :checkbox').each(function(index, element){
             if(element.checked){
                 mac = $(this).parent().parent().find('td:eq(2)').html();
                 t += "<tr><td>"+mac+"</td></tr>";
                 ap.push(mac);
+                ides.push(index+1);
             }
         });
         if(t==""){
@@ -69,6 +106,9 @@ $(document).ready(function(e) {
             dataType: "json",
             success: function (msg) {
                 if(msg.Code == 200){
+                    for(var i=0; i<=ides.length; i++){
+                        $('section:eq(1) table tr').eq(ides[i]).find('td:eq(1)').text(holder);
+                    }
                     $.MsgBox.Alert("绑定成功");
                     $t.parent().siblings("p").find("input").val("");
                     $('#asAP').hide();
@@ -91,24 +131,26 @@ $(document).ready(function(e) {
         var mac = $t.parent().parent().find("td:eq(2)").text();
         ap.push(mac);
 
-        $.ajax({
-            type: "PUT",
-            url: "/manager/unbind_ap",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(bindData(ap, holder)),
-            dataType: "json",
-            success: function (msg) {
-                if(msg.Code == 200){
-                    $.MsgBox.Alert("解绑成功");
-                    $t.parent().parent().find("td:eq(1)").html("");
-                    ap = [];
-                }else{
-                    $.MsgBox.Alert(msg.Msg);
+        $.MsgBox.Confirm("是否确定解绑该MAC？", function () {
+            $.ajax({
+                type: "PUT",
+                url: "/manager/unbind_ap",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(bindData(ap, holder)),
+                dataType: "json",
+                success: function (msg) {
+                    if(msg.Code == 200){
+                        $.MsgBox.Alert("解绑成功");
+                        $t.parent().parent().find("td:eq(1)").html("");
+                        ap = [];
+                    }else{
+                        $.MsgBox.Alert(msg.Msg);
+                    }
+                },
+                error: function(msg){
+                    $.MsgBox.Alert("解绑失败");
                 }
-            },
-            error: function(msg){
-                $.MsgBox.Alert("解绑失败");
-            }
+            });
         });
     });
 
@@ -144,20 +186,13 @@ $(document).ready(function(e) {
     $("#apSearch").click(function(){
         var manager = $("#manager").val();
         var token = $("#token").val();
-        var s = $(this).siblings(".ipu_txt").val(), result="";
-        var ss = $.trim(s);
+        var s = $(this).siblings(".ipu_txt").val();
+        var ss = Trim(s);
         var obj = {};
         obj.manager = manager;
         obj.token = token;
 
-        if(ss.length==12){
-            for(var i=0;i<ss.length-1;i++){
-                result += ss[i];
-                if(i % 2 == 1) result += ':';
-            }
-            result += ss[ss.length-1];
-            ss = result;
-        }
+        ss = maoStr(ss);
 
         obj.field = ss;
 
@@ -171,7 +206,7 @@ $(document).ready(function(e) {
                     $('section:eq(1) table tr:not(:first)').remove();
                     var t=h=ysh="";
                     for(var i=0; i<msg.aps.length; i++){
-                        h = apLoad(msg.aps[i].holder, msg.aps[i].mac, msg.aps[i].vendor, msg.aps[i].model, msg.aps[i].fm, msg.aps[i].profile, ysh);
+                        h = apLoad(msg.aps[i].holder, msg.aps[i].mac, msg.aps[i].vendor, msg.aps[i].model, msg.aps[i].fm, msg.aps[i].profile, ysh, msg.aps[i].note);
                         t += h;
                     }
                     $('section:eq(1) table').append(t);
@@ -192,9 +227,16 @@ $(document).ready(function(e) {
         var model = $('#model').val();
         var fm = $('#fm').val();
         var profile = $('#profile').val();
+        var note = $('#note').val();
+
+        var pattern = /^[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}$/;
+        mac = Trim(mac);
+        mac = maoStr(mac);
 
         if(mac=="" || mac==null){
             showError("填写MAC");$('#admac').focus();
+        }else if(!pattern.test(mac)){
+            showError("检查MAC格式");$('#mac').focus();
         }else if(vendor=="" || vendor==null){
             showError("填写厂商");$('#vendor').focus();
         }else if(model=="" || model==null){
@@ -205,7 +247,8 @@ $(document).ready(function(e) {
             showError("填写策略");$('#profile').focus();
         }else{
             clearError();
-            var a = addAPData(mac, vendor, model, fm, profile);
+            console.log(mac);
+            var a = addAPData(mac, vendor, model, fm, profile, note);
 
             $.ajax({
                 type: "POST",
@@ -216,11 +259,11 @@ $(document).ready(function(e) {
                 success: function (msg) {
                     if(msg.Code == 200){
                         var holder="", ysh="ysh";
-                        var h = apLoad(holder, mac, vendor, model, fm, profile, ysh);
+                        var h = apLoad(holder, mac, vendor, model, fm, profile, ysh, note);
                         $('section:eq(1) table tr:eq(0)').after(h);
                         $.MsgBox.Alert("添加成功");
                         $('#asbox').hide();unmask("#shade");
-                        $('#admac').val("");$('#vendor').val("");$('#model').val("");$('#fm').val("");$('#profile').val("");
+                        $('#admac').val("");$('#vendor').val("");$('#model').val("");$('#fm').val("");$('#profile').val("");$('#note').val("");
                     }else{
                         $.MsgBox.Alert(msg.Msg);
                     }
@@ -234,6 +277,8 @@ $(document).ready(function(e) {
 
     //AP管理-提交
     $(document).on('click', '#apsunH', function(){
+        console.log(apData(arr));
+
         $.ajax({
             type: "PUT",
             url: "/manager/ap",
@@ -384,9 +429,10 @@ $(document).ready(function(e) {
                 dataType: "json",
                 success: function (msg) {
                     if(msg.Code == 200){
-                        //var flag=0, ysh="ysh", fol="";
-                        //var h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, flag, ysh, fol);
-                        //$('section:eq(0) table tr:eq(1)').before(h);
+                        var flag=1, ysh="ysh", fol="";
+                        var h = moduleLoad(msg.Ids[0], lxr, lxdh, xxdz, dqsj, 3, flag, ysh, fol);
+                        $('section:eq(0) table tr:eq(1)').before(h);
+                        $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });
                         $.MsgBox.Alert("添加成功");
                         $('#asbox').hide();unmask("#shade");
                         $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");
@@ -405,7 +451,7 @@ $(document).ready(function(e) {
     $(document).on('click', '.folH', function(){
         var $t = $(this);
         $.MsgBox.Confirm("是否确定要冻结该用户？", function(){
-            var drr=[], num=1, idx=7, n;
+            var drr=[], num=1, idx=8, n;
             var id = $t.parent().parent().find("td:first-child").text();
             var mask = $t.parent().parent().find('td:eq(1) div').text();
                 mask = mask | 1<<30;
@@ -453,7 +499,7 @@ $(document).ready(function(e) {
 
     //房东管理-解冻用户
     $(document).on('click', '.unfolH', function(){
-        var $t = $(this), drr = [], num=0, idx=7;
+        var $t = $(this), drr = [], num=0, idx=8;
         var id = $t.parent().parent().find("td:first-child").text();
         var mask = $t.parent().parent().find('td:eq(1) div').text();
             mask = mask & (~(1<<30));
@@ -591,8 +637,8 @@ $(document).ready(function(e) {
         changeData(arr, id, mask, num, idx);
     });
 
-    //AP管理-固件版本、策略更改
-    $(document).on("change", '.fmbtn, .policybtn', function() {
+    //AP管理-固件版本、策略、备注更改
+    $(document).on("change", '.fmbtn, .policybtn, .notebtn', function() {
         var mac = $(this).parent().parent().find('td:eq(2)').text();
         var num = $(this).val();
         var idx = $(this).parent().index();
@@ -641,13 +687,16 @@ function pushToArr(a,b,i){    //b为旧数据，a为新数据
             a.expire_date  = b.num;
             break;
         case 5:
-            a.fm = b.num;
+            a.fm = b.num;      //固件版本
             break;
         case 6:
-            a.profile = b.num;
+            a.profile = b.num;   //策略
             break;
         case 7:
-            a.frozen = b.num;
+            a.note = b.num;     //备注
+            break;
+        case 8:
+            a.frozen = b.num;   //冻结
             break;
         default :
             a.verify = b.num;
@@ -690,10 +739,17 @@ function delHolderData(id){
     return roomObj;
 }
 
-function shCheckFunc(verifyed){
+function shCheckFunc(verifyed, page){
     var manager = $("#manager").val();
     var token = $("#token").val();
+    var ids = $('#footPage').val();
     arr=[];
+
+    if(verifyed==1){
+        $('section:eq(0) .bread input').css("display", "block");
+    }else{
+        $('section:eq(0) .bread input').css("display", "none");
+    }
 
     $.ajax({
         type: "GET",
@@ -701,7 +757,8 @@ function shCheckFunc(verifyed){
         data: {
             manager: manager,
             token: token,
-            verified: verifyed
+            verified: verifyed,
+            page: page-1
         },
         dataType: "json",
         success: function (msg) {
@@ -733,6 +790,15 @@ function shCheckFunc(verifyed){
                     }
                 });
                 $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });
+
+                //pages显示分页
+                if(msg.Pages>0){
+                    $('#footPage').val(msg.Pages);
+                    ids = msg.Pages;
+                }
+                Pheadfoot(parseInt(page), ids);
+                var ps = showPages(parseInt(page), ids);
+                $('.fanye div').html(ps);
             }else{
                 $.MsgBox.Alert("没有数据");
             }
@@ -741,6 +807,51 @@ function shCheckFunc(verifyed){
             $.MsgBox.Alert("请求失败");
         }
     });
+}
+
+function showPages(page, len){   //page:当前页   len:总页数
+    var h=t="", ex=3, mp=7;        //ex:可扩展页数  mp:最多可显示页数
+    if(len>mp){
+        if(page<=mp-ex){
+            for(var i=1; i<=mp; i++){
+                h=PagesNum(page, i);
+                t+=h;
+            }
+        }else if(page+ex>len){
+            for(var i=len-mp+1; i<=len;i++){
+                h=PagesNum(page, i);
+                t+=h;
+            }
+        }else{
+            for(var i=page-ex; i<=page+ex; i++){
+                h=PagesNum(page, i);
+                t+=h;
+            }
+        }
+    }else{
+        for(var i=1; i<=len; i++){
+            h=PagesNum(page, i);
+            t+=h;
+        }
+    }
+
+    return t;
+}
+
+function PagesNum(page, index){
+    var h="";
+    if(index==page){
+        h='<span class="ipunone">'+index+'</span>';
+    }else{
+        h='<span class="ipusmall">'+index+'</span>';
+    }
+    return h;
+}
+
+function Pheadfoot(page, len){
+    $('.phead').show();$('.pfoot').show();
+    if(page==1) $('.phead').hide();
+    if(page == len) $('.pfoot').hide();
 }
 
 function moduleLoad(a, b, c, d, e, f, g, h, i){
@@ -761,7 +872,7 @@ function moduleLoad(a, b, c, d, e, f, g, h, i){
     return t;
 }
 
-function apLoad(a, b, c, d, e, f, g){   //a:房东， b:MAC, c:厂商， d:型号， e:固件版本， f:策略
+function apLoad(a, b, c, d, e, f, g, i){   //a:房东， b:MAC, c:厂商， d:型号， e:固件版本， f:策略,  i:备注
     var h = "";
     h = '<tr class="'+g+'">'+
             '<td><input type="checkbox" class="ckb" /></td>'+
@@ -769,20 +880,22 @@ function apLoad(a, b, c, d, e, f, g){   //a:房东， b:MAC, c:厂商， d:型�
             '<td>'+b+'</td>'+
             '<td>'+c+'</td>'+
             '<td>'+d+'</td>'+
-            '<td><input type="text" value="'+e+'" class="policybtn" /></td>'+
+            '<td><input type="text" value="'+e+'" class="fmbtn" /></td>'+
             '<td><input type="text" value="'+f+'" class="policybtn" /></td>'+
+            '<td><input type="text" value="'+i+'" class="notebtn" /></td>'+
             '<td><a href="javascript:void(0);" class="polH">解绑</a><span>|</span><a href="javascript:void(0);" class="delapH">删除</a></td></tr>';
     return h;
 }
 
-function addAPData(mac, vendor, model, fm, profile){
+function addAPData(mac, vendor, model, fm, profile, note){
     var a = [];
     var apObj = {
         mac: mac,
         vendor: vendor,
         model: model,
         fm: fm,
-        profile: profile
+        profile: profile,
+        note: note
     };
     a.push(apObj);
     return a;
@@ -836,15 +949,23 @@ function bindData(a, h){
     return apObj;
 }
 
-//function showPages(len){
-//
-//    var h="", n="", t="";
-//    n = len/10+1;     //多少页
-//    if(n>3){
-//
-//    }
-//    for(var i=1; i<=n; i++){
-//        h = '<input type="button" value="'+ i +'" class="ipusmall" />';
-//        t += h;
-//    }
-//}
+function maoStr(ss){
+    var result="";
+    if(ss.length==12){
+        for(var i=0;i<ss.length-1;i++){
+            result += ss[i];
+            if(i % 2 == 1) result += ':';
+        }
+        result += ss[ss.length-1];
+    }else{
+        result = ss;
+    }
+    return result;
+}
+
+function Trim(str){   //去掉所有空格、转换中文符号
+    var result=index="", m="：";
+    result = str.replace(/\s/g,"");
+    result = result.replace(/\：/g,":");
+    return result;
+}

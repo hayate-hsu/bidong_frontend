@@ -61,7 +61,7 @@
         </table>
         <div class="page">
             <input type="button" value="提交" class="ipubtn" style="margin-left: 0;" id="subH" />
-            <!--<span><input type="button" value="上一页" class="ipusmall prev" /><input type="button" value="下一页" class="ipusmall next" /></span>-->
+            <div class="fanye"><span class="phead">首页</span><span class="prev">上一页</span><div><span class="ipunone">1</span></div><span class="next">下一页</span><span class="pfoot">尾页</span></div><input type="hidden" id="footPage" value="1" />
         </div>
         <input type="hidden" value="${manager}" id="manager" />
         <input type="hidden" value="${token}" id="token" />
@@ -85,6 +85,7 @@
                 <th>型号</th>
                 <th>固件版本</th>
                 <th>策略</th>
+                <th>备注</th>
                 <th>操作</th>
             </tr>
             <!--<tr>-->
@@ -95,6 +96,7 @@
                 <!--<td>汉明</td>-->
                 <!--<td><input type="text" value="10.1" class="fmbtn" /></td>-->
                 <!--<td><input type="text" value="1" class="policybtn" /></td>-->
+                <!--<td><input type="text" value="7102" class="notebtn" /></td>-->
                 <!--<td><a href="javascript:void(0);" class="polH">解绑</a><span>|</span><a href="javascript:void(0);" class="delapH">删除</a></td>-->
             <!--</tr>-->
         </table>
@@ -127,6 +129,7 @@
                 <li><label>型号：</label><input type="text" class="asipu" id="model" /></li>
                 <li><label>固件版本：</label><input type="text" class="asipu" id="fm" /></li>
                 <li><label>策略：</label><input type="text" class="asipu" id="profile" /></li>
+                <li><label>备注：</label><input type="text" class="asipu" id="note" /></li>
                 <li><input type="button" value="添加" class="ipubtn" id="addAP" /></li>
             </ul>
         </div>
