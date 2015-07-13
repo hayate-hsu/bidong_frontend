@@ -308,7 +308,7 @@ $(document).ready(function(e) {
                     '</td></tr>';
 
                 $('.clientbox table tr:eq(0)').after(h);
-                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
                 $arr = {};
                 $('#room').val("");$('#pwd').val("");$('#pwd').val("");
                 $(this).parent().parent().fadeOut();
@@ -338,7 +338,7 @@ $(document).ready(function(e) {
                                 '</td></tr>';
 
                             $('.clientbox table tr:eq(0)').after(h);
-                            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+                            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
                             $arr = {};
                             $('#room').val("");$('#pwd').val("");
                             t.parent().parent().fadeOut();

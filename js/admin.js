@@ -432,7 +432,7 @@ $(document).ready(function(e) {
                         var flag=1, ysh="ysh", fol="";
                         var h = moduleLoad(msg.Ids[0], lxr, lxdh, xxdz, dqsj, 3, flag, ysh, fol);
                         $('section:eq(0) table tr:eq(1)').before(h);
-                        $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });
+                        $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
                         $.MsgBox.Alert("添加成功");
                         $('#asbox').hide();unmask("#shade");
                         $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");
@@ -789,7 +789,7 @@ function shCheckFunc(verifyed, page){
                         $(this).find('input').attr("disabled", "disabled");
                     }
                 });
-                $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd' });
+                $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
 
                 //pages显示分页
                 if(msg.Pages>0){

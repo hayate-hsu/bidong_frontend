@@ -7,6 +7,11 @@ $(document).ready(function() {
         return false;
     });
 
+    //模拟选择框
+    $('.iarrow').click(function(){
+        $(this).prev().focus();
+    });
+
     //提示连接操作步骤
     $('.werror').click(function(){
         $.MsgBox.WXbox('进入手机【设置】-【无线网络】选择-【BIDONG】连接上网');
