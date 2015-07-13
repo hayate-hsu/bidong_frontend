@@ -155,6 +155,14 @@ $(document).ready(function() {
     $("#noticebox input").click(function(){
         $("#noticebox").fadeOut();
     });
+    //修改密码显示与隐藏
+    $('#changePwd').click(function(){
+        $('.pwdbox').fadeIn();shade();
+    });
+    $('.pwdbox .close').click(function(){
+        $('.pwdbox').fadeOut();unmask('#shade');
+        $('#oldpwd').val("");$('#newpwd').val("");$('#repwd').val("");
+    });
 
     //主页登录input【type=text】focus&blur
     $('.ipu_text').focus(function(){

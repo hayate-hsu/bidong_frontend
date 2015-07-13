@@ -416,16 +416,16 @@ aside li a {
     color:#333;
     background:#fff;
 }
-a.btnadd{ top:-1px; border-top-right-radius:5px;}
-a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
-.amount a:hover{
+a.btnadd, a.btnaddNone{ top:-1px; border-top-right-radius:5px;}
+a.btnreduce, a.btnreduceNone{ bottom:-1px; border-bottom-right-radius:5px;}
+.amount a:hover, a.btnaddNone, a.btnreduceNone{
     background: #ceced1;
     text-decoration: none;
 }
 /************2015-05-14新增-结束****************/
 
 /*addbox*/
-.addbox, .rechargebox, .addressbox{
+.addbox, .rechargebox, .addressbox, .pwdbox{
     position: fixed;
     width: 624px;
     height: auto;        /*484px*/
@@ -441,19 +441,19 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     display: none;
     z-index: 1002;
 }
-.addbox h2, .rechargebox h2, .addressbox h2{
+.addbox h2, .rechargebox h2, .addressbox h2, .pwdbox h2{
     font-size: 30px;
     color: #ff6138;
     font-weight: normal;
     padding: 30px 50px;
     position: relative;
 }
-.addbox .addGroup, .rechargebox div, .addressbox .addGroup{
+.addbox .addGroup, .rechargebox div, .addressbox .addGroup, .pwdbox .addGroup{
     width: 390px;
     margin: 0 auto;
     text-align: center;
 }
-.addbox .addGroup input, .rechargebox div input, .addressbox div input, .addressbox select{
+.addbox .addGroup input, .rechargebox div input, .addressbox div input, .addressbox select, .pwdbox .addGroup input{
     width: 388px;
     height: 48px;
     *height: 47px;
@@ -491,7 +491,7 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
 .addbox .addGroup input[type=date]{
     text-indent: 7px;
 }
-.addbox .addGroup .case, .rechargebox .charge, .addressbox .applyok{
+.addbox .addGroup .case, .rechargebox .charge, .addressbox .applyok, .pwdbox .addGroup .changePwd{
     background: url("../images/sprite.png") no-repeat;
     width: 390px;
     height: 50px;
@@ -499,9 +499,9 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     text-indent: -9999px;
     margin-top: 13px;
 }
-.addbox .addGroup .case, .addressbox .applyok{ background-position: 0 -680px;}
+.addbox .addGroup .case, .addressbox .applyok, .pwdbox .addGroup .changePwd{ background-position: 0 -680px;}
 .rechargebox .charge{ background-position: 0 -730px;}
-.addbox a.close, .rechargebox a, .addressbox a{
+.addbox a.close, .rechargebox a, .addressbox a, .pwdbox a.close{
     display: block;
     width: 24px;
     height: 24px;
@@ -511,7 +511,7 @@ a.btnreduce{ bottom:-1px; border-bottom-right-radius:5px;}
     top: 20px;
     right: 20px;
 }
-.addbox a.close:hover, .rechargebox a:hover, .addressbox a:hover{
+.addbox a.close:hover, .rechargebox a:hover, .addressbox a:hover, .pwdbox a.close:hover{
     background: url("../images/sprite02.png") 0 -176px no-repeat;
 }
 .addbox .addGroup .amount{

@@ -4,9 +4,9 @@
 
 $(document).ready(function(){
 
-    $(document).on('focus', '#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #room, #pwd, .datepicker2, .hidePH', function(){
+    $(document).on('focus', '#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #room, #pwd, .datepicker2, .hidePH, #oldpwd, #newpwd, #repwd', function(){
         if($(this).hasClass('hidePH')){
-            $(this).siblings("input.showPH").show().focus();
+            $(this).prev().show().focus();
             $(this).remove();
         }
         if($(this).val()==$(this).attr("placeholder")){
@@ -14,7 +14,7 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('blur', '#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #rePwd, #room, #pwd, .datepicker2', function(){
+    $(document).on('blur', '#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #room, #pwd, .datepicker2, #oldpwd, #newpwd, #repwd', function(){
         var p = $(this).attr("placeholder");
         var h = '<input type="text" class="ipu_text hidePH" value="'+p+'" />';
         if($(this).attr("type")=="password" && $(this).val()==""){
@@ -26,5 +26,5 @@ $(document).ready(function(){
         }
     });
 
-    $('#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #rePwd, #room, #pwd, .datepicker2').blur();
+    $('#user, #password, #atten, #tel, #addrDet, #reRoom, #rePwd, #room, #pwd, .datepicker2, #oldpwd, #newpwd, #repwd').blur();
 });

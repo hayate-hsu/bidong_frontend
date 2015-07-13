@@ -9,6 +9,41 @@ $(document).ready(function(e) {
 		$oldpwd = $(this).val();
 	});
 
+    //修改密码
+    $('.changePwd').click(function(){
+        var oldpwd = $('#oldpwd').val();
+        var newpwd = $('#newpwd').val();
+        var repwd = $('#repwd').val();
+        var $user = $('#user').text();
+
+        if(newpwd != repwd){
+            showError("两次输入新密码不一致！");
+        }else if(oldpwd == newpwd){
+            showError("新旧密码相同，请重新设置！");
+        }else{
+            clearError();
+            $.ajax({
+                type: "PUT",
+                url: "/account/"+$user,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(changePwdData(oldpwd, newpwd)),
+                dataType: "json",
+                success: function (msg) {
+                    if(msg.Code == 200){
+                        $('.pwdbox').fadeOut();unmask('#shade');
+                        $('#oldpwd').val("");$('#newpwd').val("");$('#repwd').val("");
+                        $.MsgBox.Alert("修改成功");
+                    }else{
+                        $.MsgBox.Alert(msg.Msg);
+                    }
+                },
+                error: function (msg) {
+                    $.MsgBox.Alert(msg.responseJSON.Msg);
+                }
+            });
+        }
+    });
+
     //在线申请
     $('.applyok').click(function(){
         var $atten = $('#atten').val();
@@ -76,6 +111,22 @@ $(document).ready(function(e) {
                 addData($arr, $room, $pwd, $date, $mask);
                 ajaxSubmit($arr);
             }
+
+            t.parent().parent().find('td').each(function(i){
+                var d = t.parent().parent().find('td').eq(i);
+                d.css("background","#fff");
+                if(i<4){
+                    if(d.find('input').length>0){
+                        d.find('input').removeAttr('disabled');
+                    }
+                    if(d.find('a.btnaddNone').length>0){
+                        d.find('a.btnaddNone').addClass('btnadd').removeClass('btnaddNone');
+                    }
+                    if(d.find('a.btnreduceNone').length>0){
+                        d.find('a.btnreduceNone').addClass('btnreduce').removeClass('btnreduceNone');
+                    }
+                }
+            });
         } else {
             $.MsgBox.Confirm("是否确定禁用该用户？", function () {
 
@@ -92,6 +143,22 @@ $(document).ready(function(e) {
                     addData($arr, $room, $pwd, $date, $mask);
                     ajaxSubmit($arr);
                 }
+
+                t.parent().parent().find('td').each(function(i){
+                    var d = t.parent().parent().find('td').eq(i);
+                    d.css("background","#eee");
+                    if(i<4){
+                        if(d.find('input').length>0){
+                            d.find('input').attr('disabled', 'disabled');
+                        }
+                        if(d.find('a.btnadd').length>0){
+                            d.find('a.btnadd').addClass('btnaddNone').removeClass('btnadd');
+                        }
+                        if(d.find('a.btnreduce').length>0){
+                            d.find('a.btnreduce').addClass('btnreduceNone').removeClass('btnreduce');
+                        }
+                    }
+                });
             });
         }
 	});
@@ -240,7 +307,8 @@ $(document).ready(function(e) {
                     '<div class="hid">'+ $mask +'</div>' +
                     '</td></tr>';
 
-                $('.clientbox table tr:eq(1)').before(h);
+                $('.clientbox table tr:eq(0)').after(h);
+                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
                 $arr = {};
                 $('#room').val("");$('#pwd').val("");$('#pwd').val("");
                 $(this).parent().parent().fadeOut();
@@ -253,6 +321,7 @@ $(document).ready(function(e) {
                     data: JSON.stringify(GetFDData($arr)),
                     dataType: "json",
                     success: function (msg) {
+                        t.attr("disabled", "disabled");
                         if (msg.Code == 200) {
                             var h = '<tr>' +
                                 '<td>' + $room + '</td>' +
@@ -268,11 +337,13 @@ $(document).ready(function(e) {
                                 '<div class="hid">'+ $mask +'</div>' +
                                 '</td></tr>';
 
-                            $('.clientbox table tr:eq(1)').before(h);
+                            $('.clientbox table tr:eq(0)').after(h);
+                            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
                             $arr = {};
                             $('#room').val("");$('#pwd').val("");
                             t.parent().parent().fadeOut();
                             unmask('#shade');
+                            t.removeAttr('disabled');
                         } else {
                             $.MsgBox.Alert(msg.Msg);
                         }
@@ -283,8 +354,6 @@ $(document).ready(function(e) {
                 });
             }
         }
-
-        $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
     });
 	
 	//提交登陆信息
@@ -392,6 +461,18 @@ $(document).ready(function(e) {
         }
     });
 });
+
+function changePwdData(oldpwd, newpwd){
+    var $token = $('#fdtoken').text();
+
+    var $obj = {
+        token: $token,
+        password: oldpwd,
+        newp: newpwd
+    };
+
+    return $obj;
+}
 
 function addData(arr, room, pwd, date, mask, ends){
     if(arguments.length > 5){

@@ -35,6 +35,7 @@
             <li><div class="line"></div></li>
             <li><label>详细地址</label>${address}<!--<a href="#">编辑</a>--></li>
         </ul>
+        <a href="javascript:;" class="fdgl" id="changePwd">修改密码</a>
         <div class="hid" id="fdtoken">${token}</div>
         <div class="hid" id="user">${user}</div>
     </aside>
@@ -52,6 +53,21 @@
             </tr>
             % for renter in renters:
             <tr>
+                % if renter['mask']>>30 & 1:
+                <td style="background: #eee;">${renter['room']}</td>
+                <td style="background: #eee;"><input type="text" class="fdpwd" value="${renter['password']}" disabled /></td>
+                <td style="background: #eee;"><input type="text" class="datepicker" value="${renter['expire_date']}" disabled /></td>
+                <td style="background: #eee;">
+                    <div class="amountbox">
+                        <div class="amount">
+                            <input type="text" value="${renter['ends']}" class="JV_Amount" disabled />
+                            <a href="javascript:void(0);" class="btnaddNone">+</a>
+                            <a href="javascript:void(0);" class="btnreduceNone">-</a>
+                        </div>
+                    </div>
+                </td>
+                <td style="background: #eee;">
+                % else:
                 <td>${renter['room']}</td>
                 <td><input type="text" class="fdpwd" value="${renter['password']}" /></td>
                 <td><input type="text" class="datepicker" value="${renter['expire_date']}" /></td>
@@ -65,6 +81,8 @@
                     </div>
                 </td>
                 <td>
+                % endif
+
                     % if renter['mask']>>30 & 1:
                     <input type="button" class="usable frozen" value="禁用" />
                     % else:
@@ -97,6 +115,17 @@
             </div>
             <input type="hidden" id="mask" value="258" />
             <input type="button" class="case" value="确定" />
+            <span class="errorMsg"></span>
+        </div>
+    </div>
+
+    <div class="pwdbox">
+        <h2>修改密码<a href="javascript:void(0);" class="close">X</a></h2>
+        <div class="addGroup">
+            <input type="password" placeholder="原密码" id="oldpwd" class="showPH" />
+            <input type="password" placeholder="新密码" id="newpwd" class="showPH" />
+            <input type="password" placeholder="再输一次新密码" id="repwd" class="showPH" />
+            <input type="button" class="changePwd" value="确定" />
             <span class="errorMsg"></span>
         </div>
     </div>
