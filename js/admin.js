@@ -11,6 +11,7 @@ $(document).ready(function(e) {
     var arr = [];     //房东管理-提交前保存的对象数组
     var ap  = [];     //AP管理-MAC地址数组
     var ides = [];    //AP管理-绑定index位置
+    var menuIndex = 0;
 
     //房东管理、AP管理切换
     $('nav a').click(function(){
@@ -25,6 +26,10 @@ $(document).ready(function(e) {
         }else{
             arr=[];
         }
+
+        menuIndex = index;
+
+        console.log(menuIndex);
     });
 
     //房东管理-过滤条件-审核
@@ -192,7 +197,8 @@ $(document).ready(function(e) {
         obj.manager = manager;
         obj.token = token;
 
-        ss = maoStr(ss);
+        ss = maoStr(ss).toUpperCase();
+        console.log(ss);
 
         obj.field = ss;
 
@@ -229,7 +235,7 @@ $(document).ready(function(e) {
         var profile = $('#profile').val();
         var note = $('#note').val();
 
-        var pattern = /^[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}$/;
+        var pattern = /^[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}$/;
         mac = Trim(mac);
         mac = maoStr(mac);
 
@@ -247,6 +253,7 @@ $(document).ready(function(e) {
             showError("填写策略");$('#profile').focus();
         }else{
             clearError();
+            mac = mac.toUpperCase();
             console.log(mac);
             var a = addAPData(mac, vendor, model, fm, profile, note);
 
@@ -409,6 +416,8 @@ $(document).ready(function(e) {
         var lxdh = $('#lxdh').val();
         var xxdz = $('#xxdz').val();
         var dqsj = $('#dqsj').val();
+        var rzym = $('#rzym').val();
+        var jffs = $('#jffs').val();
 
         if(lxr=="" || lxr==null){
             showError("填写联系人");$('#lxr').focus();
@@ -418,9 +427,12 @@ $(document).ready(function(e) {
             showError("填写详细地址");$('#xxdz').focus();
         }else if(dqsj=="" || dqsj==null){
             showError("填写截止时间");
+        }else if(rzym=="" || rzym==null){
+            showError("填写认证页面");
         }else{
             clearError();
-            var a = addHolderData(lxr, lxdh, xxdz, dqsj);
+            var a = addHolderData(lxr, lxdh, xxdz, dqsj, rzym, jffs);
+            console.log(roomData(a));
             $.ajax({
                 type: "POST",
                 url: "/manager/holder",
@@ -430,12 +442,12 @@ $(document).ready(function(e) {
                 success: function (msg) {
                     if(msg.Code == 200){
                         var flag=1, ysh="ysh", fol="";
-                        var h = moduleLoad(msg.Ids[0], lxr, lxdh, xxdz, dqsj, 3, flag, ysh, fol);
+                        var h = moduleLoad(msg.Ids[0], lxr, lxdh, xxdz, dqsj, 3, flag, ysh, fol, rzym, jffs);
                         $('section:eq(0) table tr:eq(1)').before(h);
                         $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
                         $.MsgBox.Alert("添加成功");
                         $('#asbox').hide();unmask("#shade");
-                        $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");
+                        $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");$('#rzym').val("");
                     }else{
                         $.MsgBox.Alert(msg.Msg);
                     }
@@ -450,6 +462,7 @@ $(document).ready(function(e) {
     //房东管理-冻结用户
     $(document).on('click', '.folH', function(){
         var $t = $(this);
+
         $.MsgBox.Confirm("是否确定要冻结该用户？", function(){
             var drr=[], num=1, idx=8, n;
             var id = $t.parent().parent().find("td:first-child").text();
@@ -481,6 +494,9 @@ $(document).ready(function(e) {
                             $(this).addClass('fol');
                             if($(this).find('input').length>0){
                                 $(this).find('input').attr("disabled", "disabled");
+                            }
+                            if($(this).find('select').length>0){
+                                $(this).find('select').attr("disabled", "disabled");
                             }
                         });
                         $t.parent().parent().find('td:eq(1) div').text(mask);
@@ -518,6 +534,9 @@ $(document).ready(function(e) {
                         $(this).removeClass('fol');
                         if($(this).find('input').length>0){
                             $(this).find('input').removeAttr("disabled");
+                        }
+                        if($(this).find('select').length>0){
+                            $(this).find('select').removeAttr("disabled");
                         }
                     });
                     $t.parent().parent().find('td:eq(1) div').text(mask);
@@ -628,13 +647,13 @@ $(document).ready(function(e) {
     });
 
     //房东管理-联系人、联系电话、地址、到期时间更改
-    $(document).on("change", '.realnamebtn, .mobilebtn, .addressbtn, .dpicker', function() {
+    $(document).on("change", '.realnamebtn, .mobilebtn, .addressbtn, .dpicker, .portal, .policy', function() {
         var id = $(this).parent().parent().find('td:first-child').text();
         var mask = $(this).parent().parent().find('td:eq(1) div').text();
         var num = $(this).val();
         var idx = $(this).parent().index();
 
-        changeData(arr, id, mask, num, idx);
+        changeData(arr, id, mask, num, idx, menuIndex);
     });
 
     //AP管理-固件版本、策略、备注更改
@@ -643,12 +662,12 @@ $(document).ready(function(e) {
         var num = $(this).val();
         var idx = $(this).parent().index();
 
-        changeAPData(arr, mac, num, idx);
+        changeAPData(arr, mac, num, idx, menuIndex);
     });
 
 });
 
-function changeData(arr, id, mask, num, idx){    //arr需要提交的数据,   id:房东ID,   num:改动的数据，   idx：改动数据的位置（realname,expire_date,address）
+function changeData(arr, id, mask, num, idx, menuIndex){    //arr需要提交的数据,   id:房东ID,   num:改动的数据，   idx：改动数据的位置（realname,expire_date,address）
     var orr = {}, drr = {};
     var flag = true;                       //判断arr中是否存在同一条ID数据的标记
     orr.id = drr.id = id;
@@ -658,48 +677,59 @@ function changeData(arr, id, mask, num, idx){    //arr需要提交的数据,   i
         $(arr).each(function(index){       //遍历arr
             var val = arr[index];          //arr[index]，index多条数据
             if(val.id == orr.id){
-                pushToArr(val, orr, idx);
+                pushToArr(val, orr, idx, menuIndex);
                 flag = false;
             }
         });
         if(flag){
-            pushToArr(drr, orr, idx);
+            pushToArr(drr, orr, idx, menuIndex);
             arr.push(drr);
         }
     }else{
-        pushToArr(drr, orr, idx);
+        pushToArr(drr, orr, idx, menuIndex);
         arr.push(drr);
     }
 }
 
-function pushToArr(a,b,i){    //b为旧数据，a为新数据
-    switch(i){
-        case 1:
-            a.realname = b.num;
-            break;
-        case 2:
-            a.mobile = b.num;
-            break;
-        case 3:
-            a.address = b.num;
-            break;
-        case 4:
-            a.expire_date  = b.num;
-            break;
-        case 5:
-            a.fm = b.num;      //固件版本
-            break;
-        case 6:
-            a.profile = b.num;   //策略
-            break;
-        case 7:
-            a.note = b.num;     //备注
-            break;
-        case 8:
-            a.frozen = b.num;   //冻结
-            break;
-        default :
-            a.verify = b.num;
+function pushToArr(a,b,i,z){    //b为旧数据，a为新数据, z:头部menu的index值
+    if(z==0){
+        switch(i){
+            case 1:
+                a.realname = b.num;
+                break;
+            case 2:
+                a.mobile = b.num;
+                break;
+            case 3:
+                a.address = b.num;
+                break;
+            case 4:
+                a.expire_date  = b.num;
+                break;
+            case 5:
+                a.portal = b.num;      //认证页面
+                break;
+            case 6:
+                a.policy = b.num;      //计费方式
+                break;
+            case 8:
+                a.frozen = b.num;   //冻结
+                break;
+            default :
+                a.verify = b.num;
+        }
+    }else{
+        switch(i){
+            case 5:
+                a.fm = b.num;      //固件版本
+                break;
+            case 6:
+                a.profile = b.num;   //策略
+                break;
+            case 7:
+                a.note = b.num;     //备注
+                break;
+        }
     }
 }
 
@@ -715,13 +745,15 @@ function roomData(a){
     return roomObj;
 }
 
-function addHolderData(realname, mobile, address, expire_date){
+function addHolderData(realname, mobile, address, expire_date, portal, policy){
     var a = [];
     var holderObj = {
         realname: realname,
         mobile: mobile,
         address: address,
-        expire_date: expire_date
+        expire_date: expire_date,
+        portal: portal,
+        policy: policy
     };
     a.push(holderObj);
     return a;
@@ -745,7 +777,7 @@ function shCheckFunc(verifyed, page){
     var ids = $('#footPage').val();
     arr=[];
 
-    if(verifyed==1){
+    if(verifyed==1){                 //显示【添加房东】button
         $('section:eq(0) .bread input').css("display", "block");
     }else{
         $('section:eq(0) .bread input').css("display", "none");
@@ -767,18 +799,18 @@ function shCheckFunc(verifyed, page){
                 var h=t=ysh=fol="";
                 if(verifyed==0){
                     for(var i=0; i<msg.Holders.length; i++){
-                        h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
+                        h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                         t += h;
                     }
                 }else{
                     for(var i=0; i<msg.Holders.length; i++){
                         if((msg.Holders[i].mask>>30&1)==0){
                             fol="";
-                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                             t += h;
                         }else {
                             fol = "fol";
-                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol);
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expire_date, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                             t += h;
                         }
                     }
@@ -854,13 +886,21 @@ function Pheadfoot(page, len){
     if(page == len) $('.pfoot').hide();
 }
 
-function moduleLoad(a, b, c, d, e, f, g, h, i){
+function moduleLoad(a, b, c, d, e, f, g, h, i, j, k){
     var t = '<tr class="'+ h +'">'+
             '<td class="'+i+'">'+a+'</td>'+
             '<td class="'+i+'"><input type="text" class="realnamebtn" value="'+b+'" /><div class="hidden">'+f+'</div></td>'+
             '<td class="'+i+'"><input type="text" class="mobilebtn" value="'+c+'" /></td>'+
             '<td class="'+i+'"><input type="text" class="addressbtn" title="'+d+'" value="'+d+'" /></td>'+
-            '<td class="'+i+'"><input type="text" class="dpicker" value="'+e+'" /></td><td class="'+i+'">';
+            '<td class="'+i+'"><input type="text" class="dpicker" value="'+e+'" /></td>'+
+            '<td class="'+i+'"><input type="text" class="portal" title="'+j+'" value="'+j+'" /></td><td class="'+i+'">';
+
+    if(k==1){
+        t += '<select class="policy"><option value="0">普通计费</option><option value="1" selected>免费</option></select></td><td class="'+i+'">'
+    }else{
+        t += '<select class="policy"><option value="0">普通计费</option><option value="1">免费</option></select></td><td class="'+i+'">'
+    }
+
     if(g == 0){
         t += '<a href="javascript:void(0);" class="chbH">审核</a>';
     }else if(i==""){

@@ -25,6 +25,7 @@ a{
     margin-left:20px;
 }
 .ipubtn:hover, .ipusmall:hover, #mb_btn_ok:hover, .phead:hover, .pfoot:hover, .prev:hover, .next:hover{  background:#2b77e5;  }
+select:disabled{ background: #EBEBE4;}
 
 header{
     background: #4a66a5;
@@ -179,7 +180,7 @@ section .page .fanye {
     background: transparent;
     color: #000;
 }
-input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.policybtn, input.fmbtn, input.notebtn{
+input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.policybtn, input.fmbtn, input.notebtn, input.portal{
     height: 27px;
     width: 120px;
     text-align: center;
@@ -189,8 +190,13 @@ input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.polic
     border: none;
     box-shadow: none;
 }
-input.addressbtn{
+input.addressbtn, input.portal{
     width: 250px;
+}
+.policy{
+    width: 120px;
+    height: 27px;
+    border: none;
 }
 
 footer{  text-align: center;  }
@@ -328,7 +334,7 @@ aside, #confirmbox, #msgbox{
     text-align: left;
 }
 #asbox li{  margin-bottom: 10px;  }
-input.asipu{
+.asipu{
     height: 24px;
     border: 1px solid #c4c4c4;
     text-indent: 5px;

@@ -240,12 +240,14 @@ $(document).ready(function(e) {
 		var $user = $('#user').val();
 		var $pwd = $('#password').val();
         var interval;
-		
-		if($user==""  || $user==null){
+
+        var pattern = /^[\w]+$/;
+
+        if($user==""  || $user==null){
             $.MsgBox.WXbox("请输入门牌号/电脑上网账号！");
             return false;
-		}else if($pwd=="" || $pwd==null){
-            $.MsgBox.WXbox("请输入密码");
+		}else if(!pattern.test($pwd)){
+            $.MsgBox.WXbox("密码仅支持数字和英文");
             return false;
 		}else{
 			$.ajax({

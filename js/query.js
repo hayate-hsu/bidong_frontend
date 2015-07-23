@@ -396,12 +396,15 @@ $(document).ready(function(e) {
         var $user = $('#user').val();
         var $pwd = $('#password').val();
 
+        var pattern = /^[\w]+$/;         //+号必须有输入  *号可以没有输入
+
         if($user==""  || $user==null){
             showError("请输入门牌号/电脑上网账号！");
             $('#user').focus();
             return false;
-        }else if($pwd=="" || $pwd==null){
-            showError("请输入密码");
+        }else if(!pattern.test($pwd)){
+            showError("密码仅支持数字和英文！");
+            console.log($pwd);
             $('#password').focus();
             return false;
         }else{
