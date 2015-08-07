@@ -479,8 +479,7 @@ $(document).ready(function(e) {
                 });
             }
 
-            changeData(drr, id, mask, num, idx);
-            arr.splice(n,1);                    //删除已提交的数据
+            changeData(drr, id, mask, num, idx, menuIndex);
 
             $.ajax({
                 type: "PUT",
@@ -490,6 +489,7 @@ $(document).ready(function(e) {
                 dataType: "json",
                 success: function (msg) {
                     if(msg.Code == 200){
+                        arr.splice(n,1);                    //删除已提交的数据
                         $t.parent().parent().find('td').each(function(n){
                             $(this).addClass('fol');
                             if($(this).find('input').length>0){
@@ -520,7 +520,7 @@ $(document).ready(function(e) {
         var mask = $t.parent().parent().find('td:eq(1) div').text();
             mask = mask & (~(1<<30));
 
-        changeData(drr, id, mask, num, idx);
+        changeData(drr, id, mask, num, idx, menuIndex);
 
         $.ajax({
             type: "PUT",
@@ -621,8 +621,7 @@ $(document).ready(function(e) {
                 });
             }
 
-            changeData(drr, id, mask, num, idx);
-            arr.splice(n,1);                    //删除已提交的数据
+            changeData(drr, id, mask, num, idx, menuIndex);
 
             $.ajax({
                 type: "PUT",
@@ -631,6 +630,7 @@ $(document).ready(function(e) {
                 data: JSON.stringify(roomData(drr)),
                 dataType: "json",
                 success: function (msg) {
+                    arr.splice(n,1);                    //删除已提交的数据
                     if (msg.Code == 200) {
                         $t.html("冻结").addClass("folH").removeClass("chbH");
                         $t.parent().parent().addClass("ysh");
@@ -643,6 +643,8 @@ $(document).ready(function(e) {
                     $.MsgBox.Alert("请求失败");
                 }
             });
+        }else{
+            $.MsgBox.Alert('选择到期时间，重新审核');
         }
     });
 
@@ -953,7 +955,7 @@ function apData(a){
     return apObj;
 }
 
-function changeAPData(arr, mac, num, idx){    //arr需要提交的数据,    num:改动的数据，   idx：改动数据的位置
+function changeAPData(arr, mac, num, idx, menuIndex){    //arr需要提交的数据,    num:改动的数据，   idx：改动数据的位置
     var orr = {}, drr = {};
     var flag = true;                       //判断arr中是否存在同一条ID数据的标记
     orr.mac = drr.mac = mac;
@@ -962,16 +964,16 @@ function changeAPData(arr, mac, num, idx){    //arr需要提交的数据,    num
         $(arr).each(function(index){       //遍历arr
             var val = arr[index];          //arr[index]，index多条数据
             if(val.mac == orr.mac){
-                pushToArr(val, orr, idx);
+                pushToArr(val, orr, idx, menuIndex);
                 flag = false;
             }
         });
         if(flag){
-            pushToArr(drr, orr, idx);
+            pushToArr(drr, orr, idx, menuIndex);
             arr.push(drr);
         }
     }else{
-        pushToArr(drr, orr, idx);
+        pushToArr(drr, orr, idx, menuIndex);
         arr.push(drr);
     }
 }
