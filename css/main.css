@@ -1038,20 +1038,50 @@ aside a.fdgl:hover{
 .cctd h1.cc01{ background-position: -340px -780px; line-height: 42px;}
 .cctd h1.cc02{ background-position: -340px -834px;}
 .cctd h1.cc03{ background-position: -340px -886px;}
-.ccbox{
-    padding: 18px;
+.cc_wrapper{
+    position: relative;
+    overflow: hidden;
+    height: 616px;
+}
+.cc_wrapper span{
+    position: absolute;
+    top: 38px;
+    right: 18px;
+    z-index: 998;
+}
+.cc_wrapper .cc_scroll{
+    width: 682px;
+    z-index: 997;
+    position: absolute;
+    top: 0;
+    left: 0;
     background: #f0f0f0;
     margin-top: 20px;
+}
+.ccbox{
+    padding: 18px;
     position: relative;
+    width: 305px;
+    float: left;
+    height: 560px;
+}
+.ccbox .Square{
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    background: #ff6138;
+    color: #fff;
+    font-size: 30px;
+    font-family: 'Arial';
 }
 .ccbox h3{
-    text-align: center;
     color: #333;
     font-size: 24px;
     font-weight: normal;
     margin: 20px 0 10px;
 }
-.ccbox h3 i{
+.ccbox h3 i{               /*不使用*/
     color: #fff;
     position: absolute;
     top: 0;
@@ -1068,13 +1098,13 @@ aside a.fdgl:hover{
 .ccbox p{
     line-height: 28px;
 }
-.ccbox #catbox{
+.ccbox .catbox{
     margin-top: 10px;
     position: relative;
     /*z-index: 995;*/
     overflow: hidden;
 }
-.ccbox #catbox div{
+.ccbox .catbox div{
     width: 142px;
     height: 142px;
     float: left;
@@ -1087,18 +1117,18 @@ aside a.fdgl:hover{
     cursor: pointer;
     z-index: 994;
 }
-.ccbox #catbox #imgbig{
+.ccbox .catbox .imgbig{
     position: absolute;
     z-index: 996;
     display: none;
     top: 0;
     left: 0;
 }
-.ccbox #catbox #imgbig img{
+.ccbox .catbox .imgbig img{
     width: 304px;
     height: 304px;
 }
-.ccbox #catbox div.zk{
+.ccbox .catbox div.zk{
     background: rgba(0,0,0,0.4) url("../images/darrow.png") no-repeat 55px 55px;
     background: #ccc url("../images/darrow.png") no-repeat 55px 55px\0;
     *background: #ccc url("../images/darrow.png") no-repeat 55px 55px;
@@ -1117,7 +1147,7 @@ aside a.fdgl:hover{
     right: 0;
     width: 75px;
 }
-.cc02 a{
+a.dis_arrow{
     background: url("../images/sprite.png") no-repeat;
     width: 32px;
     height: 32px;
@@ -1125,13 +1155,13 @@ aside a.fdgl:hover{
     text-indent: -9999px;
     float: left;
 }
-.cc02 a:first-child{ margin-right: 10px;}
-.cc02 a.prev{ background-position: -157px -930px;}
-.cc02 a.next{ background-position: -253px -930px;}
-.cc02 a.dis_prev{ background-position: -189px -930px;}
-.cc02 a.dis_next{ background-position: -221px -930px;}
-.cc02 a.prev:hover{ background-position: -125px -930px;}
-.cc02 a.next:hover{ background-position: -285px -930px;}
+.cc02 a:first-child, .cc_wrapper a:first-child{ margin-right: 10px;}
+a.prev{ background-position: -157px -930px;}
+a.next{ background-position: -253px -930px;}
+a.dis_prev{ background-position: -189px -930px; cursor: not-allowed;}
+a.dis_next{ background-position: -221px -930px; cursor: not-allowed;}
+a.prev:hover{ background-position: -125px -930px;}
+a.next:hover{ background-position: -285px -930px;}
 .pinglun{}
 .pinglun li{
     margin-top: 25px;

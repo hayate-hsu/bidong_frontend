@@ -103,41 +103,55 @@ $(document).ready(function() {
     });
 
     //主页放大图片
-    $('#catbox .cat img').hover(function(){
-        //var d = $(this).index();
-        //d += 1;
-        //switch (d){
-        //    case 1:
-        //        $('.ccbox h3').html('<i>'+ d + '</i>黄村新建整栋居民楼');
-        //        $('.ccbox p').html("黄村是壁咚WiFi的第一个试验地点，共安装无线路由器20余台。解决了房东拉网线的烦恼。我们有自己的施工队，负责安装调试，房东只需要支付机器费用就可以后顾无忧的使用。");
-        //        break;
-        //    case 2:
-        //        $('.ccbox h3').html('<i>'+ d + '</i>黄村新建整栋居民楼');
-        //        $('.ccbox p').html("黄村是壁咚WiFi的第一个试验地点，共安装无线路由器20余台。解决了房东拉网线的烦恼。我们有自己的施工队，负责安装调试，房东只需要支付机器费用就可以后顾无忧的使用。");
-        //        break;
-        //    case 3:
-        //        $('.ccbox h3').html('<i>'+ d + '</i>黄村新建整栋居民楼');
-        //        $('.ccbox p').html("黄村是壁咚WiFi的第一个试验地点，共安装无线路由器20余台。解决了房东拉网线的烦恼。我们有自己的施工队，负责安装调试，房东只需要支付机器费用就可以后顾无忧的使用。");
-        //        break;
-        //    case 4:
-        //        $('.ccbox h3').html('<i>'+ d + '</i>黄村新建整栋居民楼');
-        //        $('.ccbox p').html("黄村是壁咚WiFi的第一个试验地点，共安装无线路由器20余台。解决了房东拉网线的烦恼。我们有自己的施工队，负责安装调试，房东只需要支付机器费用就可以后顾无忧的使用。");
-        //        break;
-        //}
-
+    $('.catbox .cat img').hover(function(){
         $('div.zk').hide();
         $(this).parent().find('div.zk').show();
     });
-    $('#catbox .cat').mouseleave(function(){
+    $('.catbox .cat').mouseleave(function(){
         $('div.zk').hide();
     });
     $('div.zk').click(function(){
         var i = $(this).next('img').attr('src');
-        $('#imgbig img').attr('src', i).show();
-        $('#imgbig').show();
+        $(this).parent().siblings('.imgbig').find('img').attr('src', i).show();
+        $(this).parent().siblings('.imgbig').show();
     });
-    $('#imgbig').mouseleave(function(){
+    $('.imgbig').mouseleave(function(){
         $(this).hide();
+    });
+    var cc_width = 341;
+    var cc_len = $('.cc_scroll .ccbox').length;
+    var cc_now = 1;
+    var now_left = 0;
+    $('#cc_next').click(function(){
+        if(cc_now < cc_len){
+            now_left = now_left-cc_width;
+            $('.cc_scroll').animate({'left': now_left+'px'}, 300);
+            cc_now += 1;
+        }else{
+            return false;
+        }
+
+        if(cc_now==2){
+            $('#cc_prev').addClass('prev').removeClass('dis_prev');
+        }
+        if(cc_now == cc_len){
+            $(this).addClass('dis_next').removeClass('next');
+        }
+    });
+    $('#cc_prev').click(function(){
+        if(cc_now > 1){
+            now_left = now_left+cc_width;
+            $('.cc_scroll').animate({'left': now_left+'px'}, 300);
+            cc_now -= 1;
+        }else{
+            return false;
+        }
+        if(cc_now==1){
+            $(this).addClass('dis_prev').removeClass('prev');
+        }
+        if(cc_now == cc_len-1){
+            $('#cc_next').addClass('next').removeClass('dis_next');
+        }
     });
 
     //增加租客addbox在线申请addressbox显示与隐藏
