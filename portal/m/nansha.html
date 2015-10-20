@@ -14,7 +14,7 @@
     <div class="nsLogoMbo">
         <img src="/images/nsimgs/nslogo_m.jpg" />
         <div class="nsadmMbo" style="display: block;">
-            <div class="nsLeftMbo">芦湾村</div>
+            <div class="nsLeftMbo">南沙区</div>
             <div class="nsRightMbo">上网时长：<span>无限</span>
                 <!--<a href="javascript:;">退出</a>-->
             </div>
@@ -43,6 +43,9 @@
             <p>2015年，7月1日，南沙区无线城市村村通示范项目，南沙街道芦湾村公共区域WI-FI已覆盖！欢迎来到芦湾村！</p>
             <input type="hidden" value="0" id="num" />
         </div>
+        % if agent.os.family == 'Android':
+        <a href="http://nsm.bidongwifi.com/downloads/android/zmt.apk"><img src="/images/nsimgs/downloadApp.png" width="20" height="29" /></a>
+        % endif
     </div>
     <div class="nsfooterMbo">
         <div><a href="javascript:;" class="nsdisabled" id="prev">上一篇</a></div>

@@ -111,7 +111,7 @@ li {
   font-size: 16px;
 }
 .nsWireless .nsNews .nsNewsHeader .nsLeft {
-  font-size: 20px;
+  font-size: 24px;
   color: #1bbc9b;
   border-bottom: 1px solid #1bbc9b;
   float: left;
@@ -122,8 +122,10 @@ li {
   float: right;
   line-height: 54px;
 }
-.nsWireless .nsNews .nsNewsHeader .nsRight span {
-  display: inline-block;
+.nsWireless .nsNews .nsNewsHeader .nsRight button {
+    font-size: 16px;
+    border: none;
+    outline: none;
   margin-left: 10px;
 }
 .nsWireless .nsNews .nsContent {
@@ -154,4 +156,209 @@ li {
 }
 .nsfooter p {
   line-height: 24px;
+}
+.horizon {
+  margin-bottom: 180px;
+}
+.horizon .nsLoginMo {
+  width: 310px;
+  float: left;
+}
+.horizon .nsLoginMo .nsLogo {
+  background: url("../images/nsimgs/nslogo_s.jpg") no-repeat;
+  height: 140px;
+  border-right: 1px solid #e9e9e9;
+}
+.horizon .nsLogin{ border-right: 1px solid #e9e9e9;}
+.horizon .nsLoginMo .nslgn {
+  padding: 40px 0 30px 24px;
+  overflow: hidden;
+}
+.horizon .nsLoginMo .nslgn h3 {
+  font-size: 20px;
+  color: #333;
+}
+.horizon .nsLoginMo .nslgn .nsLong,
+.horizon .nsLoginMo .nslgn .nsShort {
+  width: 260px;
+  height: 40px;
+  line-height: 40px\9;
+  background: #e9e9e9;
+  border: 1px solid #e9e9e9;
+  font-size: 16px;
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  text-indent: 15px;
+  outline: none;
+  margin-top: 20px;
+  *text-indent: 0 !important;
+}
+.horizon .nsLoginMo .nslgn .nsShort {
+  width: 150px;
+  margin-top: 16px;
+  margin-right: 4px;
+  *float: left !important;
+}
+.horizon .nsLoginMo .nslgn .yzmcss {
+  width: 260px;
+  height: 40px;
+  line-height: 40px\9;
+  background: #e9e9e9;
+  border: 1px solid #e9e9e9;
+  font-size: 16px;
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  text-indent: 15px;
+  color: #fff;
+  background: #c0c0c0;
+  width: 102px;
+  text-indent: 0;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  height: 42px;
+  line-height: 42px;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  cursor: default;
+  *float: left !important;
+  *margin: 16px 0 0 4px !important;
+}
+.horizon .nsLoginMo .nslgn .yzmcss:hover {
+  background: #29af91;
+}
+.horizon .nsLoginMo .nslgn .on:hover {
+  background: #c0c0c0;
+}
+.horizon .nsLoginMo .nslgn #nsSub {
+  background: #1bbc9b;
+  width: 74px;
+  height: 32px;
+  line-height: 32px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  width: 262px;
+  height: 42px;
+  line-height: 42px;
+  border: none;
+  font-size: 20px;
+  margin-top: 24px;
+}
+.horizon .nsLoginMo .nslgn #nsSub:hover {
+  background: #29af91;
+}
+.horizon .nsLoginMo .nslgn #yjsw {
+  background: url("../images/nsimgs/nsyjsw00.png") no-repeat;
+  width: 262px;
+  height: 68px;
+  border: none;
+  text-indent: -9999px;
+  cursor: pointer;
+  float: left;
+}
+.horizon .nsLoginMo .nslgn #yjsw:hover {
+  background-position: 0 -68px;
+}
+.horizon .nsLoginMo .nslgn .errMsg {
+  display: block;
+  color: #cc0000;
+  text-indent: 15px;
+  padding: 5px 0;
+  height: 21px;
+}
+.horizon .nsLoginMo .nsadm {
+  background: #fff;
+  border-right: 1px solid #e9e9e9;
+  display: none;
+}
+.horizon .nsLoginMo .nsadm .admbox {
+  margin: 0 24px;
+  border-bottom: 1px dashed #e9e9e9;
+  position: relative;
+}
+.horizon .nsLoginMo .nsadm .admbox div {
+  text-align: center;
+}
+.horizon .nsLoginMo .nsadm .admbox div img {
+  width: 106px;
+  height: 106px;
+  padding: 60px 0 20px;
+}
+.horizon .nsLoginMo .nsadm .admbox p {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 50px;
+  position: relative;
+}
+.horizon .nsLoginMo .nsadm .admbox p .logout {
+  font-size: 14px;
+  color: #ababab;
+  text-decoration: underline;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+.horizon .nsLoginMo .nsadm .admbox p .logout:hover {
+  color: #1bbc9b;
+}
+.horizon .nsLoginMo .nsadm .admtime {
+  padding: 35px 0 60px 24px;
+  color: #999;
+}
+.horizon .nsLoginMo .nsadm .admtime span {
+  font-size: 28px;
+  color: #1bbc9b;
+}
+.horizon .nsLoginMo .nsadm .admtime i {
+  display: block;
+  float: left;
+  width: 3px;
+  height: 15px;
+  background: #1bbc9b;
+  margin-top: 17px;
+  margin-right: 10px;
+}
+.horizon .nsNews {
+  float: left;
+  width: 610px;
+}
+.horizon .nsNews .nsContent {
+  padding: 0;
+}
+.nsload{
+    border-top: 1px dashed #0c9aba;
+    margin: 0 24px;
+    position: relative;
+    overflow: hidden;
+}
+.nsload img{
+    padding: 14px 14px 14px 0;
+    float: left;
+}
+.nsload h4{
+    font-size: 20px;
+    color: #333;
+    font-weight: normal;
+    margin: 23px 0 5px;
+}
+.nsload p{
+    font-size: 14px;
+    color: #666;
+}
+.nsload a{
+    background: url("../images/nsimgs/downloadAppWeb.png") no-repeat;
+    width: 26px;
+    height: 44px;
+    display: block;
+    text-indent: -9999px;
+    position: absolute;
+    right: 0;
+    top: 28px;
 }

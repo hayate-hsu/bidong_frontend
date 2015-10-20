@@ -1158,8 +1158,8 @@ a.dis_arrow{
 .cc02 a:first-child, .cc_wrapper a:first-child{ margin-right: 10px;}
 a.prev{ background-position: -157px -930px;}
 a.next{ background-position: -253px -930px;}
-a.dis_prev{ background-position: -189px -930px; cursor: not-allowed;}
-a.dis_next{ background-position: -221px -930px; cursor: not-allowed;}
+a.dis_prev{ background-position: -189px -930px;}
+a.dis_next{ background-position: -221px -930px;}
 a.prev:hover{ background-position: -125px -930px;}
 a.next:hover{ background-position: -285px -930px;}
 .pinglun{}
