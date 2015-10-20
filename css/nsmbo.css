@@ -18,6 +18,7 @@ input,
 select {
   -webkit-tap-highlight-color: transparent;
 }
+ul,li{ list-style: none;}
 /* 1.去除android a/button/input标签被点击时产生的边框 2.去除ios a标签被点击时产生的半透明灰色背景 */
 .nsLogoMbo {
   position: relative;
@@ -148,28 +149,32 @@ select {
     bottom: 0px;
     left: 0px;
     right: 0px;
+    text-decoration: none;
 }
-.nsload div{
+.nsload ul{
+    padding: 0 15px;
+    overflow: hidden;
+}
+.nsload li{
     float: left;
 }
 .nsload .appLogo{
-    margin: 5px 10px 0 15px;
-    float: left;
+    margin-top: 5px;
+    margin-right: 10px;
 }
-.nsload span{ display: block;}
-.nsload span:first-child{
+.nsload p:first-child{
     font-size: 14px;
     color: #333;
     font-weight: normal;
     margin: 7px 0 0;
 }
-.nsload span:last-child{
+.nsload p:last-child{
     font-size: 10px;
     color: #666;
 }
-.nsload a{
+.nsload li:last-child{
     float: right;
-    margin: 10px 15px 0 0;
+    margin-top: 10px;
 }
 @-webkit-keyframes dropDown {
   0% {

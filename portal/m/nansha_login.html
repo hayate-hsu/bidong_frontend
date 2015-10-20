@@ -75,17 +75,17 @@
         <div><a href="javascript:;" class="nsdisabled" id="prev">上一篇</a></div>
         <div><a href="javascript:;" id="next">下一篇</a></div>
     </div>
-    <div class="nsload">
-        <div>
-            <img src="/images/nsimgs/applogo.png" width="36" height="36" class="appLogo" />
-            <div>
-                <span>南沙通APP 免费下载</span>
-                <span>南沙资讯、公共WiFi</span>
-            </div>
-        </div>
-        % if agent.os.family == 'Android':
-        <a href="http://nsm.bidongwifi.com/downloads/android/zmt.apk"><img src="/images/nsimgs/downloadApp.png" width="20" height="29" /></a>
-        % endif
-    </div>
+    % if agent.os.family == 'Android':
+    <a class="nsload" href="http://nsm.bidongwifi.com/downloads/android/zmt.apk">
+        <ul>
+            <li><img src="/images/nsimgs/applogo.png" width="36" height="36" class="appLogo" /></li>
+            <li>
+                <p>南沙通APP 免费下载</p>
+                <p>南沙资讯、公共WiFi</p>
+            </li>
+            <li><img src="/images/nsimgs/downloadApp.png" width="20" height="29" class="dlapp" /></li>
+        </ul>
+    </a>
+    % endif
 </body>
 </html>
