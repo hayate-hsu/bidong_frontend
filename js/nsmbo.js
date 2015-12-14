@@ -1,8 +1,9 @@
 /**
  * Created by JavieChan on 2015/7/4.
+ * Updatad by JavieChan on 2015/12/10.
  */
 
-$(document).ready(function(){
+$(function(){
 
     //新闻公告翻页
     $('.nsContentMbo h2:eq(0)').css("display","block");
@@ -81,13 +82,161 @@ $(document).ready(function(){
         $(this).parent().parent().hide();
         $('#yjsw').show();
     });
+
+    //新版
+    $('.ns_admin_btn').click(function(){
+        $('.ns_login_wrapper').addClass('stotop');
+        $('#closed').addClass('close_rotate');
+        $('body').css("overflow-y", "hidden");
+    });
+    $('#closed').click(function(){
+        $('.ns_login_wrapper').removeClass('stotop');
+        $(this).removeClass('close_rotate');
+        $('body').css("overflow-y", "auto");
+    });
+
+    //新版portal认证
+    var int, inc;
+    $('.ns_header button').click(function(){
+        var $this=$(this);
+
+        $('.anthor').fadeIn();
+        $('body').css("overflow-y", "hidden");
+        $('#p2').text("正在验证,请耐心等待...").css("color", "#333");
+        $('.anthor button').text("取消验证").css("background", "#6fccf7");
+
+        inc = setInterval(increFunc, 1000);
+        
+        $.ajax({
+            type: "POST",
+            url: "/account",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(PortalData()),
+            dataType: "json",
+            success: function (data) {
+                clearInterval(inc);
+                $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+                window.location.href = "http://www.bidongwifi.com";
+            },
+            statusCode: {
+                435: function() {
+                    clearInterval(inc);
+                    $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+                    window.location.href = "http://www.bidongwifi.com";
+                },
+                436: function() {
+                    int = setTimeout(timeOutFunc, 3000);
+                }
+            },
+            error: function(error){
+                console.log(error.status);
+                clearInterval(inc);
+                $('#p2').text('验证失败').css("color", "#f00");
+                $('.anthor button').text("返回").css("background", "#ffa21c");
+                clearTimeout(int);
+            }
+        });
+    });
+    //取消验证
+    $('.anthor button').click(function(){
+        clearInterval(inc);
+        $('.anthor').fadeOut();
+        $('#p1 span').text(0);
+        $('body').css("overflow-y", "auto");
+        clearTimeout(int);
+    });
 });
 
+function timeOutFunc(){
+    $.ajax({
+        type: "POST",
+        url: "/account",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(PortalData()),
+        dataType: "json",
+        success: function (data) {
+            clearInterval(inc);
+            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+            window.location.href = "http://www.bidongwifi.com";
+        },
+        statusCode: {
+            435: function() {
+                clearInterval(inc);
+                $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+                window.location.href = "http://www.bidongwifi.com";
+            },
+            436: function() {
+                int = setTimeout(timeOutFunc2, 3000);
+            }
+        },
+        error: function(error){
+            console.log(error.status);
+            clearInterval(inc);
+            $('#p2').text('验证失败').css("color", "#f00");
+            $('.anthor button').text("返回").css("background", "#ffa21c");
+            clearTimeout(int);
+        }
+    });
+}
+
+function timeOutFunc2(){
+    $.ajax({
+        type: "POST",
+        url: "/account",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(PortalData()),
+        dataType: "json",
+        success: function (data) {
+            clearInterval(inc);
+            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+            window.location.href = "http://www.bidongwifi.com";
+        },
+        statusCode: {
+            435: function() {
+                clearInterval(inc);
+                $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
+                window.location.href = "http://www.bidongwifi.com";
+            }
+        },
+        error: function(error){
+            console.log(error.status);
+            clearInterval(inc);
+            $('#p2').text('验证失败').css("color", "#f00");
+            $('.anthor button').text("返回").css("background", "#ffa21c");
+            clearTimeout(int);
+        }
+    });
+}
+
+function increFunc(){
+    var d = $('#p1 span').text();
+    d++;
+    $('#p1 span').text(d);
+}
+
+function delayAnthor(){
+    var d = $('#p3 span').text();
+    var t = setTimeout(delayAnthor, 1000);
+    if(d<1){
+        d--;
+        $('#p3 span').text(d);
+    }else{
+        clearInterval(t);
+        window.location.href = "http://www.bidongwifi.com";
+    }
+}
+
 function showError(msg){
+    $('.errorMsg').remove();
     var original = $(document.body);
     var h = '<div class="errorMsg">'+msg+'</div>';
-    $('.errorMsg').remove();
     original.append(h);
+
+    setTimeout(function(){
+        $('.errorMsg').fadeOut(300, function(){
+            $(this).remove();
+        })
+    }, 5000);
 }
 
 function PortalData(){
