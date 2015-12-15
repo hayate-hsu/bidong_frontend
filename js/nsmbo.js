@@ -99,6 +99,7 @@ $(function(){
     var int, inc;
     $('.ns_header button').click(function(){
         var $this=$(this);
+        var firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
 
         $('.anthor').fadeIn();
         $('body').css("overflow-y", "hidden");
@@ -106,7 +107,7 @@ $(function(){
         $('.anthor button').text("取消验证").css("background", "#6fccf7");
 
         inc = setInterval(increFunc, 1000);
-        
+
         $.ajax({
             type: "POST",
             url: "/account",
@@ -116,16 +117,20 @@ $(function(){
             success: function (data) {
                 clearInterval(inc);
                 $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-                window.location.href = "http://www.bidongwifi.com";
+                window.location.href = urlChange(firsturl, urlparam);
             },
             statusCode: {
                 435: function() {
                     clearInterval(inc);
                     $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-                    window.location.href = "http://www.bidongwifi.com";
+                    window.location.href = urlChange(firsturl, urlparam);
                 },
                 436: function() {
-                    int = setTimeout(timeOutFunc, 3000);
+                    int = setTimeout(function(url, param){
+                        return function(){
+                            timeOutFunc(url, param);
+                        }
+                    }(firsturl, urlparam), 3000);
                 }
             },
             error: function(error){
@@ -147,7 +152,9 @@ $(function(){
     });
 });
 
-function timeOutFunc(){
+function timeOutFunc(url, param){
+    console.log(urlChange(url, param));
+
     $.ajax({
         type: "POST",
         url: "/account",
@@ -157,16 +164,20 @@ function timeOutFunc(){
         success: function (data) {
             clearInterval(inc);
             $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-            window.location.href = "http://www.bidongwifi.com";
+            window.location.href = urlChange(url, param);
         },
         statusCode: {
             435: function() {
                 clearInterval(inc);
                 $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-                window.location.href = "http://www.bidongwifi.com";
+                window.location.href = urlChange(url, param);
             },
             436: function() {
-                int = setTimeout(timeOutFunc2, 3000);
+                int = setTimeout(function(url, param){
+                    return function(){
+                        timeOutFunc2(url, param);
+                    }
+                }(url, param), 3000);
             }
         },
         error: function(error){
@@ -179,7 +190,9 @@ function timeOutFunc(){
     });
 }
 
-function timeOutFunc2(){
+function timeOutFunc2(url, param){
+    console.log(urlChange(url, param));
+
     $.ajax({
         type: "POST",
         url: "/account",
@@ -189,13 +202,13 @@ function timeOutFunc2(){
         success: function (data) {
             clearInterval(inc);
             $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-            window.location.href = "http://www.bidongwifi.com";
+            window.location.href = urlChange(url, param);
         },
         statusCode: {
             435: function() {
                 clearInterval(inc);
                 $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-                window.location.href = "http://www.bidongwifi.com";
+                window.location.href = urlChange(url, param);
             }
         },
         error: function(error){
@@ -224,6 +237,12 @@ function delayAnthor(){
         clearInterval(t);
         window.location.href = "http://www.bidongwifi.com";
     }
+}
+
+function urlChange(url, param){
+    var reurl = '';
+    param=='' ? reurl=url : reurl=url+'?'+param;
+    return reurl;
 }
 
 function showError(msg){
