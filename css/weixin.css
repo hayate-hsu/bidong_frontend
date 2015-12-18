@@ -52,8 +52,8 @@ input.green, .green{ background:#65bc22;}
 }
 .wlist{
 	background:#fff;
-	border-top:1px solid #d9d9d9;
-	border-bottom:1px solid #d9d9d9;
+	/*border-top:1px solid #d9d9d9;*/
+	/*border-bottom:1px solid #d9d9d9;*/
 	margin-bottom:15px;
 }
 .wlist li{ 
@@ -163,10 +163,43 @@ input.green, .green{ background:#65bc22;}
 	
 }
 .wbox .wlist{ margin-top:0; border:none; margin:0;}
+
+.fweb{
+    box-sizing: border-box;
+    background: #fff;
+    padding: 6px;
+    /*border-top: 1px solid #d9d9d9;*/
+    /*border-bottom: 1px solid #d9d9d9;*/
+    margin-bottom: 15px;
+    display: -webkit-box;
+}
+.fweb div{
+    text-align: center;
+    -webkit-box-flex: 1;
+}
+.fweb a{
+    display: block;
+    font-size: 1.3rem;
+    padding: 6px;
+}
+.fweb a:hover{ background: #f2f2f2;}
+.fweb a i{
+    background: url("../images/websiteIco.png") no-repeat;
+    background-size: 45px;
+    margin: 0 auto 6px;
+    width: 45px;
+    height: 45px;
+    display: block;
+}
+.fweb a.web_baidu i{ background-position: 0 0;}
+.fweb a.web_wangyi i{ background-position: 0 -45px;}
+.fweb a.web_taobao i{ background-position: 0 -90px;}
+.fweb a.web_jd i{ background-position: 0 -135px;}
+
 .wbox{
 	background:#fff;
-	border-top:1px solid #d9d9d9;
-	border-bottom:1px solid #d9d9d9;
+	/*border-top:1px solid #d9d9d9;*/
+	/*border-bottom:1px solid #d9d9d9;*/
 	margin-bottom:15px;
 	position:relative;
 }

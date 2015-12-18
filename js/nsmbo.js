@@ -98,7 +98,6 @@ $(function(){
     //新版portal认证
     var int, inc;
     $('.ns_header button').click(function(){
-        var $this=$(this);
         var firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
 
         $('.anthor').fadeIn();

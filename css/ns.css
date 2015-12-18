@@ -7,12 +7,222 @@
 body {
   font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
   font-size: 16px;
-  background: #f5f5f5 url("../images/nsimgs/nsbg.jpg") top center no-repeat;
   color: #333;
+    background: #f5f5f5;
 }
-li {
-  list-style: none;
+li { list-style: none;}
+a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; outline: none;}
+
+/****-新版南沙区无线城市web版-begin-****/
+.ns_banner{
+    background: url("../images/nsimgs/banner_web.jpg") top center no-repeat;
+    height: 320px;
+    margin-bottom: 12px;
 }
+.ns_wrapper{
+    width: 1002px;
+    margin: 0 auto;
+}
+.ns_notice{
+    border: 1px solid #bed6ef;
+    position: relative;
+    background: #fff;
+}
+.ns_notice span{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    background: #418ce6;
+    width: 96px;
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+}
+.ns_notice span i{
+    background: url("../images/nsimgs/ns_sprites.png") 0 0 no-repeat;
+    width: 20px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: -2px 10px 0 15px;
+}
+.ns_notice p{
+    font-size: 14px;
+    line-height: 25px;
+    color: #444;
+    padding: 40px 20px 10px;
+    text-indent: 32px;
+}
+.ns_dw{ height: 100px;}
+.ns_authen{
+    margin-top: 10px;
+    overflow: hidden;
+}
+.ns_authen h3{
+    font-size: 18px;
+    font-weight: bold;
+    background: url("../images/nsimgs/bg_shadow.jpg") top center no-repeat;
+    height: 67px;
+    line-height: 67px;
+    text-align: center;
+}
+.ns_authen h4{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.ns_authen p, .ns_app li{
+    line-height: 25px;
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+}
+.ns_app, .ns_admin, .ns_yjsw{
+    float: left;
+    border: 1px solid #eaeaea;
+    height: 284px;
+    background: #fff;
+    width: 300px;
+}
+.ns_app .ns_box, .ns_admin .ns_box, .ns_yjsw .ns_box{ padding-top: 26px;}
+.ns_app{
+    width: 365px;
+    margin-right: 16px;
+}
+.ns_app h4{ color: #e39b00;}
+.ns_app .ns_box{
+    width: 284px;
+    margin: 0 auto;
+}
+.ns_app a{
+    width: 248px;
+    height: 40px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 auto;
+    transition: background 0.2s ease-in;
+
+    background: #e3a91c;
+    border-radius: 20px;
+    border-bottom: 3px solid #cb9719;
+}
+.ns_app a:hover{ background: #f7b81e;}
+.ns_app a span{ font-size: 12px;}
+.ns_app li{
+    background: url("../images/nsimgs/ns_sprites.png") 0 -15px no-repeat;
+    text-indent: 15px;
+}
+.ns_admin .ns_box{
+    width: 230px;
+    margin: 0 auto;
+}
+.ns_group{
+    border: 1px solid #eaeaea;
+    width: 228px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.ns_group label{
+    font-size: 14px;
+    font-weight: bold;
+    color: #a0a0a0;
+    padding-left: 5px;
+    width: 50px;
+    float: left;
+}
+.ns_group .ns_txt, .ns_group .ns_pwd{
+    outline: none;
+    height: 28px;
+    width: 165px;
+    border: none;
+    background: none;
+    float: left;
+}
+.ns_group .ns_pwd{
+    width: 120px;
+}
+.ns_group button{
+    float: right;
+    width: 48px;
+    height: 28px;
+    background: #acbdd1;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease-in;
+}
+.ns_group button:hover{ background: #429fff;}
+.ns_yjsw{ float: right;}
+.ns_yjsw h4{ color: #2d90ff;}
+.ns_yjsw .ns_box{
+    width: 220px;
+    margin: 0 auto;
+}
+.ns_yjsw button{
+    width: 220px;
+    height: 40px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 auto;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    background: #2d90ff;
+    border-radius: 20px;
+    border-bottom: 3px solid #267bda;
+}
+.ns_yjsw button:hover{ background: #429fff;}
+.ns_ad{ margin-top: 10px;}
+.ns_footer{
+    margin-top: 60px;
+    height: 143px;
+    background: #fff;
+    text-align: center;
+}
+.ns_footer div{ padding-top: 30px;}
+.ns_footer p{
+    font-size: 14px;
+    color: #555;
+    line-height: 24px;
+}
+.ns_dialog{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -70px;
+    margin-left: -250px;
+    width: 500px;
+    background: #fff;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, 0.3);
+    padding: 30px 20px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    display: none;
+}
+.ns_dialog button{
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    background: #2d90ff;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+/****-新版南沙区无线城市web版-end-****/
+
 .ipubtn {
   background: #1bbc9b;
   width: 74px;

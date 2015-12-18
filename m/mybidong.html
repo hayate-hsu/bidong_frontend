@@ -18,55 +18,43 @@
                 <a href="/holder/${user}?token=${token}">
                 % endif
                 	<img src="/images/face.jpg" class="wshort" />
-                    <div class="wtext">
+                    <div class="wtext" style="padding: 19px 0;">
                     	<h1>${user}<!--<em>(租客)</em>--></h1>
                     </div>
                     % if mask>>3 & 1:
 					<span>房东管理</span>
 				</a>
                     % endif
-            </li>
-        </ul>
-        
-        <ul class="wlist">
-        	<li class="wmid">
-            	<a href="#">
-                	<img src="/images/ico003.png" />
-                    <div class="wtext">
-                    	<h1>壁咚WIFI</h1>
-                        <p>28/40</p>
-                    </div>
-                    <span>已连接</span>
-                </a>
-                <!--<a href="#" class="werror">-->
-                    <!--<div class="wtext">-->
-                        <!--<h1><em>!</em>检测到未连接BIDONG</h1>-->
-                    <!--</div>-->
-                    <!--<span>未连接</span>-->
-                <!--</a>-->
                 <div class="line"></div>
             </li>
             <li class="wmid">
-            	<div class="notlink">
-                	<img src="/images/ico004.png" />
+                <div class="notlink">
+                    <img src="/images/ico004.png" />
                     <div class="wtext">
-                    	<h1>当前咚币</h1>
+                        <h1>当前咚币</h1>
                         <p>${coin}</p>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="line"></div>
             </li>
             <li class="wmid">
-            	<div class="notlink">
-                	<img src="/images/ico005.png" />
+                <div class="notlink">
+                    <img src="/images/ico005.png" />
                     <div class="wtext">
-                    	<h1>可上网时间</h1>
+                        <h1>可上网时间</h1>
                         <p>${days}天 + ${hours}</p>
                     </div>
                     <a href="/getdbi.html?user=${user}&token=${token}" class="btn wbtn">增加时间</a>
                 </div>
             </li>
         </ul>
+
+        <div class="fweb">
+            <div><a href="https://m.baidu.com" class="web_baidu"><i></i>百度</a></div>
+            <div><a href="http://3g.163.com/touch/" class="web_wangyi"><i></i>网易</a></div>
+            <div><a href="https://m.taobao.com/#index" class="web_taobao"><i></i>淘宝</a></div>
+            <div><a href="http://m.jd.com/" class="web_jd"><i></i>京东</a></div>
+        </div>
         
         <div class="wbox pdg15">
         	<p class="wp">家用电脑上网指南</p>
