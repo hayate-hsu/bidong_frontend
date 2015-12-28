@@ -2,68 +2,135 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>壁咚WiFi</title>
-    <script type="text/javascript" src="/js/html5shiv.js"></script>
-    <link rel="stylesheet" href="/css/weixin.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <title>南沙区无线城市</title>
+    <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/msg.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/login.js"></script>
+    <script type="text/javascript" src="/js/nsmbo.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="banner">
-            <div class="toplg"><img src="/images/bdwxlogo.png" /></div>
-            <img src="/images/adv02.jpg" />
-        </div>
+    <input type="hidden" id="user" value="${user}" />
+    <input type="hidden" id="password" value="${password}" />
+    <input type="hidden" id="openid" value="${openid}" />
+    <input type="hidden" id="ac_ip" value="${ac_ip}" />
+    <input type="hidden" id="vlanId" value="${vlan}" />
+    <input type="hidden" id="ssid" value="${ssid}" />
+    <input type="hidden" id="user_ip" value="${user_ip}" />
+    <input type="hidden" id="user_mac" value="${user_mac}" />
+    <input type="hidden" id="ap_mac" value="${ap_mac}" />
+    <input type="hidden" id="firsturl" value="${firsturl}" />
+    <input type="hidden" id="urlparam" value="${urlparam}" />
 
-        <p class="tiptitle">更多上网方式</p>
-        <div class="wbox">
-            <ul>
-                <li class="wbord"><input type="text" class="iputxt" placeholder="输入门牌号/其他上网账号" name="user" id="user" /></li>
-                <li class="wbord"><input type="password" class="iputxt" placeholder="输入密码" name="password" id="password" /></li>
-            </ul>
-                <input type="hidden" id="openid" value="${openid}" />
-                <input type="hidden" id="ac_ip" value="${ac_ip}" />
-                <input type="hidden" id="vlanId" value="${vlan}" />
-                <input type="hidden" id="ssid" value="${ssid}" />
-                <input type="hidden" id="user_ip" value="${user_ip}" />
-                <input type="hidden" id="user_mac" value="${user_mac}" />
-                <input type="hidden" id="ap_mac" value="${ap_mac}" />
-                <input type="hidden" id="firsturl" value="${firsturl}" />
-                <input type="hidden" id="urlparam" value="${urlparam}" />
-            <div class="fulline">
-                <input type="submit" value="验证" class="subbtn" id="sublogin" />
-            </div>
-        </div>
-
-        <p class="tiptitle">上网说明</p>
-        <div class="wbox" style="margin-bottom: 0;">
-            <h3><span>微信上网：</span>关注微信就送免费上网</h3>
-            <div class="info">
-                <img src="/images/ewm02.png" width="81" height="81" style="float:left;" />
-                <p>1. 关注官方微信公众号</p><em>搜索：<span>壁咚WiFi</span></em><p class="lineheight44">2. 点击<span>一键上网</span></p><p>3. 开始愉快的上网咯~</p>
-            </div>
-        </div>
-        <div class="wbox" style="border-top:0;">
-            <h3><span>租户上网（仅限壁咚WiFi已覆盖楼体）:</span><br>可向房东索要密码</h3>
-            <div style="padding: 15px;"><img src="/images/sample.png" class="sample" /></div>
-        </div>
+    <div class="anthor">
+        <div><p id="p2">正在验证，请耐心等待...</p><p id="p1">用时：<span>0</span>秒</p></div>
+        <button type="button">取消验证</button>
     </div>
 
-    <div class="loading">
-        <div class="move">
-            <div class="clouds"></div>
-            <div class="bidong"></div>
-        </div>
-        <section>
-            <div id="content">
-                <div class="expand"><span id="count">0%</span></div>
+    <div class="ns_header">
+        <img src="/images/nsimgs/bg.jpg" class="ns_bg" />
+        <button type="button" onclick="callWechatBrowser()">一键试用</button>
+        <div>南横村</div>
+    </div>
+
+    <div class="ns_box">
+        <a href="javascript:;">
+            <h3>自贸区APP验证</h3>
+            <ul>
+                <li>安装即可上网,免注册,全区无感漫游，优先接入，速度更快</li>
+                <li>政务信息早知道，南沙办事一键通</li>
+            </ul>
+        </a>
+        <div class="ns_rz">
+            <h3>账户认证</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group"><div><input type="text" placeholder="账号/手机号：" class="ns_admin" /></div></div>
+                <p>* 您可以使用手机认证或获得的相应账号密码进行登录</p>
             </div>
-        </section>
-        <p>壁咚君正在为您连接网络，请耐心等待...</p>
+        </div>
     </div>
 </body>
+
+<script type="text/javascript">
+    var loadIframe = null;
+    var noResponse = null;
+    var callUpTimestamp = 0;
+
+    function putNoResponse(ev){
+        clearTimeout(noResponse);
+    }
+
+    function errorJump()
+    {
+        var now = new Date().getTime();
+        if((now - callUpTimestamp) > 4*1000){
+            return;
+        }
+        alert('该浏览器不支持自动跳转微信请手动打开微信\n如果已跳转请忽略此提示');
+    }
+
+    myHandler = function(error) {
+        errorJump();
+    };
+
+    function createIframe(){
+        var iframe = document.createElement("iframe");
+        iframe.style.cssText = "display:none;width:0px;height:0px;";
+        document.body.appendChild(iframe);
+        loadIframe = iframe;
+    }
+
+    function jsonpCallback(result){
+        if(result && result.success){
+            alert('WeChat will call up : ' + result.success + '  data:' + result.data);
+            var ua=navigator.userAgent;
+            if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone
+                document.location = result.data;
+            }else{
+                createIframe();
+                callUpTimestamp = new Date().getTime();
+                loadIframe.src=result.data;
+                noResponse = setTimeout(function(){
+                    errorJump();
+                },3000);
+            }
+        }else if(result && !result.success){
+            alert(result.data);
+        }
+    }
+    function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, mac, ssid, bssid){
+        var url = "https://wifi.weixin.qq.com/operator/callWechatBrowser.xhtml?appId=" + appId
+                + "&extend=" + extend
+                + "&timestamp=" + timestamp
+                + "&sign=" + sign;
+
+        if(authUrl && shopId){
+            url = "https://wifi.weixin.qq.com/operator/callWechat.xhtml?appId=" + appId
+            + "&extend=" + extend
+            + "&timestamp=" + timestamp
+            + "&sign=" + sign
+            + "&shopId=" + shopId
+            + "&authUrl=" + encodeURIComponent(authUrl)
+            + "&mac=" + mac
+            + "&ssid=" + ssid
+            + "&bssid=" + bssid;
+
+        }
+
+        var script = document.createElement('script');
+        script.setAttribute('src', url);
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+</script>
+<script type="text/javascript">
+    function callWechatBrowser(){
+        Wechat_GotoRedirect('wxa7c14e6853105a84', '${extend}', '${timestamp}', '${sign}', '4873033', '${authUrl}', '${user_mac}', 'BD_ZF', '${ap_mac}');
+    }
+</script>
+<script type="text/javascript">
+    document.addEventListener('visibilitychange', putNoResponse, false);
+</script>
+
 </html>
