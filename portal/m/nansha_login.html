@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta content="telephone=no" name="format-detection">
     <title>南沙区无线城市</title>
     <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
@@ -30,30 +31,106 @@
 
     <div class="ns_header">
         <img src="/images/nsimgs/bg.jpg" class="ns_bg" />
-        <button type="button">一键试用</button>
+        <button type="button" onclick="callWechatBrowser()">一键试用</button>
         <div>南横村</div>
     </div>
-    <img src="/images/nsimgs/banner.png" class="ns_banner" />
 
     <div class="ns_box">
-        <div>
-            <h3>南沙通APP认证 <span>(10.2MB 免流量)</span></h3>
+        <a href="javascript:;">
+            <h3>自贸区APP验证</h3>
             <ul>
-                <li>免注册，全区wifi直连,上网优先，速度更快</li>
-                <li>政务信息早知道</li>
-                <li>南沙办事一键通<span>附近有30人正在使用</span></li>
+                <li>安装即可上网,免注册,全区无感漫游，优先接入，速度更快</li>
+                <li>政务信息早知道，南沙办事一键通</li>
             </ul>
+        </a>
+        <div class="ns_rz">
+            <h3>账户认证</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group"><div><input type="text" placeholder="账号/手机号：" class="ns_admin" /></div></div>
+                <p>* 您可以使用手机认证或获得的相应账号密码进行登录</p>
+            </div>
         </div>
-        <button type="button" class="ns_weixin_btn"><i></i>微信认证</button>
-        <button type="button" class="ns_admin_btn"><i></i>账户认证</button>
-    </div>
-
-    <div class="ns_login_wrapper"><i id="closed"></i>
-        <div class="ns_login"><i></i>
-            <div class="ns_group">账号：<div><input type="text" placeholder="请向房东提取登录账户输入" onfocus="this.style.color='#fff'" /></div></div>
-            <div class="ns_group">密码：<div><input type="password" placeholder="请向房东提取登录密码输入" onfocus="this.style.color='#fff'" /></div></div>
-        </div>
-        <button type="button" id="login">安全登录</button>
     </div>
 </body>
+
+<script type="text/javascript">
+    var loadIframe = null;
+    var noResponse = null;
+    var callUpTimestamp = 0;
+
+    function putNoResponse(ev){
+        clearTimeout(noResponse);
+    }
+
+    function errorJump()
+    {
+        var now = new Date().getTime();
+        if((now - callUpTimestamp) > 4*1000){
+            return;
+        }
+        alert('该浏览器不支持自动跳转微信请手动打开微信\n如果已跳转请忽略此提示');
+    }
+
+    myHandler = function(error) {
+        errorJump();
+    };
+
+    function createIframe(){
+        var iframe = document.createElement("iframe");
+        iframe.style.cssText = "display:none;width:0px;height:0px;";
+        document.body.appendChild(iframe);
+        loadIframe = iframe;
+    }
+
+    function jsonpCallback(result){
+        if(result && result.success){
+            alert('WeChat will call up : ' + result.success + '  data:' + result.data);
+            var ua=navigator.userAgent;
+            if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone
+                document.location = result.data;
+            }else{
+                createIframe();
+                callUpTimestamp = new Date().getTime();
+                loadIframe.src=result.data;
+                noResponse = setTimeout(function(){
+                    errorJump();
+                },3000);
+            }
+        }else if(result && !result.success){
+            alert(result.data);
+        }
+    }
+    function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, mac, ssid, bssid){
+        var url = "https://wifi.weixin.qq.com/operator/callWechatBrowser.xhtml?appId=" + appId
+                + "&extend=" + extend
+                + "&timestamp=" + timestamp
+                + "&sign=" + sign;
+
+        if(authUrl && shopId){
+            url = "https://wifi.weixin.qq.com/operator/callWechat.xhtml?appId=" + appId
+            + "&extend=" + extend
+            + "&timestamp=" + timestamp
+            + "&sign=" + sign
+            + "&shopId=" + shopId
+            + "&authUrl=" + encodeURIComponent(authUrl)
+            + "&mac=" + mac
+            + "&ssid=" + ssid
+            + "&bssid=" + bssid;
+
+        }
+
+        var script = document.createElement('script');
+        script.setAttribute('src', url);
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+</script>
+<script type="text/javascript">
+    function callWechatBrowser(){
+        Wechat_GotoRedirect('wxa7c14e6853105a84', '${extend}', '${timestamp}', '${sign}', '4873033', '${authUrl}', '${user_mac}', 'NanSha_City', '${ap_mac}');
+    }
+</script>
+<script type="text/javascript">
+    document.addEventListener('visibilitychange', putNoResponse, false);
+</script>
+
 </html>

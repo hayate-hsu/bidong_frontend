@@ -171,11 +171,12 @@ input.green, .green{ background:#65bc22;}
     /*border-top: 1px solid #d9d9d9;*/
     /*border-bottom: 1px solid #d9d9d9;*/
     margin-bottom: 15px;
-    display: -webkit-box;
+    overflow: hidden;
 }
-.fweb div{
+.fweb li{
     text-align: center;
-    -webkit-box-flex: 1;
+    float: left;
+    width: 33%;
 }
 .fweb a{
     display: block;
@@ -183,9 +184,7 @@ input.green, .green{ background:#65bc22;}
     padding: 6px;
 }
 .fweb a:hover{ background: #f2f2f2;}
-.fweb a i{
-    background: url("../images/websiteIco.png") no-repeat;
-    background-size: 45px;
+.fweb a img{
     margin: 0 auto 6px;
     width: 45px;
     height: 45px;
