@@ -97,7 +97,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     background: #fff;
     width: 360px;
 }
-.ns_app .ns_box, .ns_admin .ns_box, .ns_yjsw .ns_box{
+.ns_app .ns_box, .ns_admin .ns_box{
     padding-top: 34px;
     text-align: center;
 }

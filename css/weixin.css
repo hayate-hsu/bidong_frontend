@@ -189,6 +189,8 @@ input.green, .green{ background:#65bc22;}
     width: 45px;
     height: 45px;
     display: block;
+	border: 0;
+	/*-webkit-tap-highlight-color:transparent;*/
 }
 .fweb a.web_baidu i{ background-position: 0 0;}
 .fweb a.web_wangyi i{ background-position: 0 -45px;}

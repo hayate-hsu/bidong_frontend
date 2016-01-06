@@ -1,47 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>南沙区无线城市</title>
-    <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
+    <link rel="stylesheet" type="text/css" href="/css/ns.css">
+    <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/nsmbo.js"></script>
 </head>
 
 <body>
-    <div class="anthor">
-        <div><p id="p2">正在验证，请耐心等待...</p><p id="p1">用时：<span>0</span>秒</p></div>
-        <button type="button">取消验证</button>
+    <div class="ns_banner"></div>
+
+    <div class="ns_wrapper">
+        <div class="ns_notice">
+            <span><i></i>公告</span>
+            <p>南沙福利来啦，由国家平台物联网开发的无线wifi南沙通APP正式上线，南沙通APP致力于方便快捷人们的网络生活，摆脱穿插在城市之间的繁杂网线让城市居民真正体验到在哪儿都能上网，无需再担心巨额的超时流量，随时随地轻松上网。南沙通APP特点：免注册，全区wifi直连，上网优先，速度更快政务信息早知道，南沙办事一键通。</p>
+        </div>
+
+        <div class="ns_authen">
+            <div class="ns_app">
+                <h3>APP认证上网</h3>
+                <div class="ns_box">
+                    <button type="button">自贸通APP</button>
+                    <div class="ns_appnote">
+                        <a href="javascript:;">自贸通APP</a>
+                        <ul>
+                            <li>安装即可上,上网免注册,全区无感漫游，优先接入，速度更快</li>
+                            <li>政务信息早知道，南沙办事一键通</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box">
+                    <p class="in">* 您可以使用手机认证或获得的相应账号密码进行登录</p>
+                    <div class="ns_group">
+                        <label>账号/手机号：</label>
+                        <input type="text" id="ns_txt" />
+                    </div>
+                    <div class="ns_group ns_pwd ns_ani">
+                        <label>输入密码：</label>
+                        <input type="password" id="ns_pwd" />
+                    </div>
+                    <div class="ns_group ns_yzm ns_ani">
+                        <label>输入验证码：</label>
+                        <input type="text" id="ns_yzm" />
+                        <button type="button" id="yzm">获取验证码</button>
+                    </div>
+                    <input type="button" value="登录" class="ns_login ns_ani" id="ns_login" />
+                </div>
+            </div>
+            <div class="ns_yjsw">
+                <h3>微信扫一扫上网</h3>
+                <div class="ns_box">
+                    <div class="main__content">
+                        <div class="main__content-qrcode" style="width: 170px; margin: 20px auto; text-align: center; position: relative; padding: 0; border: none;">
+                            <img src="/images/ewm02.png" width="170" height="170" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <img src="/images/nsimgs/ad1.jpg" width="1002" height="342" class="ns_ad" />
+        <img src="/images/nsimgs/ad2.png" width="1002" height="376" class="ns_ad" />
     </div>
 
-    <div class="ns_header">
-        <img src="/images/nsimgs/bg.jpg" class="ns_bg" />
-        <button type="button" disabled>一键试用</button>
-        <div>南横村</div>
-    </div>
-    <img src="/images/nsimgs/banner.png" class="ns_banner" />
-
-    <div class="ns_box">
+    <div class="ns_footer">
         <div>
-            <h3>南沙通APP认证 <span>(10.2MB 免流量)</span></h3>
-            <ul>
-                <li>免注册，全区wifi直连,上网优先，速度更快</li>
-                <li>政务信息早知道</li>
-                <li>南沙办事一键通<span>附近有30人正在使用</span></li>
-            </ul>
+            <p>ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心</p>
+            <p>地址：广州市南沙区环市大道南2号南沙资讯科技园香港科大霍英东研究院科技楼三楼</p>
+            <p>电话：+86-20-39393309　邮箱：bidong@niot.cn</p>
         </div>
-        <button type="button" class="ns_weixin_btn" disabled><i></i>微信认证</button>
-        <button type="button" class="ns_admin_btn" disabled><i></i>账户认证</button>
-    </div>
-
-    <div class="ns_login_wrapper"><i id="closed"></i>
-        <div class="ns_login"><i></i>
-            <div class="ns_group">账号：<div><input type="text" placeholder="请向房东提取登录账户输入" onfocus="this.style.color='#fff'" /></div></div>
-            <div class="ns_group">密码：<div><input type="password" placeholder="请向房东提取登录密码输入" onfocus="this.style.color='#fff'" /></div></div>
-        </div>
-        <button type="button" id="login">安全登录</button>
     </div>
 </body>
 </html>

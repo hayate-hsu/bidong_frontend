@@ -31,22 +31,7 @@ input::-webkit-input-placeholder{
 }
 
 /* 新版南沙区无线城市-begin- */
-.ns_header{
-    position: relative;
-    margin-bottom: 15px;
-}
-.ns_header button{
-    background: url("../images/nsimgs/btn.png") 0 0 no-repeat;
-    width: 72px;
-    height: 72px;
-    background-size: 72px;
-    color: #fff;
-    font-size: 1.4rem;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    margin-left: -36px;
-}
+.ns_header{ position: relative;}
 .ns_header div{
     background: url("../images/nsimgs/dw_ico.png") no-repeat;
     background-size: 13px;
@@ -63,106 +48,119 @@ input::-webkit-input-placeholder{
     width: 100%;
 }
 .ns_box{
-    padding: 0 18px;
-    margin: 15px 0;
-}
-.ns_box a{
-    background: #ecf3f5;
-    border-radius: 7px;
-    margin-bottom: 18px;
-    display: block;
+    padding: 15px 32px;
+    border-bottom: 2px solid #f5f5f5;
 }
 .ns_box h3{
-    background: #40a4ff;
-    color: #fff;
     font-size: 1.6rem;
-    padding: 12px 0;
-    border-radius: inherit;
-    text-align: center;
-    font-weight: 400;
+    margin-bottom: 15px;
 }
-.ns_box a:hover h3{ background: #289ae9;}
-.ns_box a ul{
-    padding: 14px 3%;
-    color: #9e9e9e;
-    width: 94%;
-}
-.ns_box a li{
-    line-height: 1.5;
-    font-size: 1.4rem;
-    background: url("../images/nsimgs/dot_ico.png") 0 8px no-repeat;
-    background-size: 4px;
-    padding-left: 10px;
-}
-.ns_box div h3{ background: #73ec82;}
-.ns_rz{
-    background: #ecf3f5;
+.ns_box button{
+    padding: 10px 0;
+    width: 100%;
+    color: #fff;
     border-radius: 7px;
-    height: 233px;
+    font-size: 1.6rem;
 }
-.ns_rz .ns_rz_wrapper{
+.ns_box ul{ padding-top: 3px;}
+.ns_box li{
+    background: url("../images/nsimgs/dot_ico.png") 0 7px no-repeat;
+    background-size: 4px;
+    font-size: 1.3rem;
+    color: #9e9e9e;
+    padding-left: 10px;
+    margin-top: 7px;
+}
+#weixinAuthor{
+    padding: 7px 0;
+    background: #2fe033;
+    border-bottom: 2px solid #40c243;
+}
+#weixinAuthor i{
+    background: url("../images/nsimgs/weixin_ico.png") no-repeat;
+    background-size: 33px;
+    width: 33px;
+    height: 27px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 7px;
+}
+#weixinAuthor:hover{
+    background: #2bd330;
+    border-bottom: 2px solid #38bf37;
+}
+#appDownload, .appDownload{
+    background: #51adf1;
+    border-bottom: 2px solid #489bd8;
+}
+#appDownload:hover, .appDownload:hover{
+    background: #43a0de;
+    border-bottom: 2px solid #4595cf;
+}
+.ns_rz_wrapper{
     text-align: center;
     position: relative;
-    padding: 14px 3%;
-    width: 94%;
 }
-.ns_rz .ns_rz_wrapper .ns_rz_group{
-    padding: 2px;
-    background: #fff;
+.ns_rz_wrapper .ns_rz_group{
+    background: #efefef;
     border-radius: 7px;
     box-sizing: border-box;
     display: -webkit-box;
-    margin-bottom: 10px;
     position: relative;
     z-index: 999;
 }
-.ns_rz .ns_rz_wrapper .ns_rz_group div{
-    -webkit-box-flex: 1;
-}
-.ns_rz .ns_rz_wrapper .ns_rz_group input{
+.ns_rz_wrapper .ns_rz_group div{ -webkit-box-flex: 1;}
+.ns_rz_wrapper .ns_rz_group input{
     border-radius: inherit;
-    padding: 12px 0;
+    padding: 14px 0;
     font-size: 1.3rem;
     width: 100%;
     text-indent: 18px;
+    background: none;
 }
-.ns_rz #yzm{
-    padding: 11px 0;
+#yzmMbo{
+    padding: 14px 0;
     color: #fff;
-    font-size: 1.4rem;
+    border-radius: 0;
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
-    background: #83bfde;
+    background: #56aee9;
     width: 81px;
+    font-size: 1.3rem;
 }
-/*.ns_rz #yzm:hover{ background: #56aee9;}*/
-.ns_rz .ns_rz_wrapper .ns_login{
-    padding: 12px 0;
+.ns_rz_wrapper .ns_login_mbo{
+    padding: 11px 0;
     border-radius: 7px;
     background: #fea520;
-    width: 82%;
+    border-bottom: 2px solid #d38b1f;
     color: #fff;
     font-size: 1.6rem;
     position: absolute;
-    top: 124px;
-    left: 9%;
+    top: 112px;
+    left: 0;
+    width: 100%;
     z-index: 997;
     animation: drop_login 0.3s ease-in;
 }
-.ns_rz .ns_rz_wrapper .ns_login:hover{ background: #ed8e11;}
-.ns_rz p{
+.ns_rz_wrapper .ns_login_mbo:hover{
+    background: #ed9a20;
+    border-bottom: 2px solid #d48b1f;
+}
+.ns_rz_wrapper p{
+    margin-top: 7px;
     font-size: 1.3rem;
     color: #9e9e9e;
     text-align: left;
 }
-.ns_rz .ns_rz_wrapper .ns_shuru{
+.ns_rz_wrapper .ns_shuru{
     position: absolute;
-    top: 69px;
-    left: 3%;
-    width: 94%;
+    top: 52px;
+    left: 0;
+    width: 100%;
     z-index: 998;
     animation: drop_rz 0.3s ease-in;
 }
+/*【待定】-begin*/
 .anthor button{
     color: #fff;
     font-size: 1.6rem;
@@ -196,20 +194,18 @@ input::-webkit-input-placeholder{
     background: #6fccf7;
     width: 90%;
 }
+/*【待定】-end*/
 
 /* 新版南沙区无线城市-end- */
 .errorMsg {
-    color: #ef6456;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    height: 30px;
-    line-height: 30px;
+    color: #333;
+    text-indent: 50px;
+    background: #ffdbc8 url('../images/nsimgs/error_ico.png') 16px center no-repeat;
+    background-size: 23px;
+    height: 40px;
+    line-height: 40px;
     animation: dropDown 0.7s linear;
-    z-index: 1001;
+    /*z-index: 1001;*/
 }
 @-webkit-keyframes dropDown {
   0% {
@@ -227,17 +223,17 @@ input::-webkit-input-placeholder{
     }
     100%{
         opacity: 1;
-        top: 69px;
+        top: 52px;
     }
  }
 
 @-webkit-keyframes drop_login {
     0%{
         opacity: 0;
-        top: 69px;
+        top: 52px;
     }
     100%{
         opacity: 1;
-        top: 124px;
+        top: 112px;
     }
  }

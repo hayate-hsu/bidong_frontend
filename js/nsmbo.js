@@ -1,9 +1,82 @@
 /**
  * Created by JavieChan on 2015/7/4.
- * Updatad by JavieChan on 2015/12/23.
+ * Updatad by JavieChan on 2016/1/4.
  */
-$(function(){
 
+//weixin-portal
+var loadIframe = null;
+var noResponse = null;
+var callUpTimestamp = 0;
+
+function putNoResponse(ev){
+    clearTimeout(noResponse);
+}
+
+function errorJump()
+{
+    var now = new Date().getTime();
+    if((now - callUpTimestamp) > 4*1000){
+        return;
+    }
+    alert('该浏览器不支持自动跳转微信请手动打开微信\n如果已跳转请忽略此提示');
+}
+
+myHandler = function(error) {
+    errorJump();
+};
+
+function createIframe(){
+    var iframe = document.createElement("iframe");
+    iframe.style.cssText = "display:none;width:0px;height:0px;";
+    document.body.appendChild(iframe);
+    loadIframe = iframe;
+}
+
+function jsonpCallback(result){
+    if(result && result.success){
+        alert('WeChat will call up : ' + result.success + '  data:' + result.data);
+        var ua=navigator.userAgent;
+        if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone
+            document.location = result.data;
+        }else{
+            createIframe();
+            callUpTimestamp = new Date().getTime();
+            loadIframe.src=result.data;
+            noResponse = setTimeout(function(){
+                errorJump();
+            },3000);
+        }
+    }else if(result && !result.success){
+        alert(result.data);
+    }
+}
+function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, mac, ssid, bssid){
+    var url = "https://wifi.weixin.qq.com/operator/callWechatBrowser.xhtml?appId=" + appId
+            + "&extend=" + extend
+            + "&timestamp=" + timestamp
+            + "&sign=" + sign;
+
+    if(authUrl && shopId){
+        url = "https://wifi.weixin.qq.com/operator/callWechat.xhtml?appId=" + appId
+        + "&extend=" + extend
+        + "&timestamp=" + timestamp
+        + "&sign=" + sign
+        + "&shopId=" + shopId
+        + "&authUrl=" + encodeURIComponent(authUrl)
+        + "&mac=" + mac
+        + "&ssid=" + ssid
+        + "&bssid=" + bssid;
+
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', url);
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+document.addEventListener('visibilitychange', putNoResponse, false);
+
+$(function(){
     //初始化
     orient();
     //禁止横屏
@@ -45,18 +118,18 @@ $(function(){
             $('.ns_rz_wrapper p').fadeIn();
         }else if(/^1\d{10}$/.test(v)){
             $('.ns_rz_wrapper p').fadeOut();
-            var t='<div class="ns_rz_group ns_shuru"><div><input type="text" placeholder="输入验证码：" class="pwd" /></div><button type="button" id="yzm">获取验证码</button></div> <input type="button" value="登录" class="ns_login" />';
+            var t='<div class="ns_rz_group ns_shuru"><div><input type="text" placeholder="输入验证码：" /></div><button type="button" id="yzm">获取验证码</button></div> <input type="button" value="登录" class="ns_login" />';
             $('.ns_rz_wrapper').append(t);
             isyzm = true;
         }else{
             $('.ns_rz_wrapper p').fadeOut();
-            var t='<div class="ns_rz_group ns_shuru"><div><input type="password" placeholder="输入密码：" class="pwd" /></div></div> <input type="button" value="登录" class="ns_login" />';
+            var t='<div class="ns_rz_group ns_shuru"><div><input type="password" placeholder="输入密码：" /></div></div> <input type="button" value="登录" class="ns_login" />';
             $('.ns_rz_wrapper').append(t);
             isyzm = false;
         }
     });
     $(document).on('click', '.ns_login', function(){
-        var admin=$('.ns_admin').val(), pwd=$('.pwd').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
+        var admin=$('.ns_admin').val(), pwd=$('.ns_shuru div input').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
         if(!isyzm){
             var obj = {
                 user: admin,
@@ -68,192 +141,10 @@ $(function(){
 
     //验证码倒计时
     $(document).on('click', '#yzm', function(){
-        $(this).html('倒计时<span>60</span>秒').css('background', '#d4d4d4').attr("disabled", "disabled");
+        $(this).html('倒计时<span>60</span>秒').css('background', '#d8d8d8').attr("disabled", "disabled");
         delayYZM();
     });
-
-    //新版portal认证     【待定】
-    //var int, inc;
-    //$('.ns_header button').click(function(){
-    //    var firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
-    //
-    //    $('.anthor').fadeIn();
-    //    $('body').css("overflow-y", "hidden");
-    //    $('#p2').text("正在验证,请耐心等待...").css("color", "#333");
-    //    $('.anthor button').text("取消验证").css("background", "#6fccf7");
-    //
-    //    inc = setInterval(increFunc, 1000);
-    //
-    //    postAuthor(function() {
-    //        int = setTimeout(function(url, param){
-    //            return function(){
-    //                timeOutFunc(url, param);
-    //            }
-    //        }(firsturl, urlparam), 3000);
-    //    }, firsturl, urlparam);
-    //
-    //    //$.ajax({
-    //    //    type: "POST",
-    //    //    url: "/account",
-    //    //    contentType: "application/json; charset=utf-8",
-    //    //    data: JSON.stringify(PortalData()),
-    //    //    dataType: "json",
-    //    //    success: function (data) {
-    //    //        clearInterval(inc);
-    //    //        $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //    //        window.location.href = urlChange(firsturl, urlparam);
-    //    //    },
-    //    //    statusCode: {
-    //    //        435: function() {
-    //    //            clearInterval(inc);
-    //    //            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //    //            window.location.href = urlChange(firsturl, urlparam);
-    //    //        },
-    //    //        436: function() {
-    //    //            int = setTimeout(function(url, param){
-    //    //                return function(){
-    //    //                    timeOutFunc(url, param);
-    //    //                }
-    //    //            }(firsturl, urlparam), 3000);
-    //    //        }
-    //    //    },
-    //    //    error: function(error){
-    //    //        console.log(error.status);
-    //    //        clearInterval(inc);
-    //    //        $('#p2').text('验证失败').css("color", "#f00");
-    //    //        $('.anthor button').text("返回").css("background", "#ffa21c");
-    //    //        clearTimeout(int);
-    //    //    }
-    //    //});
-    //});
-    //取消验证
-    $('.anthor button').click(function(){       //【待定】
-        clearInterval(inc);
-        $('.anthor').fadeOut();
-        $('#p1 span').text(0);
-        $('body').css("overflow-y", "auto");
-        clearTimeout(int);
-    });
-    //新版end
 });
-
-//一键上网认证
-var inc,int;   //inc:用时计时器， int：timeout   【作用域全局】
-function postAuthor(callback, url, param){                   //【待定】
-    $.ajax({
-        type: "POST",
-        url: "/account",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(PortalData()),
-        dataType: "json",
-        success: function (data) {
-            clearInterval(inc);
-            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-            window.location.href = urlChange(url, param);
-        },
-        statusCode: {
-            435: function() {
-                clearInterval(inc);
-                $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-                window.location.href = urlChange(url, param);
-            },
-            436: callback
-        },
-        error: function(error){
-            console.log(error.status);
-            clearInterval(inc);
-            $('#p2').text('验证失败').css("color", "#f00");
-            $('.anthor button').text("返回").css("background", "#ffa21c");
-            clearTimeout(int);
-        }
-    });
-}
-function timeOutFunc(url, param){   //【待定】
-    postAuthor(function() {
-        int = setTimeout(function(url, param){
-            return function(){
-                timeOutFunc2(url, param);
-            }
-        }(url, param), 3000);
-    }, url, param);
-
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/account",
-    //    contentType: "application/json; charset=utf-8",
-    //    data: JSON.stringify(PortalData()),
-    //    dataType: "json",
-    //    success: function (data) {
-    //        clearInterval(inc);
-    //        $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //        window.location.href = urlChange(url, param);
-    //    },
-    //    statusCode: {
-    //        435: function() {
-    //            clearInterval(inc);
-    //            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //            window.location.href = urlChange(url, param);
-    //        },
-    //        436: function() {
-    //            int = setTimeout(function(url, param){
-    //                return function(){
-    //                    timeOutFunc2(url, param);
-    //                }
-    //            }(url, param), 3000);
-    //        }
-    //    },
-    //    error: function(error){
-    //        console.log(error.status);
-    //        clearInterval(inc);
-    //        $('#p2').text('验证失败').css("color", "#f00");
-    //        $('.anthor button').text("返回").css("background", "#ffa21c");
-    //        clearTimeout(int);
-    //    }
-    //});
-}
-function timeOutFunc2(url, param){   //【待定】
-    postAuthor(function(error){
-        console.log(error.status);
-        clearInterval(inc);
-        $('#p2').text('验证失败').css("color", "#f00");
-        $('.anthor button').text("返回").css("background", "#ffa21c");
-        clearTimeout(int);
-    }, url, param);
-
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/account",
-    //    contentType: "application/json; charset=utf-8",
-    //    data: JSON.stringify(PortalData()),
-    //    dataType: "json",
-    //    success: function (data) {
-    //        clearInterval(inc);
-    //        $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //        window.location.href = urlChange(url, param);
-    //    },
-    //    statusCode: {
-    //        435: function() {
-    //            clearInterval(inc);
-    //            $('#p2').text("验证成功,马上为您跳转！").css("color", "#00a388");
-    //            window.location.href = urlChange(url, param);
-    //        }
-    //    },
-    //    error: function(error){
-    //        console.log(error.status);
-    //        clearInterval(inc);
-    //        $('#p2').text('验证失败').css("color", "#f00");
-    //        $('.anthor button').text("返回").css("background", "#ffa21c");
-    //        clearTimeout(int);
-    //    }
-    //});
-}
-
-//计时器
-function increFunc(){   //【待定】
-    var d = $('#p1 span').text();
-    d++;
-    $('#p1 span').text(d);
-}
 
 //验证码倒计时
 function delayYZM(){
@@ -264,18 +155,14 @@ function delayYZM(){
         $('#yzm span').text(delay);
     }else{
         clearTimeout(t);
-        $('#yzm').html('获取验证码').css('background', '#83bfde').removeAttr("disabled");
+        $('#yzm').html('获取验证码').css('background', '#56aee9').removeAttr("disabled");
     }
 }
 
 //自动跳转
 function urlChange(url, param){
     var reurl = '';
-    if(url=='14.23.62.180:9898/login.html'){
-        reurl = 'http://www.bidongwifi.com';
-    }else{
-        param=='' ? reurl=url : reurl=url+'?'+param;
-    }
+    param=='' ? reurl=url : reurl=url+'?'+param;
     return reurl;
 }
 
@@ -297,7 +184,7 @@ function adminAuthor(obj, firsturl, urlparam){
             $('.ns_login').text('登录').removeAttr('disabled');
         },
         error: function (msg) {
-            showError("连接失败");
+            alert("连接失败");
         }
     });
 }
