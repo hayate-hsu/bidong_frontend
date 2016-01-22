@@ -34,7 +34,7 @@ function createIframe(){
 
 function jsonpCallback(result){
     if(result && result.success){
-        alert('WeChat will call up : ' + result.success + '  data:' + result.data);
+    // alert('WeChat will call up : ' + result.success + '  data:' + result.data);
         var ua=navigator.userAgent;
         if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone
             document.location = result.data;
@@ -105,6 +105,7 @@ $(function(){
             $('body').css('padding-right', '0').removeClass('open');
         }, 150);
     });
+    $(document).on('click', '.ns_download', function(){return false;});
 
     //响应输入框
     $('.ns_group').click(function(){
