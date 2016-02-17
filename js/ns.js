@@ -1,6 +1,6 @@
 /**
  * Created by JavieChan on 2015/7/4.
- * Updated by JavieChan on 2016/1/4.
+ * Updated by JavieChan on 2016/2/16.
  */
 
 //weixin-portal
@@ -141,10 +141,28 @@ $(function(){
     //账户登录验证
     $('#ns_login').click(function(){
         var admin=$('#ns_txt').val(), pwd=$('#ns_pwd').val(), yzm=$('#ns_yzm').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
+        var $openid =  $('#openid').val();
+        var $acip =  $('#ac_ip').val();
+        var $vlanId =  $('#vlanId').val();
+        var $ssid =  $('#ssid').val();
+        var $userip =  $('#user_ip').val();
+        var $usermac =  $('#user_mac').val();
+        var $apmac =  $('#ap_mac').val();
+        var $firsturl =  $('#firsturl').val();
+        var $urlparam =  $('#urlparam').val();
         if(!isyzm){
             var obj = {
                 user: admin,
-                password: pwd
+                password: pwd,
+                openid: $openid,
+                ac_ip: $acip,
+                vlanId: $vlanId,
+                ssid: $ssid,
+                user_ip: $userip,
+                user_mac: $usermac,
+                ap_mac: $apmac,
+                firsturl: $firsturl,
+                urlparam: $urlparam
             };
             adminAuthor(obj, firsturl, urlparam);
         }
@@ -174,9 +192,9 @@ $(function(){
 
     $('#appDownload').click(function(){
         if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-            window.location="https://mail.cstnet.cn/";
+            window.location="https://appsto.re/cn/Gw6Z-.i";
         }else if (browser.versions.android) {
-            window.location="http://www.baidu.com/";
+            window.location="http://wnl.bidongwifi.com:9899/downloads/android/zmt.apk";
         }
     });
 
@@ -203,10 +221,28 @@ $(function(){
     });
     $(document).on('click', '.ns_login_mbo', function(){
         var admin=$('.ns_admin_mbo').val(), pwd=$('.ns_shuru div input').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
+        var $openid =  $('#openid').val();
+        var $acip =  $('#ac_ip').val();
+        var $vlanId =  $('#vlanId').val();
+        var $ssid =  $('#ssid').val();
+        var $userip =  $('#user_ip').val();
+        var $usermac =  $('#user_mac').val();
+        var $apmac =  $('#ap_mac').val();
+        var $firsturl =  $('#firsturl').val();
+        var $urlparam =  $('#urlparam').val();
         if(!isyzm){
             var obj = {
                 user: admin,
-                password: pwd
+                password: pwd,
+                openid: $openid,
+                ac_ip: $acip,
+                vlanId: $vlanId,
+                ssid: $ssid,
+                user_ip: $userip,
+                user_mac: $usermac,
+                ap_mac: $apmac,
+                firsturl: $firsturl,
+                urlparam: $urlparam
             };
             adminAuthorMbo(obj, firsturl, urlparam);
         }
@@ -221,6 +257,7 @@ $(function(){
 
 //账户认证
 function adminAuthor(obj, firsturl, urlparam){
+    console.log(obj);
     $.ajax({
         type: "POST",
         url: "/account",
