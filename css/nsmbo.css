@@ -90,6 +90,13 @@ input::-webkit-input-placeholder{
     border-bottom: 2px solid #38bf37;
 }
 #appDownload, .appDownload{
+    font-size: 1.6rem;
+    padding: 10px 0;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
     background: #51adf1;
     border-bottom: 2px solid #489bd8;
 }
@@ -237,3 +244,168 @@ input::-webkit-input-placeholder{
         top: 112px;
     }
  }
+
+/* 自贸通APP-begin- */
+.app_wrapper div a.app_ios:before, .app_wrapper div a.app_andriod:before, .app_zmq:before, .app_zmq:after{
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+.app_body{
+    position: relative;
+}
+.app_body .bg{
+    background: url("../images/nsimgs/appbg_1x.jpg") no-repeat;
+    background-size: 100%;
+    width: 100%;
+    padding-top: 157%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.app_body .phone{
+    background: url("../images/nsimgs/apphone_1x.png") no-repeat;
+    background-size: 240px;
+    width: 240px;
+    height: 256px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    margin-left: -120px;
+}
+.app_wrapper{
+    padding-top: 30px;
+    text-align: center;
+    color: #fff;
+}
+.app_wrapper .logo{
+    background: url("../images/nsimgs/applogobig_1x.png") no-repeat;
+    background-size: 63px;
+    width: 63px;
+    height: 63px;
+    display: block;
+    margin: 0 auto;
+}
+.app_wrapper h1{
+    font-size: 2rem;
+    font-weight: normal;
+    margin: 18px 0 8px;
+}
+.app_wrapper p{
+    line-height: 1.5;
+    font-size: 1.3rem;
+}
+.app_wrapper div{
+    box-sizing: border-box;
+    margin-top: 18px;
+    overflow: hidden;
+}
+.app_wrapper div a{
+    color: #fff;
+    display: inline-block;
+    width: 41%;
+    height: 42px;
+    line-height: 42px;
+    -webkit-border-radius: 21px;
+    -moz-border-radius: 21px;
+    -o-border-radius: 21px;
+    border-radius: 21px;
+    font-size: 1.6rem;
+}
+.app_wrapper div a.app_ios{
+    background: #f58a8a;
+    border-bottom: 2px solid #ef635c;
+    margin-left: 6%;
+    float: left;
+}
+.app_wrapper div a.app_ios:hover{
+    background: #ff9c9c;
+    border-bottom: 2px solid #f27b7b;
+}
+.app_wrapper div a.app_andriod{
+    background: #4ed754;
+    border-bottom: 2px solid #0ba916;
+    margin-right: 6%;
+    float: right;
+}
+.app_wrapper div a.app_andriod:hover{
+    background: #54e85b;
+    border-bottom: 2px solid #24b521;
+}
+.app_wrapper div a.app_ios:before{
+    background: url("../images/nsimgs/app_sprites.png") 0 -12px no-repeat;
+    background-size: 25px;
+    width: 15px;
+    height: 17px;
+    margin-right: 5px;
+}
+.app_wrapper div a.app_andriod:before{
+    background: url("../images/nsimgs/app_sprites.png") 0 -30px no-repeat;
+    background-size: 25px;
+    width: 15px;
+    height: 18px;
+    margin-right: 5px;
+}
+/*iphone6*/
+@media (min-device-width:375px){
+    .app_body .bg{
+        background: url("../images/nsimgs/appbg_2x.jpg") no-repeat;
+        background-size: 100%;
+        padding-top: 160%;
+    }
+    .app_body .phone{
+        background: url("../images/nsimgs/apphone_2x.png") no-repeat;
+        background-size: 281px;
+        width: 281px;
+        height: 300px;
+        margin-left: -141px;
+    }
+    .app_wrapper .logo{
+        background: url("../images/nsimgs/applogobig_2x.png") no-repeat;
+        background-size: 83px;
+        width: 83px;
+        height: 83px;
+    }
+    /*.app_wrapper h1{ color: #f00;}*/
+    /*.app_wrapper{*/
+        /*padding-top: 10%;*/
+    /*}*/
+    /*.app_wrapper h1{*/
+        /*margin: 10% 0 8%;*/
+    /*}*/
+    /*.app_wrapper div{*/
+        /*margin-top: 10%;*/
+    /*}*/
+}
+/*iphone6plus*/
+@media (min-device-width:414px) and (max-device-width: 667px) and (-webkit-device-pixel-ratio: 3){
+    .app_body .bg{
+        background: url("../images/nsimgs/appbg_3x.jpg") no-repeat;
+        background-size: 100%;
+        padding-top: 160%;
+    }
+    .app_body .phone{
+        background: url("../images/nsimgs/apphone_3x.png") no-repeat;
+        background-size: 314px;
+        width: 314px;
+        height: 341px;
+        margin-left: -157px;
+    }
+    .app_wrapper .logo{
+        background: url("../images/nsimgs/applogobig_3x.png") no-repeat;
+        background-size: 83px;
+    }
+    /*.app_wrapper h1{ color: #0f0;}*/
+    /*.app_wrapper{*/
+        /*padding-top: 10%;*/
+    /*}*/
+    /*.app_wrapper h1{*/
+        /*margin: 5% 0 3%;*/
+    /*}*/
+    /*.app_wrapper div{*/
+        /*margin-top: 5%;*/
+    /*}*/
+}
+/* 自贸通APP-end- */
