@@ -409,3 +409,22 @@ input::-webkit-input-placeholder{
     /*}*/
 }
 /* 自贸通APP-end- */
+
+.wxbug{
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+.wxbug p{
+    color: #fff;
+    font-size: 1.8rem;
+    margin: 0 20px;
+    padding-top: 20%;
+}
+.wxbug p span{
+    color: #EBDB4A;
+}

@@ -20,10 +20,36 @@
             <h1>自贸通APP下载</h1>
             <p>安装即可，免注册上网，全区无感漫游，办事一键通</p>
             <div>
-                <a href="https://appsto.re/cn/Gw6Z-.i" class="app_ios">iOS下载</a>
+                <span id="appDL"><a href="https://appsto.re/cn/Gw6Z-.i" class="app_ios">iOS下载</a></span>
                 <a href="http://wnl.bidongwifi.com:9899/downloads/android/zmt.apk" class="app_andriod">Andriod下载</a>
             </div>
         </div>
     </div>
+    <div class="wxbug" id="wxbug">
+        <p>戳右上角，选择“<span>在Safari中打开</span>”即可完成下载，等你呦！</p>
+    </div>
+    <script type="text/javascript">
+        var browser = {
+            versions: function() {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+                    iPad: u.indexOf('iPad') > -1,
+                    weixin: u.indexOf('MicroMessenger') > -1
+                };
+            }()
+        };
+        if (browser.versions.weixin) {
+            if(browser.versions.ios || browser.versions.iPhone || browser.versions.iPad){
+                document.getElementById('appDL').innerHTML='<a href="javascript:;" class="app_ios" id="appios">iOS下载</a>';
+            }
+        }
+        var appios = document.getElementById("appios");
+        appios.ontouchstart = function(e){
+            document.getElementById('wxbug').style.display='block';
+        };
+    </script>
 </body>
 </html>
