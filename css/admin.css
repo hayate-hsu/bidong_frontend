@@ -123,14 +123,12 @@ section table td{
 	line-height:39px;
     text-align: center;
 }
-section table td:first-child{
-    width: 100px;
-}
+section table td:first-child{ width: 100px;}
 section .ysh{ background: #eaf0ff;}
-section table tr:hover{  background:#fff4b7; }
-section table tr td.fol{  background: #e1e1e8; }
-section td a{  color: #2b77e5;  }
-section td a:hover{  text-decoration: underline;  }
+section table tr:hover{ background:#fff4b7;}
+section table tr td.fol{ background: #e1e1e8;}
+section td a{ color: #2b77e5;}
+section td a:hover{ text-decoration: underline;}
 section td span{
     margin: 0 10px;
     color: #dddddd;
@@ -163,7 +161,7 @@ section .page{
     border-top: none;
     font-size: 18px;
 }
-section .page{  overflow: hidden;  }
+section .page{ overflow: hidden;}
 section .page .fanye {
     font-size: 12px;
     margin-top: 8px;
@@ -180,7 +178,7 @@ section .page .fanye {
     background: transparent;
     color: #000;
 }
-input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.policybtn, input.fmbtn, input.notebtn, input.portal{
+input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.policybtn, input.fmbtn, input.notebtn, input.portal, input.note, input.ssid{
     height: 27px;
     width: 120px;
     text-align: center;
@@ -190,16 +188,14 @@ input.dpicker, input.realnamebtn, input.mobilebtn, input.addressbtn, input.polic
     border: none;
     box-shadow: none;
 }
-input.addressbtn, input.portal{
-    width: 250px;
-}
+input.addressbtn{ width: 250px;}
 .policy{
     width: 120px;
     height: 27px;
     border: none;
 }
 
-footer{  text-align: center;  }
+footer{ text-align: center;}
 
 .room li{
 	float:left;
@@ -291,7 +287,7 @@ footer{  text-align: center;  }
 /*2015-05-26新增*/
 aside, #confirmbox, #msgbox{
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 50%;
     border: 3px solid #5A78B7;
     background: #fff;
@@ -326,14 +322,14 @@ aside, #confirmbox, #msgbox{
     cursor: pointer;
 }
 #asbox h2 span.closed:hover, #asAP p span.closed:hover{  background: #2b77e5;}
-#asbox div{  text-align: center; display: none;  }
+#asbox div{ text-align: center; display: none;}
 #asbox div label{
     width: 76px;
     display: inline-block;
     vertical-align: top;
     text-align: left;
 }
-#asbox li{  margin-bottom: 10px;  }
+#asbox li{ margin-bottom: 10px;}
 .asipu{
     height: 24px;
     border: 1px solid #c4c4c4;
@@ -377,7 +373,7 @@ aside .ipubtn{ margin-top: 10px;}
     margin: 0 auto;
     border-collapse: collapse;
 }
-#asAP td, #asAP th{  line-height: 22px;  }
+#asAP td, #asAP th{ line-height: 22px;}
 /*#asAP tr:hover{  background: #fff4b7; }*/
 
 #confirmbox{
@@ -434,3 +430,4 @@ span.errorMsg em{
     height: 21px;
     margin: 0 3px 0 30px;
 }
+

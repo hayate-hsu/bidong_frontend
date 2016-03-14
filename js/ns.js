@@ -89,23 +89,23 @@ function weixinScan(appId, shopId, extend, authUrl){
 
 $(function(){
     //APP下载
-    $('.ns_app button, .ns_appnote a').click(function(){
-        $('body').css('padding-right', '17px').addClass('open').append('<div class="zhez fade"></div>');
-        $('.ns_modal').fadeIn(150, function(){
-            $(this).addClass('in');
-        });
-        $('.zhez').addClass('in');
-    });
-    $(document).on('click', '.ns_modal, .ns_download .closed', function(){
-        $('.ns_modal').removeClass('in').fadeOut(150);
-
-        $('.zhez').removeClass('in');
-        setTimeout(function(){
-            $('.zhez').remove();
-            $('body').css('padding-right', '0').removeClass('open');
-        }, 150);
-    });
-    $(document).on('click', '.ns_download', function(){return false;});
+    //$('.ns_app button').click(function(){
+    //    $('body').css('padding-right', '17px').addClass('open').append('<div class="zhez fade"></div>');
+    //    $('.ns_modal').fadeIn(150, function(){
+    //        $(this).addClass('in');
+    //    });
+    //    $('.zhez').addClass('in');
+    //});
+    //$(document).on('click', '.ns_modal, .ns_download .closed', function(){
+    //    $('.ns_modal').removeClass('in').fadeOut(150);
+    //
+    //    $('.zhez').removeClass('in');
+    //    setTimeout(function(){
+    //        $('.zhez').remove();
+    //        $('body').css('padding-right', '0').removeClass('open');
+    //    }, 150);
+    //});
+    //$(document).on('click', '.ns_download', function(){return false;});
 
     //响应输入框
     $('.ns_group').click(function(){
@@ -173,28 +173,6 @@ $(function(){
         if(canyzm){
             $(this).html('倒计时<span>60</span>秒').addClass('disabled').attr('disabled', 'disabled');
             delayYZM();
-        }
-    });
-
-    //移动端认证
-    /*智能机浏览器版本信息*/
-    var browser = {
-        versions: function() {
-            var u = navigator.userAgent, app = navigator.appVersion;
-            return {//移动终端浏览器版本信息
-                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-                iPad: u.indexOf('iPad') > -1 //是否iPad
-            };
-        }()
-    };
-
-    $('#appDownload').click(function(){
-        if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-            window.location="https://appsto.re/cn/Gw6Z-.i";
-        }else if (browser.versions.android) {
-            window.location="http://wnl.bidongwifi.com:9899/downloads/android/zmt.apk";
         }
     });
 

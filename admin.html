@@ -58,7 +58,7 @@
                 <!--<td><input type="text" value="小太阳" class="realnamebtn" /><div class="hidden">mask</div></td>-->
                 <!--<td><input type="text" value="15933229588" class="mobilebtn" /></td>-->
                 <!--<td><input type="text" value="广东省广州市南沙区环市大道南2号软件南楼203" class="addressbtn" /></td>-->
-                <!--<td><input type="text" value="2015-04-15" class="dpicker" /></td>-->
+                <!--<td><input type="text" value="2016-03-12 13:50" class="dpicker" /></td>-->
                 <!--<td><a href="javascript:void(0);" class="slideH">展开</a></td>-->
                 <!--<td><a href="javascript:void(0);" class="folH">冻结</a><span>|</span><a href="javascript:void(0);" class="delH">删除</a><span>|</span><a href="javascript:void(0);" class="chbH">审核</a></td>-->
             <!--</tr>-->
@@ -150,9 +150,15 @@
     </aside>
 
     <script type="text/javascript" src="/js/custom.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-timepicker-addon.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.dpicker2').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
+            $('.dpicker2, .dpicker').datetimepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+//                stepHour: 1,
+                stepMinute: 10
+            });
         });
     </script>
 </body>
