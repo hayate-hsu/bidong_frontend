@@ -1,12 +1,13 @@
 /**
  * Created by JaiveChan on 2015/5/12.
+ * Updated by JaiveChan on 2016/3/15.
  */
 
 ;(function($){
     var min = 1, max = 10;
 
     $.fn.extend({
-        add:function(){
+        addTM:function(){
             var obj = this.parent().find('input');
             var x = amount(obj, true);
             $(obj).val(x);
@@ -19,7 +20,7 @@
             //    $(obj).focus();
             //}
         },
-        reduce:function(){
+        reduceTM:function(){
             var obj = this.parent().find('input');
             var x = amount(obj, false);
             if (parseInt(x) >= min) {
@@ -31,7 +32,7 @@
                 $(obj).focus();
             }
         },
-        modify : function(old) {
+        modifyTM : function(old) {
             var x = this.val();
             if (!reg(parseInt(x))) {
                 $.MsgBox.Alert("请输入正确的网络号！");

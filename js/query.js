@@ -170,7 +170,7 @@ $(document).ready(function(e) {
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
 
-        $(this).add();
+        $(this).addTM();
 
         var $ends = $(this).parent().find('input').val();
 
@@ -185,7 +185,7 @@ $(document).ready(function(e) {
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
 
-        $(this).reduce();
+        $(this).reduceTM();
 
         var $ends = $(this).parent().find('input').val();
 
@@ -203,7 +203,7 @@ $(document).ready(function(e) {
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
 
-        $(this).modify($oldend);
+        $(this).modifyTM($oldend);
 
         var $ends = $(this).val();
 
@@ -252,13 +252,13 @@ $(document).ready(function(e) {
 
     //添加房间信息
     $('.addbox .btnadd').click(function(){
-        $(this).add();
+        $(this).addTM();
     });
     $('.addbox .btnreduce').click(function(){
-        $(this).reduce();
+        $(this).reduceTM();
     });
     $('.addbox .JV_Amount').click(function(){
-        $(this).modify();
+        $(this).modifyTM();
     });
     $(document).on('click', '.case', function(){
         var $room = $('#room').val();
@@ -308,7 +308,7 @@ $(document).ready(function(e) {
                     '</td></tr>';
 
                 $('.clientbox table tr:eq(0)').after(h);
-                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
+                $('.datepicker').datetimepicker({dateFormat: 'yy-mm-dd', changeYear: true, stepMinute: 10});
                 $arr = {};
                 $('#room').val("");$('#pwd').val("");$('#pwd').val("");
                 $(this).parent().parent().fadeOut();
@@ -338,7 +338,7 @@ $(document).ready(function(e) {
                                 '</td></tr>';
 
                             $('.clientbox table tr:eq(0)').after(h);
-                            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
+                            $('.datepicker').datetimepicker({dateFormat: 'yy-mm-dd', changeYear: true, stepMinute: 10});
                             $arr = {};
                             $('#room').val("");$('#pwd').val("");
                             t.parent().parent().fadeOut();
@@ -482,12 +482,12 @@ function addData(arr, room, pwd, date, mask, ends){
         if(!(arr[room])){
             arr[room] = {};
             arr[room].password = pwd;
-            arr[room].expire_date = date;
+            arr[room].expired = date;
             arr[room].ends = ends;
             arr[room].mask = parseInt(mask);
         }else{
             arr[room].password = pwd;
-            arr[room].expire_date = date;
+            arr[room].expired = date;
             arr[room].ends = ends;
             arr[room].mask = parseInt(mask);
         }
@@ -495,11 +495,11 @@ function addData(arr, room, pwd, date, mask, ends){
         if(!(arr[room])){
             arr[room] = {};
             arr[room].password = pwd;
-            arr[room].expire_date = date;
+            arr[room].expired = date;
             arr[room].mask = parseInt(mask);
         }else{
             arr[room].password = pwd;
-            arr[room].expire_date = date;
+            arr[room].expired = date;
             arr[room].mask = parseInt(mask);
         }
     }

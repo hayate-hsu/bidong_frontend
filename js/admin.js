@@ -444,7 +444,7 @@ $(document).ready(function(e) {
                         var flag=1, ysh="ysh", fol="";
                         var h = moduleLoad(msg.Ids[0], lxr, lxdh, xxdz, dqsj, 3, flag, ysh, fol, rzym, jffs);
                         $('section:eq(0) table tr:eq(1)').before(h);
-                        $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
+                        $('.dpicker').datetimepicker({dateFormat: 'yy-mm-dd', changeYear: true,stepMinute: 10});
                         $.MsgBox.Alert("添加成功");
                         $('#asbox').hide();unmask("#shade");
                         $('#lxr').val("");$('#lxdh').val("");$('#xxdz').val("");$('#dqsj').val("");$('#rzym').val("");
@@ -669,7 +669,7 @@ $(document).ready(function(e) {
 
 });
 
-function changeData(arr, id, mask, num, idx, menuIndex){    //arr需要提交的数据,   id:房东ID,   num:改动的数据，   idx：改动数据的位置（realname,expored,address）
+function changeData(arr, id, mask, num, idx, menuIndex){    //arr需要提交的数据,   id:房东ID,   num:改动的数据，   idx：改动数据的位置（realname,expired,address）
     var orr = {}, drr = {};
     var flag = true;                       //判断arr中是否存在同一条ID数据的标记
     orr.id = drr.id = id;
@@ -706,7 +706,7 @@ function pushToArr(a,b,i,z){    //b为旧数据，a为新数据, z:头部menu的
                 a.address = b.num;
                 break;
             case 4:
-                a.expored  = b.num;
+                a.expired  = b.num;
                 break;
             case 5:
                 a.portal = b.num;      //认证页面
@@ -747,13 +747,13 @@ function roomData(a){
     return roomObj;
 }
 
-function addHolderData(realname, mobile, address, expored, portal, policy){
+function addHolderData(realname, mobile, address, expired, portal, policy){
     var a = [];
     var holderObj = {
         realname: realname,
         mobile: mobile,
         address: address,
-        expored: expored,
+        expired: expired,
         portal: portal,
         policy: policy
     };
@@ -801,18 +801,18 @@ function shCheckFunc(verifyed, page){
                 var h=t=ysh=fol="";
                 if(verifyed==0){
                     for(var i=0; i<msg.Holders.length; i++){
-                        h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expored, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
+                        h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expired, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                         t += h;
                     }
                 }else{
                     for(var i=0; i<msg.Holders.length; i++){
                         if((msg.Holders[i].mask>>30&1)==0){
                             fol="";
-                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expored, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expired, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                             t += h;
                         }else {
                             fol = "fol";
-                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expored, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
+                            h = moduleLoad(msg.Holders[i].id, msg.Holders[i].realname, msg.Holders[i].mobile, msg.Holders[i].address, msg.Holders[i].expired, msg.Holders[i].mask, verifyed, ysh, fol, msg.Holders[i].portal, msg.Holders[i].policy);
                             t += h;
                         }
                     }
@@ -823,7 +823,7 @@ function shCheckFunc(verifyed, page){
                         $(this).find('input').attr("disabled", "disabled");
                     }
                 });
-                $('.dpicker').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true });
+                $('.dpicker').datetimepicker({dateFormat: 'yy-mm-dd', changeYear: true, stepMinute: 10});
 
                 //pages显示分页
                 if(msg.Pages>0){
