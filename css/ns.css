@@ -24,6 +24,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     height: 320px;
     margin-bottom: 12px;
 }
+.baiyun{ background: url("../images/nsimgs/banner_baiyun.jpg") top center no-repeat;}
 .ns_wrapper{
     width: 1002px;
     margin: 0 auto;
@@ -137,6 +138,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     float: left;
     margin-right: 10px;
 }
+.ns_app .ns_appnote span.baiyun{ background: url("../images/nsimgs/baiyunlogo.png") no-repeat;}
 .ns_app ul{ float: left;}
 .ns_app li{
     background: url("../images/nsimgs/ns_sprites.png") 0 -18px no-repeat;

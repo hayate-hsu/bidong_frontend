@@ -150,6 +150,8 @@ $(function(){
         var $apmac =  $('#ap_mac').val();
         var $firsturl =  $('#firsturl').val();
         var $urlparam =  $('#urlparam').val();
+        var $appid =  $('#appid').val();
+        var $shopid=  $('#shopid').val();
         if(!isyzm){
             var obj = {
                 user: admin,
@@ -162,7 +164,9 @@ $(function(){
                 user_mac: $usermac,
                 ap_mac: $apmac,
                 firsturl: $firsturl,
-                urlparam: $urlparam
+                urlparam: $urlparam,
+                appid: $appid,
+                shopid: $shopid
             };
             adminAuthor(obj, firsturl, urlparam);
         }
@@ -208,6 +212,8 @@ $(function(){
         var $apmac =  $('#ap_mac').val();
         var $firsturl =  $('#firsturl').val();
         var $urlparam =  $('#urlparam').val();
+        var $appid =  $('#appid').val();
+        var $shopid=  $('#shopid').val();
         if(!isyzm){
             var obj = {
                 user: admin,
@@ -220,7 +226,9 @@ $(function(){
                 user_mac: $usermac,
                 ap_mac: $apmac,
                 firsturl: $firsturl,
-                urlparam: $urlparam
+                urlparam: $urlparam,
+                appid: $appid,
+                shopid: $shopid
             };
             adminAuthorMbo(obj, firsturl, urlparam);
         }
@@ -293,6 +301,8 @@ function PortalData(){
     var $apmac =  $('#ap_mac').val();
     var $firsturl =  $('#firsturl').val();
     var $urlparam =  $('#urlparam').val();
+    var $appid =  $('#appid').val();
+    var $shopid=  $('#shopid').val();
 
     var jsonObj = {
         "user": $user,
@@ -305,7 +315,9 @@ function PortalData(){
         "user_mac": $usermac,
         "ap_mac": $apmac,
         "firsturl": $firsturl,
-        "urlparam": $urlparam
+        "urlparam": $urlparam,
+        appid: $appid,
+        shopid: $shopid
     };
 
     return jsonObj;
