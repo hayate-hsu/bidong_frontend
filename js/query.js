@@ -261,25 +261,17 @@ $(document).ready(function(e) {
         $(this).modifyTM();
     });
     $(document).on('click', '.case', function(){
-        var $room = $('#room').val();
-        var $pwd = $('#pwd').val();
-        var $date = $('#sdate').val();
-        var $ends = $('#ends').val();
-        var $mask = $('#mask').val();
-
-        var pattern = /^\d{1,4}$/;
-        $room = FormatNum($room,4);
-
         var t = $(this);
+        var $room = $('#room').val(), $pwd = $('#pwd').val(), $date = $('#sdate').val(), $ends = $('#ends').val(), $mask = $('#mask').val();
 
-        if($room=="" || $room==null || $room=='0000'){
-            showError("输入4位数字房间号");
-            $('#room').focus();
-        }else if(!pattern.test($room)){
-            showError("输入4位数字房间号！");
+        var pattern = /^[\w\?%&=\-_]+$/;
+        //$room = FormatNum($room,4);
+
+        if(!pattern.test($room)){
+            showError("输入数字或英文的房间号");
             $('#room').val("").focus();
         }else if($.inArray($room, allRooms()) != -1){
-            showError("房间号已经存在，请输入其他房间号！");
+            showError("房间号已经存在，请输入其他房间号");
             $('#room').focus();
         }else if (pwdCorrect($pwd)){
             $('#room').val($room);
@@ -294,7 +286,7 @@ $(document).ready(function(e) {
 
             if(id==10000){
                 var h = '<tr>' +
-                    '<td>' + $room + '</td>' +
+                    '<td><em title="'+$room+'">'+$room+'</em></td>' +
                     '<td><input type="text" class="fdpwd" value="'+ $pwd +'" /></td>' +
                     '<td><input type="text" class="datepicker" value="'+ $date +'" /></td>' +
                     '<td><div class="amountbox"><div class="amount">' +
@@ -324,7 +316,7 @@ $(document).ready(function(e) {
                         t.attr("disabled", "disabled");
                         if (msg.Code == 200) {
                             var h = '<tr>' +
-                                '<td>' + $room + '</td>' +
+                                '<td><em title="'+$room+'">'+$room+'</em></td>' +
                                 '<td><input type="text" class="fdpwd" value="'+ $pwd +'" /></td>' +
                                 '<td><input type="text" class="datepicker" value="'+ $date +'" /></td>' +
                                 '<td><div class="amountbox"><div class="amount">' +

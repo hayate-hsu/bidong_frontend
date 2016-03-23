@@ -347,6 +347,14 @@ aside li a {
     border-bottom: 1px solid #f0f0f0;
     color: #333;
 }
+.clientbox table td em{
+    display: block;
+    width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-style: normal;
+}
 .clientbox table td input.fdpwd, .clientbox table td input.datepicker, .clientbox table td input.ends{
     width: 196px;
     height: 34px;

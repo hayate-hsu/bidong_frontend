@@ -115,7 +115,10 @@ input::-webkit-input-placeholder{
     display: -webkit-box;
     position: relative;
     z-index: 999;
+    margin-bottom: 7px;
+    border: 1px solid #d9d9d9;
 }
+.ns_rz_wrapper .borderRed{ border: 1px solid #f36144;}
 .ns_rz_wrapper .ns_rz_group div{ -webkit-box-flex: 1;}
 .ns_rz_wrapper .ns_rz_group input{
     border-radius: inherit;
@@ -127,27 +130,30 @@ input::-webkit-input-placeholder{
 }
 #yzmMbo{
     padding: 14px 0;
-    color: #fff;
+    color: #489ad8;
     border-radius: 0;
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
-    background: #56aee9;
-    width: 81px;
+    background: transparent;
+    width: 90px;
     font-size: 1.3rem;
+    text-decoration: underline;
+    display: none;
 }
 .ns_rz_wrapper .ns_login_mbo{
+    width: 100%;
     padding: 11px 0;
     border-radius: 7px;
     background: #fea520;
     border-bottom: 2px solid #d38b1f;
     color: #fff;
     font-size: 1.6rem;
-    position: absolute;
-    top: 112px;
-    left: 0;
-    width: 100%;
-    z-index: 997;
-    animation: drop_login 0.3s ease-in;
+    margin-top: 6px;
+    /*position: absolute;*/
+    /*top: 112px;*/
+    /*left: 0;*/
+    /*z-index: 997;*/
+    /*animation: drop_login 0.3s ease-in;*/
 }
 .ns_rz_wrapper .ns_login_mbo:hover{
     background: #ed9a20;
@@ -166,6 +172,9 @@ input::-webkit-input-placeholder{
     width: 100%;
     z-index: 998;
     animation: drop_rz 0.3s ease-in;
+}
+.ns_msg{
+    margin-top: 10px;
 }
 /*【待定】-begin*/
 .anthor button{

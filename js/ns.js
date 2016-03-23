@@ -182,27 +182,14 @@ $(function(){
 
     //移动账户认证
     $('.ns_admin_mbo').change(function(){
-        $('.ns_shuru, .ns_login_mbo').fadeOut(function(){
-            $(this).remove();
-        });
-
-        var v = $(this).val();
-        if(v==''){
-            $('.ns_rz_wrapper p').fadeIn();
-        }else if(/^1\d{10}$/.test(v)){
-            $('.ns_rz_wrapper p').fadeOut();
-            var t='<div class="ns_rz_group ns_shuru"><div><input type="text" placeholder="输入验证码：" /></div><button type="button" id="yzmMbo">获取验证码</button></div> <input type="button" value="登录" class="ns_login_mbo" />';
-            $('.ns_rz_wrapper').append(t);
-            isyzm = true;
+        if(/^1\d{10}$/.test($(this).val())){
+            $('#yzmMbo').show();
         }else{
-            $('.ns_rz_wrapper p').fadeOut();
-            var t='<div class="ns_rz_group ns_shuru"><div><input type="password" placeholder="输入密码：" /></div></div> <input type="button" value="登录" class="ns_login_mbo" />';
-            $('.ns_rz_wrapper').append(t);
-            isyzm = false;
+            $('#yzmMbo').hide();
         }
     });
     $(document).on('click', '.ns_login_mbo', function(){
-        var admin=$('.ns_admin_mbo').val(), pwd=$('.ns_shuru div input').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
+        var admin=$('input[name=user]').val(), pwd=$('input[name=password]').val();
         var $openid =  $('#openid').val();
         var $acip =  $('#ac_ip').val();
         var $vlanId =  $('#vlanId').val();
@@ -214,7 +201,12 @@ $(function(){
         var $urlparam =  $('#urlparam').val();
         var $appid =  $('#appid').val();
         var $shopid=  $('#shopid').val();
-        if(!isyzm){
+        if(admin==''||admin==null){
+            $('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+        }else if(pwd=='' || pwd==null){
+            $('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+        }else{
+            $('.ns_rz_group').removeClass('borderRed');
             var obj = {
                 user: admin,
                 password: pwd,
@@ -236,7 +228,7 @@ $(function(){
 
     //验证码倒计时
     $(document).on('click', '#yzmMbo', function(){
-        $(this).html('倒计时<span>60</span>秒').css('background', '#d8d8d8').attr("disabled", "disabled");
+        $(this).html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
         delayYZMMbo();
     });
 });
@@ -332,13 +324,16 @@ function adminAuthorMbo(obj, firsturl, urlparam){
         data: JSON.stringify(obj),
         dataType: "json",
         beforeSend: function(){
-            $('.ns_login_mbo').text('正在为你验证...').attr('disabled', 'disabled');
+            $('.ns_msg').text('正在为您验证...');
+            $('.ns_login_mbo').attr('disabled', 'disabled');
         },
         success: function (data) {
+            $('.ns_msg').text('验证成功');
             window.location.href=urlChange(firsturl, urlparam);
         },
         complete: function(){
-            $('.ns_login_mbo').text('登录').removeAttr('disabled');
+            $('.ns_msg').text('');
+            $('.ns_login_mbo').removeAttr('disabled');
         },
         error: function (msg) {
             alert("连接失败");
@@ -371,6 +366,6 @@ function delayYZMMbo(){
         $('#yzmMbo span').text(delay);
     }else{
         clearTimeout(t);
-        $('#yzmMbo').html('获取验证码').css('background', '#56aee9').removeAttr("disabled");
+        $('#yzmMbo').html('获取验证码').css('color', '#489ad8').removeAttr("disabled");
     }
 }
