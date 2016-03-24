@@ -159,6 +159,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     margin-bottom: 8px;
     overflow: hidden;
     background: #d1ebf0;
+    position: relative;
 }
 .ns_ani{
     transition: all 1s ease;
@@ -168,7 +169,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     left: 0;
     z-index: -1;
 }
-.ns_pwd, .ns_yzm{ top: 80px;}
+/*.ns_pwd, .ns_yzm{ top: 80px;}*/
 .ns_ani.in{
     transform: translate(0, 0);
     opacity: 1;
@@ -190,10 +191,12 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     float: left;
     font-size: 16px;
 }
-.ns_group #ns_yzm{ width: 104px;}
-.ns_group #ns_pwd{ width: 200px;}
+/*.ns_group #ns_yzm{ width: 104px;}*/
+/*.ns_group #ns_pwd{ width: 200px;}*/
 .ns_group #yzm{  /*hover样式*/
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
     width: 93px;
     height: 40px;
     background: #2d90ff;
@@ -202,6 +205,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s ease-in;
+    display: none;
 }
 .ns_group #yzm:hover{ background: #429fff;}
 .ns_group #yzm.disabled, .ns_group #yzm.disabled:hover{ background: #d4d4d4;}
@@ -215,9 +219,13 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     border-radius: 5px;
     margin-top: 9px;
     cursor: pointer;
-    left: 50%;
-    margin-left: -60px;
-    top: 129px;
+    /*left: 50%;*/
+    /*margin-left: -60px;*/
+    /*top: 129px;*/
+}
+.ns_msg{
+    margin-top: 5px;
+    color: #f36144;
 }
 .ns_login:hover{
     background: #3ba1ff;

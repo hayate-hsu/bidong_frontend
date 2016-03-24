@@ -88,24 +88,11 @@ function weixinScan(appId, shopId, extend, authUrl){
 }
 
 $(function(){
-    //APP下载
-    //$('.ns_app button').click(function(){
-    //    $('body').css('padding-right', '17px').addClass('open').append('<div class="zhez fade"></div>');
-    //    $('.ns_modal').fadeIn(150, function(){
-    //        $(this).addClass('in');
-    //    });
-    //    $('.zhez').addClass('in');
-    //});
-    //$(document).on('click', '.ns_modal, .ns_download .closed', function(){
-    //    $('.ns_modal').removeClass('in').fadeOut(150);
-    //
-    //    $('.zhez').removeClass('in');
-    //    setTimeout(function(){
-    //        $('.zhez').remove();
-    //        $('body').css('padding-right', '0').removeClass('open');
-    //    }, 150);
-    //});
-    //$(document).on('click', '.ns_download', function(){return false;});
+    $('.tn_l .tn_po').hover(function(){
+        $('.tn_wx').show();
+    },function(){
+        $('.tn_wx').hide();
+    });
 
     //响应输入框
     $('.ns_group').click(function(){
@@ -114,47 +101,38 @@ $(function(){
 
     //账号类型检测
     var isyzm = false;
-    $('#ns_txt').change(function(){
-        var v=$(this).val();
-        $(this).parent().parent().find('p').removeClass('in');
-
-        if(v==''){
-            $('.ns_login, .ns_yzm, .ns_pwd').removeClass('in');
-            $(this).parent().parent().find('p').addClass('in');
-        }else if(/^1\d{10}$/.test(v)){
-            $('.ns_pwd').removeClass('in');
-            $('.ns_yzm').addClass('in');
-            setTimeout(function(){
-                $('.ns_login').addClass('in');
-            }, 200);
-            isyzm = true;
+    $('.ns_user input').change(function(){
+        if(/^1\d{10}$/.test($(this).val())){
+            $('#yzm').show().prev('input').css('width', '100px');
         }else{
-            $('.ns_yzm').removeClass('in');
-            $('.ns_pwd').addClass('in');
-            setTimeout(function(){
-                $('.ns_login').addClass('in');
-            }, 200);
-            isyzm = false;
+            $('#yzm').hide().prev('input').css('width', '179px');
         }
     });
 
     //账户登录验证
     $('#ns_login').click(function(){
-        var admin=$('#ns_txt').val(), pwd=$('#ns_pwd').val(), yzm=$('#ns_yzm').val(), firsturl=$('#firsturl').val(), urlparam=$('#urlparam').val();
-        var $openid =  $('#openid').val();
-        var $acip =  $('#ac_ip').val();
-        var $vlanId =  $('#vlanId').val();
-        var $ssid =  $('#ssid').val();
-        var $userip =  $('#user_ip').val();
-        var $usermac =  $('#user_mac').val();
-        var $apmac =  $('#ap_mac').val();
-        var $firsturl =  $('#firsturl').val();
-        var $urlparam =  $('#urlparam').val();
-        var $appid =  $('#appid').val();
-        var $shopid=  $('#shopid').val();
-        if(!isyzm){
+        var user=$('#ns_user').val(),
+            pwd=$('#ns_pwd').val(),
+            $openid=$('#openid').val(),
+            $acip=$('#ac_ip').val(),
+            $vlanId=$('#vlanId').val(),
+            $ssid=$('#ssid').val(),
+            $userip=$('#user_ip').val(),
+            $usermac=$('#user_mac').val(),
+            $apmac=$('#ap_mac').val(),
+            $firsturl=$('#firsturl').val(),
+            $urlparam=$('#urlparam').val(),
+            $appid=$('#appid').val(),
+            $shopid=$('#shopid').val();
+
+        if(user==''||user==null){
+            $('.ns_msg').text('*输入账号/手机号').css('color', '#f36144').show();$('#ns_user').focus();
+        }else if(pwd==''||pwd==null){
+            $('.ns_msg').text('*输入密码/验证码').css('color', '#f36144').show();$('#ns_pwd').focus();
+        }else{
+            $('.ns_msg').text('');
             var obj = {
-                user: admin,
+                user: user,
                 password: pwd,
                 openid: $openid,
                 ac_ip: $acip,
@@ -189,18 +167,20 @@ $(function(){
         }
     });
     $(document).on('click', '.ns_login_mbo', function(){
-        var admin=$('input[name=user]').val(), pwd=$('input[name=password]').val();
-        var $openid =  $('#openid').val();
-        var $acip =  $('#ac_ip').val();
-        var $vlanId =  $('#vlanId').val();
-        var $ssid =  $('#ssid').val();
-        var $userip =  $('#user_ip').val();
-        var $usermac =  $('#user_mac').val();
-        var $apmac =  $('#ap_mac').val();
-        var $firsturl =  $('#firsturl').val();
-        var $urlparam =  $('#urlparam').val();
-        var $appid =  $('#appid').val();
-        var $shopid=  $('#shopid').val();
+        var admin=$('input[name=user]').val(),
+            pwd=$('input[name=password]').val(),
+            $openid=$('#openid').val(),
+            $acip=$('#ac_ip').val(),
+            $vlanId=$('#vlanId').val(),
+            $ssid=$('#ssid').val(),
+            $userip=$('#user_ip').val(),
+            $usermac=$('#user_mac').val(),
+            $apmac=$('#ap_mac').val(),
+            $firsturl=$('#firsturl').val(),
+            $urlparam=$('#urlparam').val(),
+            $appid=$('#appid').val(),
+            $shopid=$('#shopid').val();
+
         if(admin==''||admin==null){
             $('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
         }else if(pwd=='' || pwd==null){
@@ -235,7 +215,6 @@ $(function(){
 
 //账户认证
 function adminAuthor(obj, firsturl, urlparam){
-    console.log(obj);
     $.ajax({
         type: "POST",
         url: "/account",
@@ -243,14 +222,20 @@ function adminAuthor(obj, firsturl, urlparam){
         data: JSON.stringify(obj),
         dataType: "json",
         beforeSend: function(){
-            $('.ns_login').text('正在验证...').attr('disabled', 'disabled');
+            $('.ns_msg').text('正在为您验证...').css('color', '#68d68f').show();
+            $('.ns_login').attr('disabled', 'disabled');
         },
         success: function (data) {
-            $('.ns_admin .ns_box').append('<span style="position: absolute; top: 184px; left: 59px;">验证成功，正在为您跳转~</span>');
-            window.location.href= urlChange(firsturl, urlparam);
+            $('.ns_msg').text('验证成功').css('color', '#68d68f').show();
+            if($('#ns_login').hasClass('theNode')){
+                window.location.href= 'http://www.thenode.cn/web/index.do';
+            }else{
+                window.location.href= urlChange(firsturl, urlparam);
+            }
         },
         complete: function(){
-            $('.ns_login').text('登录').removeAttr('disabled');
+            $('.ns_msg').text('').hide();
+            $('.ns_login').removeAttr('disabled');
         },
         error: function (msg) {
             alert('验证失败！');
@@ -279,40 +264,6 @@ function urlChange(url, param){
     var reurl = '';
     param=='' ? reurl=url : reurl=url+'?'+param;
     return reurl;
-}
-
-function PortalData(){
-    var $user = $('#user').val();
-    var $password =  $('#password').val();
-    var $openid =  $('#openid').val();
-    var $acip =  $('#ac_ip').val();
-    var $vlanId =  $('#vlanId').val();
-    var $ssid =  $('#ssid').val();
-    var $userip =  $('#user_ip').val();
-    var $usermac =  $('#user_mac').val();
-    var $apmac =  $('#ap_mac').val();
-    var $firsturl =  $('#firsturl').val();
-    var $urlparam =  $('#urlparam').val();
-    var $appid =  $('#appid').val();
-    var $shopid=  $('#shopid').val();
-
-    var jsonObj = {
-        "user": $user,
-        "password": $password,
-        "openid": $openid,
-        "ac_ip": $acip,
-        "vlanId": $vlanId,
-        "ssid": $ssid,
-        "user_ip": $userip,
-        "user_mac": $usermac,
-        "ap_mac": $apmac,
-        "firsturl": $firsturl,
-        "urlparam": $urlparam,
-        appid: $appid,
-        shopid: $shopid
-    };
-
-    return jsonObj;
 }
 
 //移动端账户认证
