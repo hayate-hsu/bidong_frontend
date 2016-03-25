@@ -146,7 +146,7 @@ $(function(){
                 appid: $appid,
                 shopid: $shopid
             };
-            adminAuthor(obj, firsturl, urlparam);
+            adminAuthor(obj, $firsturl, $urlparam);
         }
     });
 
@@ -202,7 +202,7 @@ $(function(){
                 appid: $appid,
                 shopid: $shopid
             };
-            adminAuthorMbo(obj, firsturl, urlparam);
+            adminAuthorMbo(obj, $firsturl, $urlparam);
         }
     });
 
