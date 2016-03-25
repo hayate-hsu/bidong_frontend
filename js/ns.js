@@ -151,10 +151,10 @@ $(function(){
     });
 
     //验证码重发
-    $('#yzm').click(function(){
+    $('#yzm, #byYzm').click(function(){
         if(canyzm){
-            $(this).html('倒计时<span>60</span>秒').addClass('disabled').attr('disabled', 'disabled');
-            delayYZM();
+            $(this).html('<span>60</span>秒重新获取').addClass('disabled').attr('disabled', 'disabled');
+            delayYZM($(this));
         }
     });
 
@@ -245,17 +245,22 @@ function adminAuthor(obj, firsturl, urlparam){
 
 //验证码倒计时
 var canyzm = true;//判断倒计时是否结束   【作用域全局】
-function delayYZM(){
-    var delay = $('#yzm span').text();
-    var t = setTimeout('delayYZM()', 1000);
+function delayYZM($this){
+    var delay = $this.find('span').text();
+    var t = setTimeout(_delayYZM($this), 1000);
     if(delay>1){
         delay--;
-        $('#yzm span').text(delay);
+        $this.find('span').text(delay);
         canyzm = false;
     }else{
         clearTimeout(t);
-        $('#yzm').html('获取验证码').removeClass('disabled').removeAttr('disabled');
+        $this.html('获取验证码').removeClass('disabled').removeAttr('disabled');
         canyzm = true;
+    }
+}
+function _delayYZM($this){
+    return function (){
+        delayYZM($this);
     }
 }
 

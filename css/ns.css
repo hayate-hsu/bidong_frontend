@@ -24,7 +24,8 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     height: 320px;
     margin-bottom: 12px;
 }
-.baiyun{ background: url("../images/nsimgs/banner_baiyun.jpg") top center no-repeat;}
+.baiyun{ background: url("../images/nsimgs/banner_baiyun.png") top center no-repeat; height: 278px;}
+.yczone{ background: url("../images/nsimgs/banner_yczone.jpg") top center no-repeat; height: 278px;}
 .ns_wrapper{
     width: 1002px;
     margin: 0 auto;
@@ -243,21 +244,97 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 }
 .ns_ad{
     margin-bottom: 10px;
-    width: 1002px;
+    width: 100%;
     display: block;
 }
+.ns_by{
+    overflow: hidden;
+    margin-bottom: 90px;
+    padding-top: 28px;
+}
+.ns_by .ns_byAdmin{ float: left;}
+.ns_byPortal{
+    width: 260px;
+    float: left;
+    margin-right: 25px;
+}
+.ns_byPortal h3{
+    font-size: 22px;
+    color: #006be3;
+    font-weight: bold;
+    text-align: center;
+}
+.ns_byPortal .ns_group{
+    width: auto;
+    border: 1px solid #d4d4d4;
+    background: #fff;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+.ns_byPortal .ns_group input{ width: 150px;}
+.ns_byPortal .ns_login{
+    width: 100%;
+    background: #f1b31e;
+    font-size: 18px;
+    border-bottom: 3px solid #e6ab1d;
+    margin-top: 14px;
+    height: 42px;
+}
+.ns_byPortal .ns_login:hover{
+    background: #e3a216;
+    border-bottom: 3px solid #c69208;
+}
+.ns_byPortal .ns_btns{ text-align: right;}
+.ns_byPortal .ns_byMsg{
+    margin-top: 5px;
+    height: 24px;
+}
+.ns_byPortal .ns_byMsg .ns_msg{
+    margin-top: 0;
+    text-align: center;
+}
+#byYzm{
+    background: no-repeat;
+    border: none;
+    text-decoration: underline;
+    color: #878787;
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+#byYzm:hover{ color: #4d8de3;}
+#byYzm:disabled{ color: #878787;}
+.ns_byWx{
+    width: 182px;
+    height: 214px;
+    background: #fff;
+    border-radius: 5px;
+    float: left;
+    margin-top: 49px;
+}
+.ns_byWx p{
+    text-align: center;
+    line-height: 20px;
+    padding: 10px 20px 0;
+    font-size: 16px;
+}
+.ns_byAd{ float: right;}
+
 .ns_footer{
     margin-top: 50px;
     height: 143px;
     background: #fff;
     text-align: center;
 }
-.ns_footer div{ padding: 30px 0;}
+.ns_footer div{ padding-top: 24px;}
 .ns_footer p{
     font-size: 14px;
     color: #555;
     line-height: 24px;
 }
+.ns_footer p span{ margin: 0 15px;}
+.ns_byFooter{ height: 72px;}
+
 .ns_dialog{
     position: fixed;
     top: 50%;
@@ -541,6 +618,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
         min-width: 360px;
         margin: 0 15px;
     }
+    .ns_byWrapper{ width: 1002px;}
     .ns_app, .ns_admin, .ns_yjsw{
         width: 100%;
         min-width: 360px;
@@ -548,7 +626,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
         margin-bottom: 10px;
     }
     .ns_yjsw{ margin-bottom: 0;}
-    .ns_ad{ width: 100%;}
+    /*.ns_ad{ width: 100%;}*/
     .ns_footer{ height: auto;}
     .ns_footer div{ margin: 0 15px;}
 }
