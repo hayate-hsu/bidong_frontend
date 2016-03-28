@@ -54,7 +54,7 @@
             % for renter in renters:
             <tr>
                 % if renter['mask']>>30 & 1:
-                <td style="background: #eee;"><em title="${renter['room']}">${renter['room']}</em></td>
+                <td style="background: #eee;" title="${user}${renter['room']}"><div><em class="bd_host">${user}</em><em class="bd_room">${renter['room']}</em></div></td>
                 <td style="background: #eee;"><input type="text" class="fdpwd" value="${renter['password']}" disabled /></td>
                 <td style="background: #eee;"><input type="text" class="datepicker" value="${renter['expired'].strftime('%Y-%m-%d %H:%M')}" disabled /></td>
                 <td style="background: #eee;">
@@ -68,7 +68,7 @@
                 </td>
                 <td style="background: #eee;">
                 % else:
-                <td><em title="${renter['room']}">${renter['room']}</em></td>
+                <td title="${user}${renter['room']}"><div><em class="bd_host">${user}</em><em class="bd_room">${renter['room']}</em></div></td>
                 <td><input type="text" class="fdpwd" value="${renter['password']}" /></td>
                 <td><input type="text" class="datepicker" value="${renter['expired'].strftime('%Y-%m-%d %H:%M')}" /></td>
                 <td>

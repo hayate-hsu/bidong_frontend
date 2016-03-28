@@ -90,7 +90,7 @@ $(document).ready(function(e) {
 
 	//禁用租户上网状态
     $(document).on('click', '.usable', function(){
-        var $room = $(this).parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).parent().parent().find('td:eq(1) input').val();
         var $date = $(this).parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).siblings("div").html();
@@ -165,7 +165,7 @@ $(document).ready(function(e) {
 
     //可用终端数更改
     $(document).on('click', '.clientbox .btnadd', function(){
-        var $room = $(this).parent().parent().parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).parent().parent().parent().parent().find('td:eq(1) input').val();
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
@@ -180,7 +180,7 @@ $(document).ready(function(e) {
     });
 
     $(document).on('click', '.clientbox .btnreduce', function(){
-        var $room = $(this).parent().parent().parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).parent().parent().parent().parent().find('td:eq(1) input').val();
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
@@ -198,7 +198,7 @@ $(document).ready(function(e) {
         $oldend = $(this).val();
     });
     $(document).on('change', '.clientbox .JV_Amount', function(){
-        var $room = $(this).parent().parent().parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).parent().parent().parent().parent().find('td:eq(1) input').val();
         var $date = $(this).parent().parent().parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().parent().parent().find('td:eq(4) div').html();
@@ -214,7 +214,7 @@ $(document).ready(function(e) {
 
     //到期时间更改
     $(document).on('change', '.datepicker', function(){
-        var $room = $(this).parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).parent().parent().find('td:eq(1) input').val();
         var $date = $(this).val();
         var $mask = $(this).parent().parent().find('td:eq(4) div').html();
@@ -231,7 +231,7 @@ $(document).ready(function(e) {
 
 	//房间密码更改
     $(document).on('change', '.fdpwd', function(){
-        var $room = $(this).parent().parent().find('td:first').html();
+        var $room = $(this).parent().parent().find('td:first em.bd_room').text();
         var $pwd = $(this).val();
         var $date = $(this).parent().parent().find('td:eq(2) input').val();
         var $mask = $(this).parent().parent().find('td:eq(4) div').html();
@@ -286,7 +286,7 @@ $(document).ready(function(e) {
 
             if(id==10000){
                 var h = '<tr>' +
-                    '<td><em title="'+$room+'">'+$room+'</em></td>' +
+                    '<td title="'+(id+$room)+'"><div><em class="bd_host">'+id+'</em><em class="bd_room">'+$room+'</em></div></td>' +
                     '<td><input type="text" class="fdpwd" value="'+ $pwd +'" /></td>' +
                     '<td><input type="text" class="datepicker" value="'+ $date +'" /></td>' +
                     '<td><div class="amountbox"><div class="amount">' +
@@ -316,7 +316,7 @@ $(document).ready(function(e) {
                         t.attr("disabled", "disabled");
                         if (msg.Code == 200) {
                             var h = '<tr>' +
-                                '<td><em title="'+$room+'">'+$room+'</em></td>' +
+                                '<td title="'+(id+$room)+'"><div><em class="bd_host">'+id+'</em><em class="bd_room">'+$room+'</em></div></td>' +
                                 '<td><input type="text" class="fdpwd" value="'+ $pwd +'" /></td>' +
                                 '<td><input type="text" class="datepicker" value="'+ $date +'" /></td>' +
                                 '<td><div class="amountbox"><div class="amount">' +
