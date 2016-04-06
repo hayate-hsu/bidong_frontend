@@ -295,7 +295,7 @@ $(function(){
                 success: function(data){
                     verify = data.verify;
                     alert("验证码已下发到手机，请注意查收！");
-                    $(this).html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
+                    $this.html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
                     delayYZMMbo();
                 },
                 error: function(msg){
