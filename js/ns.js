@@ -168,6 +168,7 @@ $(function(){
                     }
                 });
             }else{
+                $('#ns_pwd').val('');
                 $('.ns_msg').text('验证码错误');return false;
             }
         }else{
@@ -191,7 +192,6 @@ $(function(){
                     mask: 256
                 },
                 success: function(data){
-                    console.log(data);
                     verify = data.verify;
                     alert("验证码已下发到手机，请注意查收！");
                     $this.html('<span>60</span>秒重新获取').addClass('disabled').attr('disabled', 'disabled');
@@ -272,6 +272,7 @@ $(function(){
                 alert('验证码错误');
             }
         }else{
+            $('input[name=password]').val('');
             $('.ns_rz_group').removeClass('borderRed');
             adminAuthorMbo(obj, $firsturl, $urlparam);
         }
@@ -292,7 +293,6 @@ $(function(){
                     mask: 256
                 },
                 success: function(data){
-                    console.log(data);
                     verify = data.verify;
                     alert("验证码已下发到手机，请注意查收！");
                     $(this).html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
