@@ -354,32 +354,27 @@ $(document).ready(function(e) {
 		var $pwd = $('#password').val();
 		
 		if($user==""  || $user==null){
-            showError("请输入门牌号/电脑上网账号！");
-            $('#user').focus();
-            return false;
+            showError("请输入门牌号/电脑上网账号！");$('#user').focus();
 		}else if($pwd=="" || $pwd==null){
-            showError("请输入密码");
-            $('#password').focus();
-            return false;
+            showError("请输入密码");$('#password').focus();
 		}else{
             $('span.errorMsg').html("");
 			$.ajax({
-				type: "POST",
+				method: "POST",
 				url: "/account",
 				contentType: "application/json; charset=utf-8",
-				data: JSON.stringify(GetJsonData()),
-				dataType: "json",
-				success: function (msg) {				
-					if(msg.Code == 200){
-                        window.location.href= "/account/"+msg.User+"?token="+msg.Token;
-					}else{
-                        $.MsgBox.Alert(msg.Msg);
-					}
-				},
-				error: function (msg) {
-                    $.MsgBox.Alert(msg.responseJSON.Msg);
-				}
-			});
+				data: JSON.stringify(GetJsonData($user, $pwd)),
+				dataType: "json"
+			}).done(function(data){
+                if(data.Code == 200){
+                    window.location.href= "/account/"+data.User+"?token="+data.Token;
+                }else{
+                    $.MsgBox.Alert(data.Msg);
+                }
+            }).fail(function(error){
+                //$.MsgBox.Alert(error.responseJSON.Msg);
+                $.MsgBox.Alert('连接失败，请检查网络是否已连接');
+            });
 		}
 	});
 
@@ -396,7 +391,6 @@ $(document).ready(function(e) {
             return false;
         }else if(!pattern.test($pwd)){
             showError("密码仅支持数字和英文！");
-            console.log($pwd);
             $('#password').focus();
             return false;
         }else{
@@ -517,13 +511,10 @@ function DeleteFDData(room){
     return $obj;
 }
 
-function GetJsonData(){
-	var $user = $('#user').val();
-	var $password =  $('#password').val();
-	
+function GetJsonData(user, pwd){
 	var jsonObj = {
-		"user": $user,
-		"password": $password
+		user: user,
+		password: pwd
 	};
 	
 	return jsonObj;

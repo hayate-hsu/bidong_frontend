@@ -100,12 +100,16 @@ $(function(){
     });
 
     //账号类型检测
-    var isyzm = false;
+    var isyzm = false, verify;
     $('.ns_user input').change(function(){
         if(/^1\d{10}$/.test($(this).val())){
+            isyzm = true;
             $('#yzm').show().prev('input').css('width', '100px');
+            $('#ns_pwd').attr('type', 'text').val('');
         }else{
+            isyzm = false;
             $('#yzm').hide().prev('input').css('width', '179px');
+            $('#ns_pwd').attr('type', 'password').val('');
         }
     });
 
@@ -125,49 +129,95 @@ $(function(){
             $appid=$('#appid').val(),
             $shopid=$('#shopid').val();
 
+        var obj = {
+            user: user,
+            password: pwd,
+            openid: $openid,
+            ac_ip: $acip,
+            vlanId: $vlanId,
+            ssid: $ssid,
+            user_ip: $userip,
+            user_mac: $usermac,
+            ap_mac: $apmac,
+            firsturl: $firsturl,
+            urlparam: $urlparam,
+            appid: $appid,
+            shopid: $shopid
+        };
+
         if(user==''||user==null){
             $('.ns_msg').text('*输入账号/手机号').css('color', '#f36144').show();$('#ns_user').focus();
         }else if(pwd==''||pwd==null){
             $('.ns_msg').text('*输入密码/验证码').css('color', '#f36144').show();$('#ns_pwd').focus();
+        }else if(isyzm){
+            $('.ns_msg').text('');
+            if(MD5yzm(pwd)==verify){
+                $.ajax({
+                    method: "post",
+                    url: '/wnl/register',
+                    dataType: "json",
+                    data: {
+                        mobile: user,
+                        mask: 256,
+                        mac: $apmac
+                    },
+                    success: function(data){
+                        obj.user=data.user;
+                        obj.password=data.password;
+                        adminAuthor(obj, $firsturl, $urlparam);
+                    }
+                });
+            }else{
+                $('.ns_msg').text('验证码错误');return false;
+            }
         }else{
             $('.ns_msg').text('');
-            var obj = {
-                user: user,
-                password: pwd,
-                openid: $openid,
-                ac_ip: $acip,
-                vlanId: $vlanId,
-                ssid: $ssid,
-                user_ip: $userip,
-                user_mac: $usermac,
-                ap_mac: $apmac,
-                firsturl: $firsturl,
-                urlparam: $urlparam,
-                appid: $appid,
-                shopid: $shopid
-            };
             adminAuthor(obj, $firsturl, $urlparam);
         }
     });
 
     //验证码重发
     $('#yzm, #byYzm').click(function(){
-        if(canyzm){
-            $(this).html('<span>60</span>秒重新获取').addClass('disabled').attr('disabled', 'disabled');
-            delayYZM($(this));
+        var $this=$(this), mobile=$('#ns_user').val();
+        if(!isyzm){
+            alert('请输入正确的手机号');
+        }else if(canyzm){
+            $.ajax({
+                method: "post",
+                url: '/wnl/mobile',
+                dataType: "json",
+                data: {
+                    mobile: mobile,
+                    mask: 256
+                },
+                success: function(data){
+                    console.log(data);
+                    verify = data.verify;
+                    alert("验证码已下发到手机，请注意查收！");
+                    $this.html('<span>60</span>秒重新获取').addClass('disabled').attr('disabled', 'disabled');
+                    delayYZM($this);
+                },
+                error: function(msg){
+                    alert('请检查网络状态');
+                }
+            });
         }
     });
 
     //移动账户认证
     $('.ns_admin_mbo').change(function(){
         if(/^1\d{10}$/.test($(this).val())){
+            isyzm = true;
             $('#yzmMbo').show();
+            $('input[name=password]').attr('type', 'text').val('');
         }else{
+            isyzm = false;
             $('#yzmMbo').hide();
+            $('input[name=password]').attr('type', 'password').val('');
         }
     });
     $(document).on('click', '.ns_login_mbo', function(){
-        var admin=$('input[name=user]').val(),
+        var user=$('input[name=user]').val(),
             pwd=$('input[name=password]').val(),
             $openid=$('#openid').val(),
             $acip=$('#ac_ip').val(),
@@ -181,42 +231,85 @@ $(function(){
             $appid=$('#appid').val(),
             $shopid=$('#shopid').val();
 
-        if(admin==''||admin==null){
+        var obj = {
+            user: user,
+            password: pwd,
+            openid: $openid,
+            ac_ip: $acip,
+            vlanId: $vlanId,
+            ssid: $ssid,
+            user_ip: $userip,
+            user_mac: $usermac,
+            ap_mac: $apmac,
+            firsturl: $firsturl,
+            urlparam: $urlparam,
+            appid: $appid,
+            shopid: $shopid
+        };
+
+        if(user==''||user==null){
             $('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
         }else if(pwd=='' || pwd==null){
             $('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+        }else if(isyzm){
+            if(MD5yzm(pwd)==verify){
+                $.ajax({
+                    method: "post",
+                    url: '/wnl/register',
+                    dataType: "json",
+                    data: {
+                        mobile: user,
+                        mask: 256,
+                        mac: $apmac
+                    },
+                    success: function(data){
+                        obj.user=data.user;
+                        obj.password=data.password;
+                        adminAuthorMbo(obj, $firsturl, $urlparam);
+                    }
+                });
+            }else{
+                alert('验证码错误');
+            }
         }else{
             $('.ns_rz_group').removeClass('borderRed');
-            var obj = {
-                user: admin,
-                password: pwd,
-                openid: $openid,
-                ac_ip: $acip,
-                vlanId: $vlanId,
-                ssid: $ssid,
-                user_ip: $userip,
-                user_mac: $usermac,
-                ap_mac: $apmac,
-                firsturl: $firsturl,
-                urlparam: $urlparam,
-                appid: $appid,
-                shopid: $shopid
-            };
             adminAuthorMbo(obj, $firsturl, $urlparam);
         }
     });
 
     //验证码倒计时
     $(document).on('click', '#yzmMbo', function(){
-        $(this).html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
-        delayYZMMbo();
+        var $this=$(this), mobile=$('.ns_admin_mbo').val();
+        if(!isyzm){
+            alert('输入手机号');
+        }else if(canyzm){
+            $.ajax({
+                method: "post",
+                url: '/wnl/mobile',
+                dataType: "json",
+                data: {
+                    mobile: mobile,
+                    mask: 256
+                },
+                success: function(data){
+                    console.log(data);
+                    verify = data.verify;
+                    alert("验证码已下发到手机，请注意查收！");
+                    $(this).html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
+                    delayYZMMbo();
+                },
+                error: function(msg){
+                    alert('检查网络是否连接');
+                }
+            });
+        }
     });
 });
 
 //账户认证
 function adminAuthor(obj, firsturl, urlparam){
     $.ajax({
-        type: "POST",
+        method: "POST",
         url: "/account",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(obj),
@@ -274,7 +367,7 @@ function urlChange(url, param){
 //移动端账户认证
 function adminAuthorMbo(obj, firsturl, urlparam){
     $.ajax({
-        type: "POST",
+        method: "POST",
         url: "/account",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(obj),
@@ -324,4 +417,12 @@ function delayYZMMbo(){
         clearTimeout(t);
         $('#yzmMbo').html('获取验证码').css('color', '#489ad8').removeAttr("disabled");
     }
+}
+
+//验证码检测
+function MD5yzm(yzm){
+    var m = hex_md5(yzm);
+    var md1=m.substr(12, 4), md2=m.substr(-4);
+    m = md1+md2;
+    return m;
 }

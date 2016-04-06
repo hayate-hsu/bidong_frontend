@@ -333,35 +333,39 @@ $(document).ready(function(e) {
         var user = $('#user').val();
         var token = $('#token').val();
         var room = $('#room').val();
-        var password = $('#password').val();
+        var password = $('#password').val(), $this=$(this);
 
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: "account/"+user+"/bind",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(rechargeData(room, password, token)),
             dataType: "json",
-            success: function (msg) {
-                if(msg.Code == 200){
-                    var _html = msg.days+'天 + ' +msg.hours+'小时';
-                    $('#canustime').html(_html);
-                    $('#room').val("");$('#password').val("");
-                }else{
-                    $.MsgBox.WXbox("请检查输入信息是否有误！");
-                }
-            },
-            error: function (msg) {
-                $.MsgBox.WXbox("兑换失败");
+            beforeSend: function(){
+                $this.attr('disabled', 'disabled');
             }
+        }).done(function (msg){
+            if(msg.Code == 200){
+                alert("兑换成功");
+                var _html = msg.days+'天 + ' +msg.hours+'小时';
+                $('#canustime').html(_html);
+                $('#room').val("");$('#password').val("");
+            }else{
+                $.MsgBox.WXbox("请检查输入信息是否有误！");
+            }
+        }).fail(function (msg){
+            $.MsgBox.WXbox("兑换失败");
+        }).always(function(){
+            $this.removeAttr('disabled');
         });
     });
 });
 
 function rechargeData(room, password, token){
     var obj = {
-        "room": room,
-        "password": password,
-        "token": token
+        room: room,
+        password: password,
+        token: token
     };
 
     return obj;
