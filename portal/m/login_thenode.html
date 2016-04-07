@@ -52,6 +52,28 @@
 </body>
 
 <script type="text/javascript">
+    $(function(){
+        $('#weixinAuthor').click(function(){
+            var $this=$(this);
+            $.ajax({
+                url: '/detect',
+                type: "get",
+                dataType: "json",
+                beforeSend: function(){
+                    $this.attr('disabled', 'disabled');
+                },
+                success: function(data){
+                    callWechatBrowser();
+                },
+                complete: function(){
+                    $this.removeAttr('disabled');
+                },
+                error: function(msg){
+                    alert(msg);
+                }
+            });
+        });
+    });
     function callWechatBrowser(){
         Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
     }

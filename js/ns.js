@@ -252,6 +252,7 @@ $(function(){
         }else if(pwd=='' || pwd==null){
             $('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
         }else if(isyzm){
+            $('.ns_rz_group').removeClass('borderRed');
             if(MD5yzm(pwd)==verify){
                 $.ajax({
                     method: "post",
@@ -282,7 +283,7 @@ $(function(){
     $(document).on('click', '#yzmMbo', function(){
         var $this=$(this), mobile=$('.ns_admin_mbo').val();
         if(!isyzm){
-            alert('输入手机号');
+            alert('请输入正确的手机号');
         }else if(canyzm){
             $.ajax({
                 method: "post",
@@ -299,7 +300,8 @@ $(function(){
                     delayYZMMbo();
                 },
                 error: function(msg){
-                    alert('检查网络是否连接');
+                    console.log(msg);
+                    alert('请检查网络是否已连接');
                 }
             });
         }
