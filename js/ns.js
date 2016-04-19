@@ -387,7 +387,7 @@ function adminAuthorMbo(obj, firsturl, urlparam){
             $('.ns_login_mbo').removeAttr('disabled');
         },
         error: function (msg) {
-            alert("连接失败");
+            alert(msg.responseText);
         }
     });
 }
