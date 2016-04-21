@@ -333,7 +333,7 @@ function adminAuthor(obj, firsturl, urlparam){
             $('.ns_login').removeAttr('disabled');
         },
         error: function (msg) {
-            alert('验证失败！');
+            alert('验证失败：'+msg.Msg);
         }
     });
 }
@@ -387,7 +387,7 @@ function adminAuthorMbo(obj, firsturl, urlparam){
             $('.ns_login_mbo').removeAttr('disabled');
         },
         error: function (msg) {
-            alert(msg.responseText);
+            alert('验证失败：'+msg.Msg);
         }
     });
 }
