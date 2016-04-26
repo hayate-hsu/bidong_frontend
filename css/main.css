@@ -81,8 +81,10 @@ nav li a:hover, nav li a.actived {
 }
 header p{
     width: 1002px;
-    margin: 20px auto 0;
+    margin: -18px auto 0;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    text-indent: 112px;
 }
 
 /*官网中心*/
