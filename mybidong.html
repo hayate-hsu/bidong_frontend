@@ -19,12 +19,13 @@
 <body>
 	<header class="contentHeader">
     	<nav>
-        	<a href="/" class="logo">壁咚WiFi</a>
-            <ul>
-            	<li><a href="/">首页</a></li>
-                <li><a href="javascript:void(0);" class="actived">我的壁咚</a></li>
-            </ul>
+        	<a href="/" class="logo">壁咚WiFi</a><span class="headerName">上网账户管理系统</span>
+            <!--<ul>-->
+            	<!--<li><a href="/">首页</a></li>-->
+                <!--<li><a href="javascript:void(0);" class="actived">我的壁咚</a></li>-->
+            <!--</ul>-->
         </nav>
+        <p>单位名称/地址：${address}</p>
     </header>
 
     <aside>
@@ -35,7 +36,7 @@
             <li class="firstLi"><label>可上网时间</label><span>${days}天 + ${hours}</span></li>
         </ul>
         % if mask>>3 & 1:
-        <a href="/holder/${user}?token=${token}" class="fdgl">房东管理</a>
+        <a href="/holder/${user}?token=${token}" class="fdgl">管理操作</a>
         % endif
     </aside>
 
@@ -49,8 +50,8 @@
                 <input type="button" value="充值" class="srg" />
             </li>
             <li>
-                <p class="s3" style="text-indent: 48px;">租户可向房东索要充值密码</p>
-                <p style="text-indent: 48px;">（仅限壁咚WiFi已覆盖楼体）</p>
+                <p class="s3" style="text-indent: 48px;">上网账号可咨询管理员</p>
+                <p style="text-indent: 48px; visibility: hidden;">（仅限壁咚WiFi已覆盖楼体）</p>
                 <div id="formCag">
                     <input type="text" placeholder="请输入房间号" class="ipu_text" value="" id="reRoom" />
                     <input type="password" placeholder="请输入充值密码" class="ipu_text showPH" value="" id="rePwd" />
