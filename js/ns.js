@@ -74,8 +74,6 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-document.addEventListener('visibilitychange', putNoResponse, false);
-
 function weixinScan(appId, shopId, extend, authUrl){
     JSAPI.auth({
         target : document.getElementById('qrcode_zone'),
