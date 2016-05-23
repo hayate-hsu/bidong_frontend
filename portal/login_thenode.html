@@ -22,7 +22,6 @@
             top: 0;
             left: 0;
             width: 100%;
-            /*min-width: 1140px;*/
         }
         .tn_nav img{ margin-left: 72px;}
         .tn_protal{
@@ -32,7 +31,6 @@
             width: 100%;
             box-shadow: 0 -6px 6px rgba(137, 97, 99, 0.4);
             font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
-            /*min-width: 1140px;*/
         }
         .tn_protal button, .tn_protal input{
             font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
@@ -47,7 +45,7 @@
         .tn_protal .tn_l{
             background: url("/images/nsimgs/tn_bg_l.png") left top no-repeat;
             height: 116px;
-            width: 34%;
+            width: 26%;
             display: block;
             float: left;
             position: relative;
@@ -55,7 +53,7 @@
         .tn_protal .tn_r{
             background: url("/images/nsimgs/tn_bg_r.png") right top no-repeat;
             height: 116px;
-            width: 66%;
+            width: 74%;
             display: block;
             float: left;
             position: relative;
@@ -87,34 +85,31 @@
             color: #313132;
             font-size: 20px;
         }
-        .tn_protal .tn_r span{
+        .tn_protal .tn_r .tn_box{
             color: #fff;
             margin: 26px 0 0 50px;
-            display: block;
             line-height: 54px;
         }
-        .tn_protal .tn_r span em{
+        .tn_protal .tn_r .tn_box em{
             float: left;
             font-style: normal;
             font-size: 28px;
         }
-        .tn_protal .tn_r span input{
+        .btngroups{margin-right: 16px;}
+        .login{ margin-left: 20px;}
+        .tn_protal .tn_r .tn_box input{
             border-radius: 5px;
-            width: 20%;
             height: 54px;
             background: #019ae5;
             float: left;
             font-size: 20px;
             text-indent: 20px;
             color: #fff;
-            margin-right: 25px;
+            width: 100%;
         }
-        .tn_protal .tn_r span div{
-            position: relative;
-            float: left;
-        }
+        .tn_protal .tn_r .tn_box div{ position: relative;float: left;}
         input::-webkit-input-placeholder{ color: rgba(255, 255, 255, 0.6);}
-        .tn_protal .tn_r span button{
+        .tn_protal .tn_r .tn_box #ns_login{
             float: left;
             width: 150px;
             height: 64px;
@@ -122,11 +117,8 @@
             color: #313132;
             box-shadow: 0 6px 10px rgba(0, 133, 198, 0.3);
         }
-        .tn_protal .tn_r span button:hover{ background: #e8c504;}
-        .indexBg{
-            width: 100%;
-            height: 100%;
-        }
+        .tn_protal .tn_r .tn_box #ns_login:hover{ background: #e8c504;}
+        .indexBg{ width: 100%;height: 100%;}
         .ns_msg{
             background: #fff;
             text-indent: 20px;
@@ -138,13 +130,25 @@
             line-height: 24px;
             display: none;
         }
-        @media screen and (max-width: 1400px) {
-            .tn_protal .tn_r span input{
-                font-size: 16px;
-                text-indent: 10px;
-            }
-            .tn_protal .tn_r span em{ font-size: 20px;}
-            /*.ns_msg{ margin-left: 150px; text-indent: 10px;}*/
+        #byYzm{
+            border: none;
+            background: none;
+            text-decoration: underline;
+            font-size: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #fff;
+            opacity: 0.6;
+            padding: 0 12px;
+            height: 54px;
+            cursor: pointer;
+            outline: none;
+        }
+        @media screen and (max-width: 1322px) {
+            .tn_protal .tn_r .tn_box input{ font-size: 16px;text-indent: 10px;}
+            #byYzm{ font-size: 16px;}
+            .tn_protal .tn_r .tn_box em{ font-size: 20px;}
         }
     </style>
 </head>
@@ -166,12 +170,14 @@
                 </div>
             </li>
             <li class="tn_r">
-                <span>
+                <div class="tn_box">
                     <em>账户认证：</em>
-                    <input type="text" placeholder="请输入您的账号" id="ns_user" />
-                    <input type="password" placeholder="请输入您的密码" id="ns_pwd" />
-                    <div><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
-                </span>
+                    <div class="btngroups" style="width: 30%;"><input type="text" placeholder="请输入您的账号" id="ns_user" />
+                        <!--<button type="button" id="byYzm">获取验证码</button>-->
+                    </div>
+                    <div class="btngroups" style="width: 22%"><input type="password" placeholder="请输入您的密码" id="ns_pwd" /></div>
+                    <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login">登录</button></div>
+                </div>
             </li>
         </ul>
     </div>

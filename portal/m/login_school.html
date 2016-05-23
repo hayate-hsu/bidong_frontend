@@ -60,24 +60,7 @@
 <script type="text/javascript">
     $(function(){
         $('#weixinAuthor').click(function(){
-            var $this=$(this);
-            $.ajax({
-                url: '/detect',
-                type: "get",
-                dataType: "json",
-                beforeSend: function(){
-                    $this.attr('disabled', 'disabled');
-                },
-                success: function(data){
-                    callWechatBrowser();
-                },
-                complete: function(){
-                    $this.removeAttr('disabled');
-                },
-                error: function(msg){
-                    alert(msg);
-                }
-            });
+            callWechatBrowser();
         });
     });
     function callWechatBrowser(){

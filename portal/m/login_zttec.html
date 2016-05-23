@@ -28,7 +28,7 @@
     <input type="hidden" id="shopid" value="${shopid}" />
 
     <div class="ns_header">
-        <img src="/images/nsimgs/bg_zttec.jpg" class="ns_bg" />
+        <img src="/images/nsimgs/bg_zttec.png" class="ns_bg" />
         <!--<div>白云区</div>-->
     </div>
 
@@ -62,24 +62,7 @@
 <script type="text/javascript">
     $(function(){
         $('#weixinAuthor').click(function(){
-            var $this=$(this);
-            $.ajax({
-                url: '/detect',
-                type: "get",
-                dataType: "json",
-                beforeSend: function(){
-                    $this.attr('disabled', 'disabled');
-                },
-                success: function(data){
-                    callWechatBrowser();
-                },
-                complete: function(){
-                    $this.removeAttr('disabled');
-                },
-                error: function(msg){
-                    alert(msg);
-                }
-            });
+            callWechatBrowser();
         });
     });
     function callWechatBrowser(){
