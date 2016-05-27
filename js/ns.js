@@ -330,8 +330,8 @@ function adminAuthor(obj, firsturl, urlparam){
             $('.ns_msg').text('').hide();
             $('.ns_login').removeAttr('disabled');
         },
-        error: function (msg) {
-            alert('验证失败：'+msg.Msg);
+        error: function (error) {
+            alert('验证失败：'+error.responseJSON.Msg);
         }
     });
 }
@@ -384,8 +384,8 @@ function adminAuthorMbo(obj, firsturl, urlparam){
             $('.ns_msg').text('');
             $('.ns_login_mbo').removeAttr('disabled');
         },
-        error: function (msg) {
-            alert('验证失败：'+msg.Msg);
+        error: function (error) {
+            alert('验证失败：'+error.responseJSON.Msg);
         }
     });
 }
