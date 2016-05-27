@@ -162,7 +162,9 @@
         <ul>
             <li class="tn_l">
                 <div class="tn_po">
+                    % if shopid:
                     <button type="button">微信认证</button>
+                    % endif
                     <div class="tn_wx">
                         <p>微信扫一扫上网</p>
                         <div class="main__content-qrcode" id="qrcode_zone" style="border: none; text-align: center; margin: 0 auto; width: 170px; position: relative;" title="http://wifi.weixin.qq.com/assistant/wifigw/pcAuth.xhtml?appId=${appid}&amp;shopId=${shopid}&amp;ticket=${secret}"></div>
@@ -196,8 +198,10 @@
     <input type="hidden" id="appid" value="${appid}" />
     <input type="hidden" id="shopid" value="${shopid}" />
 
+    % if shopid:
     <script type="text/javascript">
         weixinScan('${appid}', '${shopid}', '${extend}', '${authUrl}');
     </script>
+    % endif
 </body>
 </html>

@@ -68,6 +68,7 @@
                     <div class="ns_msg"></div>
                 </div>
             </div>
+            % if shopid:
             <div class="ns_yjsw">
                 <h3>微信扫一扫上网</h3>
                 <div class="ns_box">
@@ -78,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            % endif
         </div>
 
         <img src="/images/nsimgs/ad1.jpg" class="ns_ad" />
@@ -108,8 +110,10 @@
         </div>
     </div>
 
+    % if shopid:
     <script type="text/javascript">
         weixinScan('${appid}', '${shopid}', '${extend}', '${authUrl}');
     </script>
+    % endif
 </body>
 </html>
