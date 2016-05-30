@@ -271,7 +271,6 @@ $(function(){
                 alert('验证码错误');
             }
         }else{
-            $('input[name=password]').val('');
             $('.ns_rz_group').removeClass('borderRed');
             adminAuthorMbo(obj, $firsturl, $urlparam);
         }
@@ -316,7 +315,7 @@ function adminAuthor(obj, firsturl, urlparam){
         dataType: "json",
         beforeSend: function(){
             $('.ns_msg').text('正在为您验证...').css('color', '#68d68f').show();
-            $('.ns_login').attr('disabled', 'disabled');
+            $('#ns_login').attr('disabled', 'disabled');
         },
         success: function (data) {
             $('.ns_msg').text('验证成功').css('color', '#68d68f').show();
@@ -328,7 +327,7 @@ function adminAuthor(obj, firsturl, urlparam){
         },
         complete: function(){
             $('.ns_msg').text('').hide();
-            $('.ns_login').removeAttr('disabled');
+            $('#ns_login').removeAttr('disabled');
         },
         error: function (error) {
             alert('验证失败：'+error.responseJSON.Msg);
