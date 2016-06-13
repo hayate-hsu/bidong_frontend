@@ -4,183 +4,18 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>广东女子职业技术学院</title>
+    <link rel="stylesheet" type="text/css" href="/css/ns.css">
     <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/json2.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
     <script type="text/javascript" src="/js/ns.js"></script>
     <script type="text/javascript" src="/wx/js/pcauth.js"></script>
-    <script type="text/javascript" src="/wx/js/pollpcresult.js"></script>
-    <style type="text/css">
-        body,html{ width: 100%; height: 100%; overflow-y: hidden;}
-        .tn_nav{
-            background: rgba(0,0,0,.7);
-            height: 88px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-        .tn_nav img{ margin-left: 72px;}
-        .tn_protal{
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            box-shadow: 0 -6px 6px rgba(137, 97, 99, 0.4);
-            font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
-        }
-        .tn_protal button, .tn_protal input{
-            font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
-            font-size: 28px;
-            border: none;
-        }
-        .tn_protal ul{
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        .tn_protal .tn_l{
-            background: url("/images/nsimgs/zt_bg_l.jpg") left top no-repeat;
-            height: 116px;
-            width: 26%;
-            display: block;
-            float: left;
-            position: relative;
-        }
-        .tn_protal .tn_r{
-            background: url("/images/nsimgs/zt_bg_r.jpg") right top no-repeat;
-            height: 116px;
-            width: 74%;
-            display: block;
-            float: left;
-            position: relative;
-        }
-        .tn_protal .tn_l .tn_po{
-            position: absolute;
-            top: 26px;
-            right: 12%;
-        }
-        .tn_protal .tn_l button{
-            width: 179px;
-            height: 64px;
-            background: #0365ff;
-            color: #fff;
-            box-shadow: 0 6px 10px rgba(28, 142, 255, 0.3);
-        }
-        .tn_protal .tn_l button:hover{ background: #0e57cc;}
-        .tn_protal .tn_l .tn_wx{
-            position: absolute;
-            bottom: 64px;
-            right: 0;
-            background: #20a0b1;
-            width: 179px;
-            height: 222px;
-            display: none;
-        }
-        .tn_protal .tn_l .tn_wx p{
-            text-align: center;
-            color: #313132;
-            font-size: 20px;
-        }
-        .tn_protal .tn_r .tn_box{
-            color: #fff;
-            margin: 26px 0 0 50px;
-            line-height: 54px;
-        }
-        .tn_protal .tn_r .tn_box em{
-            float: left;
-            font-style: normal;
-            font-size: 28px;
-        }
-        .btngroups{margin-right: 16px;}
-        .login{ margin-left: 20px;}
-        .tn_protal .tn_r .tn_box input{
-            border-radius: 5px;
-            height: 54px;
-            background: #0e57cc;
-            float: left;
-            font-size: 20px;
-            text-indent: 20px;
-            color: #fff;
-            width: 100%;
-        }
-        .tn_protal .tn_r .tn_box div{ position: relative;float: left;}
-        input::-webkit-input-placeholder{ color: rgba(255, 255, 255, 0.6);}
-        .tn_protal .tn_r .tn_box #ns_login{
-            float: left;
-            width: 150px;
-            height: 64px;
-            background: #6eeeff;
-            color: #1c6ab9;
-            box-shadow: 0 6px 10px rgba(0, 133, 198, 0.3);
-        }
-        .tn_protal .tn_r .tn_box #ns_login:hover{ background: #2be6ff;}
-        .indexBg{ width: 100%;height: 100%;}
-        .ns_msg{
-            background: #fff;
-            text-indent: 20px;
-            width: 150px;
-            position: absolute;
-            top: -26px;
-            left: 0;
-            color: #222;
-            line-height: 24px;
-            display: none;
-        }
-        #byYzm{
-            border: none;
-            background: none;
-            text-decoration: underline;
-            font-size: 20px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            color: #fff;
-            opacity: 0.6;
-            padding: 0 12px;
-            height: 54px;
-            cursor: pointer;
-            outline: none;
-        }
-        @media screen and (max-width: 1322px) {
-            .tn_protal .tn_r .tn_box input{ font-size: 16px;text-indent: 10px;}
-            #byYzm{ font-size: 16px;}
-            .tn_protal .tn_r .tn_box em{ font-size: 20px;}
-        }
-    </style>
+    <script src="/wx/js/pollpcresult.js"></script>
 </head>
 
 <body>
-    <img src="/images/nsimgs/zttec_index.jpg" class="indexBg" />
-    <div class="tn_protal">
-        <ul>
-            <li class="tn_l">
-                <div class="tn_po">
-                    % if shopid:
-                    <button type="button">微信认证</button>
-                    % endif
-                    <div class="tn_wx">
-                        <p>微信扫一扫上网</p>
-                        <div class="main__content-qrcode" id="qrcode_zone" style="border: none; text-align: center; margin: 0 auto; width: 170px; position: relative;" title="http://wifi.weixin.qq.com/assistant/wifigw/pcAuth.xhtml?appId=${appid}&amp;shopId=${shopid}&amp;ticket=${secret}"></div>
-                    </div>
-                </div>
-            </li>
-            <li class="tn_r">
-                <div class="tn_box">
-                    <em>账户认证：</em>
-                    <div class="btngroups ns_user" style="width: 30%;"><input type="text" placeholder="请输入您的账号" id="ns_user" />
-                        <button type="button" id="byYzm">获取验证码</button>
-                    </div>
-                    <div class="btngroups" style="width: 22%;"><input type="password" placeholder="请输入您的密码" id="ns_pwd" /></div>
-                    <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login">登录</button></div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
     <input type="hidden" id="user" value="${user}" />
     <input type="hidden" id="password" value="${password}" />
     <input type="hidden" id="openid" value="${openid}" />
@@ -194,6 +29,60 @@
     <input type="hidden" id="urlparam" value="${urlparam}" />
     <input type="hidden" id="appid" value="${appid}" />
     <input type="hidden" id="shopid" value="${shopid}" />
+
+    <div class="ns_banner school"></div>
+
+    <div class="ns_wrapper">
+        <div class="ns_authen">
+            <div class="ns_app">
+                <h3>APP认证上网</h3>
+                <div class="ns_box">
+                    <a href="javascript:;">女院APP</a>
+                    <div class="ns_appnote">
+                        <img src="/images/nsimgs/school_app_ico.png" />
+                        <ul>
+                            <li>安装即可上,上网免注册,全学院无感漫游，优先接入，速度更快</li>
+                            <li>学院信息早知道，教务课程一键通</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box">
+                    <div class="ns_group ns_user">
+                        <label>账号/手机号：</label>
+                        <input type="text" id="ns_user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>密码/验证码：</label>
+                        <input type="text" id="ns_pwd" />
+                        <button type="button" id="yzm">获取验证码</button>
+                    </div>
+                    <input type="button" value="登录" class="ns_login" id="ns_login" />
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % if shopid:
+            <div class="ns_yjsw">
+                <h3>微信扫一扫上网</h3>
+                <div class="ns_box">
+                    <div class="main__content">
+                        <input type="hidden" value="${logo}" id="wxImg" />
+                        <div class="main__content-qrcode" id="qrcode_zone" style="text-align: center; margin: 20px auto; width: 170px; position: relative;" title="http://wifi.weixin.qq.com/assistant/wifigw/pcAuth.xhtml?appId=${appid}&amp;shopId=${shopid}&amp;ticket=${secret}"></div>
+                        <div class="main__content-info">使用微信扫描二维码</div>
+                    </div>
+                </div>
+            </div>
+            % endif
+        </div>
+    </div>
+
+    <div class="ns_footer">
+        <div>
+            <p>服务提供商：广州众拓计算机科技有限公司</p>
+        </div>
+    </div>
 
     % if shopid:
     <script type="text/javascript">

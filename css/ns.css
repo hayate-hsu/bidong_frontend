@@ -27,6 +27,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 .baiyun{ background: url("../images/nsimgs/banner_baiyun.png") top center no-repeat; height: 278px;}
 .yczone{ background: url("../images/nsimgs/banner_yczone.jpg") top center no-repeat; height: 278px;}
 .zttec{ background: url("../images/nsimgs/banner_zttec.jpg") top center no-repeat; height: 278px;}
+.school{ background: url("../images/nsimgs/banner_school.png") top center no-repeat;}
 .ns_wrapper{
     width: 1002px;
     margin: 0 auto;
@@ -138,6 +139,13 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     display: block;
     text-indent: -9999px;
     float: left;
+    margin-right: 10px;
+}
+.ns_app .ns_appnote img{
+    width: 62px;
+    height: 62px;
+    float: left;
+    display: block;
     margin-right: 10px;
 }
 .ns_app .ns_appnote span.baiyun{ background: url("../images/nsimgs/baiyunlogo.png") no-repeat;}
@@ -328,7 +336,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     background: #fff;
     text-align: center;
 }
-.ns_footer div{ padding-top: 24px;}
+.ns_footer div{ padding: 24px;}
 .ns_footer p{
     font-size: 14px;
     color: #555;
