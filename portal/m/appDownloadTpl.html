@@ -1,0 +1,12 @@
+<%page args="appname=u'南沙通', applink='http://wnl.bidongwifi.com:9899/app.html', apptxt=True" />
+
+<div class="ns_box">
+    <h3>客户端下载</h3>
+    <a href="${applink}" class="appDownload">${appname}下载</a>
+    % if apptxt:
+    <ul>
+        <li>安装即可上网，优先接入，速度更快</li>
+        <li>政务早知道，办事一键通</li>
+    </ul>
+    % endif
+</div>

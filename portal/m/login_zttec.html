@@ -1,76 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta content="telephone=no" name="format-detection">
-    <title>众拓科技-无线城市</title>
-    <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/md5.js"></script>
-    <script type="text/javascript" src="/js/ns.js"></script>
-</head>
+## 众拓科技 login_zttec.html
 
-<body>
-    <input type="hidden" id="user" value="${user}" />
-    <input type="hidden" id="password" value="${password}" />
-    <input type="hidden" id="openid" value="${openid}" />
-    <input type="hidden" id="ac_ip" value="${ac_ip}" />
-    <input type="hidden" id="vlanId" value="${vlan}" />
-    <input type="hidden" id="ssid" value="${ssid}" />
-    <input type="hidden" id="user_ip" value="${user_ip}" />
-    <input type="hidden" id="user_mac" value="${user_mac}" />
-    <input type="hidden" id="ap_mac" value="${ap_mac}" />
-    <input type="hidden" id="firsturl" value="${firsturl}" />
-    <input type="hidden" id="urlparam" value="${urlparam}" />
-    <input type="hidden" id="appid" value="${appid}" />
-    <input type="hidden" id="shopid" value="${shopid}" />
+<%inherit file="base.html" />
 
-    <div class="ns_header">
-        <img src="/images/nsimgs/bg_zttec.jpg" class="ns_bg" />
-        <!--<div>白云区</div>-->
-    </div>
+<%block name="title">众拓科技</%block>
 
-    <div class="ns_box">
-        <h3>第三方认证</h3>
-        % if shopid:
-        <button type="button" id="weixinAuthor" onclick="callWechatBrowser()"><i></i>微信上网</button>
-        % else:
-        <button type="button" id="weixinAuthor" disabled onclick="callWechatBrowser()"><i></i>微信上网</button>
-        % endif
-    </div>
-    <!--<div class="ns_box">-->
-        <!--<h3>客户端下载</h3>-->
-        <!--<a href="javascript:;" class="appDownload">创意园APP下载</a>-->
-        <!--<ul>-->
-            <!--<li>安装即可上网，优先接入，速度更快</li>-->
-            <!--<li>政务早知道，办事一键通</li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <div class="ns_box" style="border-bottom: none; height: 250px;">
-        <h3 style="color: #d46e00;">账户认证</h3>
-        <div class="ns_rz_wrapper">
-            <div class="ns_rz_group"><div><input type="text" placeholder="账号/手机号：" class="ns_admin_mbo" name="user" /></div></div>
-            <div class="ns_rz_group"><div><input type="text" placeholder="输入密码/验证码：" name="password" /></div><button type="button" id="yzmMbo">获取验证码</button></div>
-            <input type="button" value="登录" class="ns_login_mbo" />
-            <div class="ns_msg"></div>
-        </div>
-    </div>
-</body>
-
-<script type="text/javascript">
-    $(function(){
-        $('#weixinAuthor').click(function(){
-            callWechatBrowser();
-        });
-    });
-    function callWechatBrowser(){
-        Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
-    }
-</script>
-<script type="text/javascript">
-	document.addEventListener('visibilitychange', putNoResponse, false);
-</script>
-
-</html>
+<%block name="headerBg">
+    <img src="/images/nsimgs/bg_zttec.jpg" class="ns_bg" />
+</%block>

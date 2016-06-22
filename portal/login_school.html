@@ -1,93 +1,19 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>广东女子职业技术学院</title>
-    <link rel="stylesheet" type="text/css" href="/css/ns.css">
-    <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/json2.js"></script>
-    <script type="text/javascript" src="/js/md5.js"></script>
-    <script type="text/javascript" src="/js/ns.js"></script>
-    <script type="text/javascript" src="/wx/js/pcauth.js"></script>
-    <script src="/wx/js/pollpcresult.js"></script>
-</head>
+##  广东女子职业技术学院 login_school.html
 
-<body>
-    <input type="hidden" id="user" value="${user}" />
-    <input type="hidden" id="password" value="${password}" />
-    <input type="hidden" id="openid" value="${openid}" />
-    <input type="hidden" id="ac_ip" value="${ac_ip}" />
-    <input type="hidden" id="vlanId" value="${vlan}" />
-    <input type="hidden" id="ssid" value="${ssid}" />
-    <input type="hidden" id="user_ip" value="${user_ip}" />
-    <input type="hidden" id="user_mac" value="${user_mac}" />
-    <input type="hidden" id="ap_mac" value="${ap_mac}" />
-    <input type="hidden" id="firsturl" value="${firsturl}" />
-    <input type="hidden" id="urlparam" value="${urlparam}" />
-    <input type="hidden" id="appid" value="${appid}" />
-    <input type="hidden" id="shopid" value="${shopid}" />
-
-    <div class="ns_banner school"></div>
-
-    <div class="ns_wrapper">
-        <div class="ns_authen">
-            <div class="ns_app">
-                <h3>APP认证上网</h3>
-                <div class="ns_box">
-                    <a href="javascript:;">女院APP</a>
-                    <div class="ns_appnote">
-                        <img src="/images/nsimgs/school_app_ico.png" />
-                        <ul>
-                            <li>安装即可上,上网免注册,全学院无感漫游，优先接入，速度更快</li>
-                            <li>学院信息早知道，教务课程一键通</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="ns_admin">
-                <h3>账号密码认证上网</h3>
-                <div class="ns_box">
-                    <div class="ns_group ns_user">
-                        <label>账号/手机号：</label>
-                        <input type="text" id="ns_user" />
-                    </div>
-                    <div class="ns_group">
-                        <label>密码/验证码：</label>
-                        <input type="text" id="ns_pwd" />
-                        <button type="button" id="yzm">获取验证码</button>
-                    </div>
-                    <input type="button" value="登录" class="ns_login" id="ns_login" />
-                    <div class="ns_msg"></div>
-                </div>
-            </div>
-            % if shopid:
-            <div class="ns_yjsw">
-                <h3>微信扫一扫上网</h3>
-                <div class="ns_box">
-                    <div class="main__content">
-                        <input type="hidden" value="${logo}" id="wxImg" />
-                        <div class="main__content-qrcode" id="qrcode_zone" style="text-align: center; margin: 20px auto; width: 170px; position: relative;" title="http://wifi.weixin.qq.com/assistant/wifigw/pcAuth.xhtml?appId=${appid}&amp;shopId=${shopid}&amp;ticket=${secret}"></div>
-                        <div class="main__content-info">使用微信扫描二维码</div>
-                    </div>
-                </div>
-            </div>
-            % endif
-        </div>
-    </div>
-
-    <div class="ns_footer">
-        <div>
-            <p>服务提供商：广州众拓计算机科技有限公司</p>
-        </div>
-    </div>
-
-    % if shopid:
-    <script type="text/javascript">
-        weixinScan('${appid}', '${shopid}', '${extend}', '${authUrl}');
-    </script>
-    % endif
-</body>
-</html>
+<%!
+    title = u'广东女子职业技术学院';
+    bannerImg = 'banner_school.png';
+    notice = False;
+    applogo = 'school_app_ico.png';
+    nsLink = 'javascript:;';
+    nsName = u'女院';
+    nsItr = [
+        u'安装即可上,上网免注册,全学院无感漫游，优先接入，速度更快',
+        u'学院信息早知道，教务课程一键通'
+    ];
+    adsFlag = False;
+    nsfooter = [
+        u'服务提供商：广州众拓计算机科技有限公司'
+    ];
+%>
+<%inherit file="tpLA.html" />

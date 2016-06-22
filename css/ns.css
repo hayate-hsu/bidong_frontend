@@ -24,7 +24,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     height: 320px;
     margin-bottom: 12px;
 }
-.baiyun{ background: url("../images/nsimgs/banner_baiyun.png") top center no-repeat; height: 278px;}
+.baiyun{ background: #efefef url("../images/nsimgs/banner_baiyun.jpg") top center no-repeat; height: 278px;}
 .yczone{ background: url("../images/nsimgs/banner_yczone.jpg") top center no-repeat; height: 278px;}
 .zttec{ background: url("../images/nsimgs/banner_zttec.jpg") top center no-repeat; height: 278px;}
 .school{ background: url("../images/nsimgs/banner_school.png") top center no-repeat;}
@@ -121,14 +121,14 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     font-size: 16px;
     cursor: pointer;
     transition: background 0.2s ease;
-
+    text-decoration: none;
     border-radius: 20px;
     background: #3ab1ff;
     border-bottom: 3px solid #257bd9;
     display: block;
     margin: 0 auto;
 }
-.ns_app button:hover{ background: #2d91fe;}
+.ns_app a:hover{ background: #2d91fe;}
 .ns_app .ns_appnote{
     margin-top: 30px;
 }
@@ -179,7 +179,6 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     left: 0;
     z-index: -1;
 }
-/*.ns_pwd, .ns_yzm{ top: 80px;}*/
 .ns_ani.in{
     transform: translate(0, 0);
     opacity: 1;
@@ -202,8 +201,6 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     float: left;
     font-size: 16px;
 }
-/*.ns_group #ns_yzm{ width: 104px;}*/
-/*.ns_group #ns_pwd{ width: 200px;}*/
 .ns_group #yzm{  /*hover样式*/
     position: absolute;
     right: 0;
@@ -220,7 +217,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 }
 .ns_group #yzm:hover{ background: #429fff;}
 .ns_group #yzm.disabled, .ns_group #yzm.disabled:hover{ background: #d4d4d4;}
-.ns_login{
+#ns_login{
     width: 120px;
     height: 40px;
     background: #6bb2ff;
@@ -234,13 +231,13 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     /*margin-left: -60px;*/
     /*top: 129px;*/
 }
+#ns_login:hover{
+    background: #3ba1ff;
+    border-bottom: 3px solid #257bd9;
+}
 .ns_msg{
     margin-top: 5px;
     color: #f36144;
-}
-.ns_login:hover{
-    background: #3ba1ff;
-    border-bottom: 3px solid #257bd9;
 }
 .ns_yjsw{
     width: 260px;
@@ -270,7 +267,6 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 }
 .ns_byPortal h3{
     font-size: 22px;
-    color: #006be3;
     font-weight: bold;
     text-align: center;
 }
@@ -282,7 +278,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     margin-bottom: 0;
 }
 .ns_byPortal .ns_group input{ width: 150px;}
-.ns_byPortal .ns_login{
+.ns_byPortal #ns_login{
     width: 100%;
     background: #f1b31e;
     font-size: 18px;
@@ -290,7 +286,7 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     margin-top: 14px;
     height: 42px;
 }
-.ns_byPortal .ns_login:hover{
+.ns_byPortal #ns_login:hover{
     background: #e3a216;
     border-bottom: 3px solid #c69208;
 }
@@ -303,17 +299,24 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
     margin-top: 0;
     text-align: center;
 }
-#byYzm{
-    background: no-repeat;
+#yzm.sYzm{
+    background: none;
     border: none;
     text-decoration: underline;
     color: #878787;
     margin-top: 10px;
     font-size: 14px;
     cursor: pointer;
+    display: block;
 }
-#byYzm:hover{ color: #4d8de3;}
-#byYzm:disabled{ color: #878787;}
+#yzm.sYzm:hover{ color: #4d8de3;}
+#yzm.sYzm:disabled{ color: #878787;}
+.ns_group #yzm.sYzm{
+    margin: 0;
+}
+.ns_group #yzm.sYzm:hover{
+    background: none;
+}
 .ns_byWx{
     width: 182px;
     height: 214px;
@@ -332,18 +335,17 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 
 .ns_footer{
     margin-top: 50px;
-    height: 143px;
+    padding: 24px 15px;
+    /*height: 143px;*/
     background: #fff;
     text-align: center;
 }
-.ns_footer div{ padding: 24px;}
 .ns_footer p{
     font-size: 14px;
     color: #555;
     line-height: 24px;
 }
 .ns_footer p span{ margin: 0 15px;}
-.ns_byFooter{ height: 72px;}
 
 .ns_dialog{
     position: fixed;
@@ -622,13 +624,115 @@ a, button, input{ font-family: "microsoft yahei", Arial, Helvetica, sans-serif; 
 .app_footer p{ line-height: 20px;}
 /****-自贸通APP下载-end-****/
 
+/*2016-06-20新增*/
+.seWrapper{
+    background: #fff;
+    width: 1000px;
+    height: 596px;
+    margin: 95px auto 0;
+    overflow: hidden;
+    padding-top: 30px;
+}
+.seWrapper .ns_msg{
+    float: right;
+    margin-top: 0;
+}
+.seL{
+    padding: 0 30px 0 20px;
+    width: 260px;
+    float: left;
+}
+.ns_sePortal h3{
+    font-size: 20px;
+    color: #d12236;
+    text-align: center;
+    font-weight: bold;
+}
+.ns_sePortal .ns_group{
+    width: 260px;
+    background: #fff;
+    border: 1px solid #d4d4d4;
+    margin: 14px 0 0 0;
+}
+.ns_sePortal .ns_group input{
+    width: 150px;
+}
+.ns_sePortal #yzm.sYzm{
+    color: #d12236;
+}
+.ns_sePortal #ns_login{
+    background: #d12236;
+    border: none;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    height: 42px;
+    line-height: 42px;
+}
+.ns_sePortal #ns_login:hover{background: #ab1b2c;}
+.ns_se{margin-top: 10px;}
+.ns_se label{
+    color: #878787;
+}
+.ns_se label input{
+    border: 1px solid #d4d4d4;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.ns_se label a{
+    color: #333;
+    text-decoration: underline;
+}
+.ns_se b{font-weight: bold;}
+.ns_ctx{
+    font-size: 14px;
+    margin-top: 10px;
+}
+.ns_ctx h3{
+    color: #333;
+    font-weight: bold;
+}
+.ns_ctx p{
+    line-height: 24px;
+    margin-top: 8px;
+    color: #555;
+}
+.seR{
+    width: 668px;
+    float: left;
+    font-size: 14px;
+    color: #333;
+}
+.seR img{
+    width: 668px;
+    height: 180px;
+    display: block;
+    margin-bottom: 5px;
+}
+.seR h4{
+    color: #0087e5;
+    font-weight: bold;
+    line-height: 30px;
+}
+.seR p{
+    font-size: 12px;
+    line-height: 22px;
+}
+.seR p.lp{font-size: 14px;}
+.sefooter{
+    text-align: center;
+    color: #444;
+    margin-top: 80px;
+}
+
 @media screen and (max-width: 900px) {
     .ns_wrapper{
         width: auto;
         min-width: 360px;
         margin: 0 15px;
     }
-    .ns_byWrapper{ width: 1002px;}
     .ns_app, .ns_admin, .ns_yjsw{
         width: 100%;
         min-width: 360px;
