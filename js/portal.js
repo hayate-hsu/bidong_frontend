@@ -72,10 +72,9 @@
                 if(!isMobile){alert('请输入正确的手机号!');return false;}
                 self.unitAjax('/wnl/mobile', 'mobile='+self.user.value.trim()+'&mask=256', function(data){
                     eval("var objSucc =" + data);
-                    console.log(objSucc);
                     verify = objSucc.verify;
                     alert("验证码已下发到手机，请注意查收！");
-                    self.yzm.innerHTML='<span id="portal_sec">10</span>秒重新获取';
+                    self.yzm.innerHTML='<span id="portal_sec">60</span>秒重新获取';
                     self.yzm.disabled = true;
                     timeoutYzm();
                 }, function(error){
@@ -107,11 +106,10 @@
                 if(isMobile){
                     console.log(self.MD5yzm(pwd) + ' ' + verify);
                     if(self.MD5yzm(pwd)==verify){
-                        self.unitAjax('/wnl/register', 'moblie='+user+'&mask=256&mac='+self.opt.ap_mac, function(data){
+                        self.unitAjax('/wnl/register', 'mobile='+user+'&mask=256&mac='+self.opt.ap_mac, function(data){
                             eval("var objSucc =" + data);
-                            console.log(objSucc);
-                            self.opt.user = objSucc.user;
-                            self.opt.password = objSucc.password;
+                            obj.user = objSucc.user;
+                            obj.password = objSucc.password;
                             self.unitPortal(obj, self.opt.firsturl, self.opt.urlparam);
                         });
                     }else{
@@ -133,8 +131,7 @@
             }, function(error){
                 self.login.innerHTML = '重新验证';
                 self.login.disabled = false;
-                eval("var objErr" + error.responseText);
-                console.log(objErr);
+                eval("var objErr =" + error);
                 alert('验证失败：'+ objErr.Msg);
             });
         },
@@ -159,7 +156,7 @@
                         fnSucc(oAjax.responseText);
                     }else{
                         if(fnFaild){
-                            fnFaild();
+                            fnFaild(oAjax.responseText);
                         }
                     }
                 }

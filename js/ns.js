@@ -93,6 +93,14 @@ $(function(){
         $('.tn_wx').hide();
     });
 
+    // 记住账号
+    if($('#autoLogin').length>0){
+        var name = $('#autoLogin').data('name');
+        var user = localStorage[name];
+        $('input[name=user]').val(user);
+        if(!!user){$('#autoLogin input').attr('checked', true);}
+    }
+
     //响应输入框
     $('.ns_group').click(function(){$(this).find('input').focus();});
 
@@ -157,11 +165,11 @@ $(function(){
             // all
             return false;
         }
-        // mobile
         if($('#autoDuty').length>0 && (!$('#autoDuty input').is(':checked'))){
             alert('需同意无线上网业务免责声明！');
             return false;
         }
+        // mobile
         $('.ns_rz_group').removeClass('borderRed');
         // pc
         $('.ns_msg').text('');
@@ -219,99 +227,6 @@ $(function(){
             });
         }
     });
-    //验证码倒计时
-    //$(document).on('click', '#yzmMbo', function(){
-    //    var $this=$(this), mobile=$('input[name=user]').val();
-    //    if(!isyzm){alert('请输入正确的手机号');return false;}
-    //    if(canyzm){
-    //        $.ajax({
-    //            method: "post",
-    //            url: '/wnl/mobile',
-    //            dataType: "json",
-    //            data: {
-    //                mobile: mobile,
-    //                mask: 256
-    //            },
-    //            success: function(data){
-    //                verify = data.verify;
-    //                alert("验证码已下发到手机，请注意查收！");
-    //                $this.html('<span>60</span>秒重新获取').css('color', '#cbcbcb').attr("disabled", "disabled");
-    //                delayYZMMbo();
-    //            },
-    //            error: function(msg){
-    //                console.log(msg);
-    //                alert('请检查网络是否已连接');
-    //            }
-    //        });
-    //    }
-    //});
-
-    //移动账户认证
-    //$(document).on('click', '#login', function(){
-    //    var user=$('input[name=user]').val(),
-    //        pwd=$('input[name=password]').val(),
-    //        $openid=$('#openid').val(),
-    //        $acip=$('#ac_ip').val(),
-    //        $vlanId=$('#vlanId').val(),
-    //        $ssid=$('#ssid').val(),
-    //        $userip=$('#user_ip').val(),
-    //        $usermac=$('#user_mac').val(),
-    //        $apmac=$('#ap_mac').val(),
-    //        $firsturl=$('#firsturl').val(),
-    //        $urlparam=$('#urlparam').val(),
-    //        $appid=$('#appid').val(),
-    //        $shopid=$('#shopid').val();
-    //
-    //    var obj = {
-    //        user: user,
-    //        password: pwd,
-    //        openid: $openid,
-    //        ac_ip: $acip,
-    //        vlanId: $vlanId,
-    //        ssid: $ssid,
-    //        user_ip: $userip,
-    //        user_mac: $usermac,
-    //        ap_mac: $apmac,
-    //        firsturl: $firsturl,
-    //        urlparam: $urlparam,
-    //        appid: $appid,
-    //        shopid: $shopid
-    //    };
-    //
-    //    if(user=='' || user==null){
-    //        $('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
-    //        return false;
-    //    }
-    //    if(pwd=='' || pwd==null){
-    //        $('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
-    //        return false;
-    //    }
-    //    $('.ns_rz_group').removeClass('borderRed');
-    //    if(isyzm){
-    //        if(MD5yzm(pwd)==verify){
-    //            $.ajax({
-    //                method: "post",
-    //                url: '/wnl/register',
-    //                dataType: "json",
-    //                data: {
-    //                    mobile: user,
-    //                    mask: 256,
-    //                    mac: $apmac
-    //                },
-    //                success: function(data){
-    //                    obj.user=data.user;
-    //                    obj.password=data.password;
-    //                    adminAuthorMbo(obj, $firsturl, $urlparam);
-    //                }
-    //            });
-    //        }else{
-    //            $('input[name=password]').val('');
-    //            alert('验证码错误');
-    //        }
-    //    }else{
-    //        adminAuthorMbo(obj, $firsturl, $urlparam);
-    //    }
-    //});
 });
 
 //账户认证
@@ -327,6 +242,10 @@ function adminAuthor(obj, firsturl, urlparam){
             $('#ns_login, #login').attr('disabled', 'disabled');
         },
         success: function (data) {
+            if($('#autoLogin').length>0 && $('#autoLogin input').is(':checked')){
+                var name = $('#autoLogin').data('name');
+                localStorage[name]=user;
+            }
             $('.ns_msg').text('验证成功').css('color', '#68d68f');
             if($('#ns_login').hasClass('theNode')){
                 window.location.href= 'http://www.thenode.cn/web/index.do';
@@ -343,32 +262,6 @@ function adminAuthor(obj, firsturl, urlparam){
         }
     });
 }
-//移动端账户认证
-//function adminAuthorMbo(obj, firsturl, urlparam){
-//    $.ajax({
-//        method: "POST",
-//        url: "/account",
-//        contentType: "application/json; charset=utf-8",
-//        data: JSON.stringify(obj),
-//        dataType: "json",
-//        beforeSend: function(){
-//            $('.ns_msg').text('正在为您验证...');
-//            $('#login').attr('disabled', 'disabled');
-//        },
-//        success: function (data) {
-//            $('.ns_msg').text('验证成功');
-//            window.location.href=urlChange(firsturl, urlparam);
-//        },
-//        complete: function(){
-//            $('.ns_msg').text('');
-//            $('#login').removeAttr('disabled');
-//        },
-//        error: function (error) {
-//            alert('验证失败：'+error.responseJSON.Msg);
-//        }
-//    });
-//}
-
 //验证码倒计时
 var canyzm = true;//判断倒计时是否结束   【作用域全局】
 //function delayYZM($this){
@@ -429,7 +322,6 @@ function MD5yzm(yzm){
 
 //自动跳转
 function urlChange(url, param){
-    var reurl = '';
-    param=='' ? reurl=url : reurl=url+'?'+param;
+    var reurl = (param=='' ? url : url+'?'+param);
     return reurl;
 }

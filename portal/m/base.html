@@ -55,7 +55,7 @@
             <div class="ns_rz_group"><div><input type="text" placeholder="账号/手机号：" name="user" /></div></div>
             <div class="ns_rz_group"><div><input type="text" placeholder="密码/验证码：" name="password" /></div><button type="button" id="yzmMbo" class="mYzm fYzm">获取验证码</button></div>
             % if self.attr.duty:
-            <label id="autoLogin"><input type="checkbox" />下次自动登录</label>
+            <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
             <button type="button" id="login">登录</button>
             % if self.attr.duty:
@@ -92,4 +92,5 @@
     color = 'G_orange';
     wxFlag = True;
     duty = False;
+    nsName = 'auto';
 %>
