@@ -14,6 +14,13 @@
 
 % if shopid:
 <script type="text/javascript">
-    weixinScan('${appid}', '${shopid}', '${extend}', '${authUrl}');
+    JSAPI.auth({
+        target : document.getElementById('qrcode_zone'),
+        appId : '${appid}',
+        shopId : '${shopid}',
+        extend : '${extend}',
+        //authUrl : 'http://wifi.weixin.qq.com/mbl/default.xhtml'
+        authUrl : '${authUrl}'
+    });
 </script>
 % endif

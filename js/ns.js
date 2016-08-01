@@ -74,17 +74,6 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-function weixinScan(appId, shopId, extend, authUrl){
-    JSAPI.auth({
-        target : document.getElementById('qrcode_zone'),
-        appId : appId,
-        shopId : shopId,
-        extend : extend,
-        //authUrl : 'http://wifi.weixin.qq.com/mbl/default.xhtml'
-        authUrl : authUrl
-    });
-}
-
 $(function(){
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
@@ -322,6 +311,13 @@ function MD5yzm(yzm){
 
 //自动跳转
 function urlChange(url, param){
-    var reurl = (param=='' ? url : url+'?'+param);
+    var reurl;
+    var w=window.location.href;
+    var d=w.indexOf('?');
+    if(url==w.substr(0, d)){
+        reurl = 'http://mbd.cniotroot.cn/';
+    }else{
+        reurl = (param=='' ? url : url+'?'+param);
+    }
     return reurl;
 }
