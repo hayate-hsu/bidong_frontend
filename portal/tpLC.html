@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>${self.attr.title}</title>
     <style type="text/css">
+        *{margin: 0; padding: 0;}
         body,html{ width: 100%; height: 100%; overflow-y: hidden;}
         .tn_nav{
             background: rgba(0,0,0,.7);
@@ -35,37 +36,53 @@
             width: 100%;
             margin: 0;
             padding: 0;
+            position: relative;
         }
         .tn_protal .tn_l{
             background: url("/images/nsimgs/tn_bg_l.png") left top no-repeat;
             height: 116px;
-            width: 26%;
+            width: 560px;
             display: block;
-            float: left;
             position: relative;
         }
         .tn_protal .tn_r{
             background: url("/images/nsimgs/tn_bg_r.png") right top no-repeat;
             height: 116px;
-            width: 74%;
             display: block;
-            float: left;
-            position: relative;
+            position: absolute;
+            left: 560px;
+            right: 0;
+            top: 0;
         }
         .tn_protal .tn_l .tn_po{
-            position: absolute;
-            top: 26px;
-            right: 12%;
+            float: right;
+            margin-top: 8px;
+            margin-right: 50px;
         }
-        .tn_protal .tn_l button{
+        .tn_protal .tn_l .logo{
+            background: url("/images/nsimgs/thenode_logo.png") no-repeat;
+            width: 144px;
+            height: 100px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 25px;
+        }
+        .tn_protal .tn_l .scan{
+            display: inline-block;
+            vertical-align: middle;
+            width: 179px;
+            height: 64px;
+            position: relative;
+        }
+        .tn_protal .tn_l .scan button{
             width: 179px;
             height: 64px;
             background: #01a5f6;
             color: #fff;
             box-shadow: 0 6px 10px rgba(52, 156, 58, 0.3);
         }
-        .tn_protal .tn_l button:hover{ background: #0192da;}
-        .tn_protal .tn_l .tn_wx{
+        .tn_protal .tn_l .scan button:hover{ background: #0192da;}
+        .tn_protal .tn_l .scan .tn_wx{
             position: absolute;
             bottom: 64px;
             right: 0;
@@ -74,14 +91,15 @@
             height: 222px;
             display: none;
         }
-        .tn_protal .tn_l .tn_wx p{
+        .tn_protal .tn_l .scan .tn_wx p{
             text-align: center;
             color: #313132;
             font-size: 20px;
         }
         .tn_protal .tn_r .tn_box{
             color: #fff;
-            margin: 26px 0 0 50px;
+            margin-top: 26px;
+            margin-left: 50px;
             line-height: 54px;
         }
         .tn_protal .tn_r .tn_box em{
@@ -124,11 +142,10 @@
             line-height: 24px;
             display: none;
         }
-        #byYzm{
+        #yzm{
+            font-size: 16px;
             border: none;
             background: none;
-            text-decoration: underline;
-            font-size: 20px;
             position: absolute;
             top: 0;
             right: 0;
@@ -139,9 +156,17 @@
             cursor: pointer;
             outline: none;
         }
-        @media screen and (max-width: 1322px) {
-            .tn_protal .tn_r .tn_box input{ font-size: 16px;text-indent: 10px;}
-            #byYzm{ font-size: 16px;}
+        .userbtn{width: 280px;}
+        .pwdbtn{width: 200px;}
+        @media screen and (max-width: 1466px) {
+            .tn_protal .tn_l{width: 500px;}
+            .tn_protal .tn_r{left: 500px;}
+            .tn_protal .tn_l .tn_po{margin-right: 30px;}
+            .tn_protal .tn_r .tn_box{margin-left: 30px;}
+            .userbtn{width: 230px;}
+            .pwdbtn{width: 150px;}
+            .tn_protal .tn_r .tn_box input{font-size: 16px;text-indent: 10px;}
+            #yzm{font-size: 16px;}
             .tn_protal .tn_r .tn_box em{ font-size: 20px;}
         }
     </style>
@@ -160,25 +185,29 @@
         <ul>
             <li class="tn_l">
                 <div class="tn_po">
-                    % if shopid:
-                    <button type="button">微信认证</button>
-                    % endif
-                    <div class="tn_wx">
-                        <p>微信扫一扫上网</p>
-                        <div class="main__content-qrcode" id="qrcode_zone" style="border: none; text-align: center; margin: 0 auto; width: 170px; position: relative;"></div>
+                    <i class="logo"></i>
+                    <div class="scan">
+                        % if shopid:
+                        <button type="button">微信认证</button>
+                        % endif
+                        <div class="tn_wx">
+                            <p>微信扫一扫上网</p>
+                            <input type="hidden" value="${logo}" id="wxImg" style="width:50px" />
+                            <div class="main__content-qrcode" id="qrcode_zone" style="border: none; text-align: center; margin: 0 auto; width: 170px; position: relative;"></div>
+                        </div>
                     </div>
                 </div>
             </li>
             <li class="tn_r">
                 <div class="tn_box">
                     <em>账户认证：</em>
-                    <div class="btngroups" style="width: 30%;">
+                    <div class="btngroups userbtn">
                         <input type="text" placeholder="请输入您的账号" name="user" class="onlyAct" />
                         % if self.attr.yzm:
                         <button type="button" id="yzm" class="mYzm fYzm">获取验证码</button>
                         % endif
                     </div>
-                    <div class="btngroups" style="width: 22%"><input type="password" placeholder="请输入您的密码" name="password" /></div>
+                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
                     <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
                 </div>
             </li>
@@ -190,7 +219,7 @@
 </html>
 <%!
     title = u'无线验证';
-    nsnav = True;
+    nsnav = False;
     yzm = True;
     bg = 'thenode_index.jpg';
 %>
