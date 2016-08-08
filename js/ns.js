@@ -86,8 +86,10 @@ $(function(){
     if($('#autoLogin').length>0){
         var name = $('#autoLogin').data('name');
         var user = localStorage[name];
-        $('input[name=user]').val(user);
-        if(!!user){$('#autoLogin input').attr('checked', true);}
+        if(!!user){
+            $('input[name=user]').val(user);
+            $('#autoLogin input').attr('checked', true);
+        }
     }
 
     //响应输入框
