@@ -177,7 +177,7 @@ $(function(){
                     success: function(data){
                         obj.user=data.user;
                         obj.password=data.password;
-                        adminAuthor(obj, $firsturl, $urlparam);
+                        adminAuthor(obj, $firsturl, $urlparam, user);
                     }
                 });
             }else{
@@ -185,7 +185,7 @@ $(function(){
                 alert('验证码错误');
             }
         }else{
-            adminAuthor(obj, $firsturl, $urlparam);
+            adminAuthor(obj, $firsturl, $urlparam, user);
         }
     });
 
@@ -219,7 +219,7 @@ $(function(){
 });
 
 //账户认证
-function adminAuthor(obj, firsturl, urlparam){
+function adminAuthor(obj, firsturl, urlparam, user){
     $.ajax({
         method: "POST",
         url: "/account",
