@@ -75,6 +75,7 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
 }
 
 $(function(){
+    var isyzm = false, verify;
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -89,6 +90,19 @@ $(function(){
         if(!!user){
             $('input[name=user]').val(user);
             $('#autoLogin input').attr('checked', true);
+            if(/^1\d{10}$/.test(user) && (!$('input[name=user]').hasClass('onlyAct'))){   // onlyAct:只有账户登录
+                isyzm = true;
+                if($('#yzmMbo, #yzm').hasClass('fYzm')){
+                    $('.mYzm').show();
+                    $('input[name=password]').attr('type', 'text');
+                }
+            }else{
+                isyzm = false;
+                if($('#yzmMbo, #yzm').hasClass('fYzm')){
+                    $('.mYzm').hide();
+                    $('input[name=password]').attr('type', 'password');
+                }
+            }
         }
     }
 
@@ -96,7 +110,6 @@ $(function(){
     $('.ns_group').click(function(){$(this).find('input').focus();});
 
     //账号类型检测
-    var isyzm = false, verify;
     $('input[name=user]').change(function(){
         $('input[name=password]').val('');
         if(/^1\d{10}$/.test($(this).val()) && (!$(this).hasClass('onlyAct'))){   // onlyAct:只有账户登录
@@ -193,7 +206,7 @@ $(function(){
 
     //验证码重发
     $(document).on('click', '#yzm, #yzmMbo', function(){
-        var $this=$(this), mobile=$('input[name=user]').val();
+        var $this=$(this);
         if(!isyzm){alert('请输入正确的手机号');return false;}
         if(canyzm){
             $.ajax({
@@ -201,8 +214,9 @@ $(function(){
                 url: '/wnl/mobile',
                 dataType: "json",
                 data: {
-                    mobile: mobile,
-                    mask: 256
+                    mobile: $('input[name=user]').val(),
+                    mask: 256,
+                    pn: $('#pn').val()
                 },
                 success: function(data){
                     verify = data.verify;

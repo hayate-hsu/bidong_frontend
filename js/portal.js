@@ -18,7 +18,8 @@
             firsturl: '',
             urlparam: '',
             appid: '',
-            shopid: ''
+            shopid: '',
+            pn: ''
         },
         auth: function(param){
             for(var i in param)
@@ -70,7 +71,7 @@
             var self = this;
             self.addEventHandler(self.yzm, 'click', function(e) {
                 if(!isMobile){alert('请输入正确的手机号!');return false;}
-                self.unitAjax('/wnl/mobile', 'mobile='+self.user.value.trim()+'&mask=256', function(data){
+                self.unitAjax('/wnl/mobile', 'mobile='+self.user.value.trim()+'&mask=256&pn='+self.opt.pn, function(data){
                     eval("var objSucc =" + data);
                     verify = objSucc.verify;
                     alert("验证码已下发到手机，请注意查收！");
