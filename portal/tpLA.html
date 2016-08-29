@@ -268,15 +268,26 @@
             <div class="ns_admin">
                 <h3>账号密码认证上网</h3>
                 <div class="ns_box">
+                    % if self.attr.yzm:
                     <div class="ns_group">
                         <label>账号/手机号：</label>
-                        <input type="text" name="user" />
+                        <input type="text" name="user" id="userCtrl" />
                     </div>
                     <div class="ns_group">
                         <label>密码/验证码：</label>
-                        <input type="text" name="password" />
-                        <button type="button" id="yzm" class="mYzm fYzm">获取验证码</button>
+                        <input type="password" name="password" />
+                        <button type="button" id="yzm">获取验证码</button>
                     </div>
+                    % else:
+                    <div class="ns_group">
+                        <label>账号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>密码：</label>
+                        <input type="password" name="password" />
+                    </div>
+                    % endif
                     <button type="button" id="ns_login">登录</button>
                     <div class="ns_msg"></div>
                 </div>
@@ -343,4 +354,5 @@
     nsfooter = [
         u'ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心'
     ];
+    yzm = True;
 %>

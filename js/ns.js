@@ -90,18 +90,15 @@ $(function(){
         if(!!user){
             $('input[name=user]').val(user);
             $('#autoLogin input').attr('checked', true);
-            if(/^1\d{10}$/.test(user) && (!$('input[name=user]').hasClass('onlyAct'))){   // onlyAct:只有账户登录
+            if(/^1\d{10}$/.test(user)){
                 isyzm = true;
-                if($('#yzmMbo, #yzm').hasClass('fYzm')){
-                    $('.mYzm').show();
-                    $('input[name=password]').attr('type', 'text');
-                }
+                $('input[name=password]').attr('type', 'text');
+                $('#yzm').show();
             }else{
                 isyzm = false;
-                if($('#yzmMbo, #yzm').hasClass('fYzm')){
-                    $('.mYzm').hide();
-                    $('input[name=password]').attr('type', 'password');
-                }
+                $('input[name=password]').attr('type', 'password');
+                if(!$('#yzm').hasClass('sYzm'))
+                    $('#yzm').hide();
             }
         }
     }
@@ -110,20 +107,17 @@ $(function(){
     $('.ns_group').click(function(){$(this).find('input').focus();});
 
     //账号类型检测
-    $('input[name=user]').change(function(){
+    $('#userCtrl').change(function(){
         $('input[name=password]').val('');
-        if(/^1\d{10}$/.test($(this).val()) && (!$(this).hasClass('onlyAct'))){   // onlyAct:只有账户登录
+        if(/^1\d{10}$/.test($(this).val())){
             isyzm = true;
-            if($('#yzmMbo, #yzm').hasClass('fYzm')){
-                $('.mYzm').show();
-                $('input[name=password]').attr('type', 'text');
-            }
+            $('input[name=password]').attr('type', 'text');
+            $('#yzm').show();
         }else{
             isyzm = false;
-            if($('#yzmMbo, #yzm').hasClass('fYzm')){
-                $('.mYzm').hide();
-                $('input[name=password]').attr('type', 'password');
-            }
+            $('input[name=password]').attr('type', 'password');
+            if(!$('#yzm').hasClass('sYzm'))
+                $('#yzm').hide();
         }
     });
 
@@ -205,7 +199,7 @@ $(function(){
     });
 
     //验证码重发
-    $(document).on('click', '#yzm, #yzmMbo', function(){
+    $(document).on('click', '#yzm', function(){
         var $this=$(this);
         if(!isyzm){alert('请输入正确的手机号');return false;}
         if(canyzm){

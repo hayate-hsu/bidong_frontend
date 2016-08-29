@@ -36,6 +36,10 @@ input[type=checkbox]{
     vertical-align: middle;
     margin-right: 5px;
 }
+button{
+    -webkit-user-select: none;
+    user-select: none;
+}
 
 /* 新版南沙区无线城市-begin- */
 .footer{
@@ -119,7 +123,7 @@ input[type=checkbox]{
 #weixinAuthor{
     padding: 7px 0;
     background: #2fe033;
-    border-bottom: 2px solid #40c243;
+    border-bottom: 2px solid #40c243
 }
 #weixinAuthor i{
     background: url("../images/nsimgs/weixin_ico.png") no-repeat;
@@ -130,11 +134,11 @@ input[type=checkbox]{
     vertical-align: middle;
     margin-right: 7px;
 }
-#weixinAuthor:hover{
+#weixinAuthor:active {
     background: #2bd330;
     border-bottom: 2px solid #38bf37;
 }
-#appDownload, .appDownload{
+.appDownload{
     font-size: 1.6rem;
     padding: 10px 0;
     color: #fff;
@@ -145,7 +149,7 @@ input[type=checkbox]{
     background: #51adf1;
     border-bottom: 2px solid #489bd8;
 }
-#appDownload:hover, .appDownload:hover{
+.appDownload:active {
     background: #43a0de;
     border-bottom: 2px solid #4595cf;
 }
@@ -153,22 +157,19 @@ input[type=checkbox]{
 .ns_rz_wrapper .ns_rz_group{
     background: #efefef;
     border-radius: 7px;
-    box-sizing: border-box;
-    display: -webkit-box;
     position: relative;
     z-index: 999;
     margin-bottom: 7px;
     border: 1px solid #d9d9d9;
 }
-.ns_rz_wrapper .borderRed{ border: 1px solid #f36144;}
-.ns_rz_wrapper .ns_rz_group div{ -webkit-box-flex: 1;}
+.ns_rz_wrapper .borderRed{border: 1px solid #f36144;}
 .ns_rz_wrapper .ns_rz_group input{
     border-radius: inherit;
     padding: 14px 0;
     font-size: 1.3rem;
-    width: 100%;
     text-indent: 18px;
     background: none;
+    width: 100%;
 }
 .ns_rz_wrapper label{
     font-size: 1.3rem;
@@ -178,7 +179,7 @@ input[type=checkbox]{
     text-decoration: underline;
     color: #333;
 }
-#yzmMbo{
+#yzm{
     padding: 14px 0;
     color: #489ad8;
     border-radius: 0;
@@ -189,9 +190,11 @@ input[type=checkbox]{
     font-size: 1.3rem;
     text-decoration: underline;
     display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
-#yzmMbo.sYzm{display: block;}
-#yzmMbo.disabled{color: #999;}
+#yzm.disabled{color: #999;}
 .ns_rz_wrapper p{
     margin-top: 7px;
     font-size: 1.3rem;

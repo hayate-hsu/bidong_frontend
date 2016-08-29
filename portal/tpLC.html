@@ -201,13 +201,18 @@
             <li class="tn_r">
                 <div class="tn_box">
                     <em>账户认证：</em>
+                    % if self.attr.yzm:
                     <div class="btngroups userbtn">
-                        <input type="text" placeholder="请输入您的账号" name="user" class="onlyAct" />
-                        % if self.attr.yzm:
-                        <button type="button" id="yzm" class="mYzm fYzm">获取验证码</button>
-                        % endif
+                        <input type="text" placeholder="请输入您的账号" name="user" id="userCtrl" />
+                        <button type="button" id="yzm">获取验证码</button>
                     </div>
                     <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
+                    % else:
+                    <div class="btngroups userbtn">
+                        <input type="text" placeholder="请输入您的账号" name="user" />
+                    </div>
+                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
+                    % endif
                     <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
                 </div>
             </li>
