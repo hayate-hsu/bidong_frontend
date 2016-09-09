@@ -43,11 +43,4 @@ document.body.appendChild(f),f=document.getElementById("weixin_wifi_auth_qrcode"
 k+"px;height:"+k+'px;text-align:center;font-size:16px;color:#FFF;"><div id="weixin_wifi_error_tips" style="margin-top:'+0+'px;">\u4e8c\u7ef4\u7801\u5931\u6548<br/>\u8bf7\u5237\u65b0\u91cd\u8bd5</div></div>';(new QRCode(f,{width:k,height:k})).makeCode(l)},queryState:function(l){var f=this;this.queryCount++;1==this.queryCount&&(qrcodeQueryTimeout=new Date,qrcodeCheckNetTimeout=setTimeout(function(){document.getElementById("weixin_wifi_error_tips").innerHTML="\u670d\u52a1\u5668\u7e41\u5fd9<br/>\u8bf7\u4e00\u5206\u949f\u540e\u5237\u65b0\u91cd\u8bd5";
 document.getElementById("weixin_wifi_qrcode_timeout").style.display="block"},30001));this.jsonp("https://wifi.weixin.qq.com/cgi-bin/pollpcresult?ticket="+l,function(k){clearTimeout(qrcodeCheckNetTimeout);1==k.success?f.gotoAuth(k.data):12E4<(new Date).getTime()-qrcodeQueryTimeout.getTime()?document.getElementById("weixin_wifi_qrcode_timeout").style.display="block":f.queryState(l)})},gotoAuth:function(l){-1!=this.opt.authUrl.indexOf("?")?window.location=this.opt.authUrl+"&"+l+"&extend="+encodeURIComponent(this.opt.extend):
 window.location=this.opt.authUrl+"?"+l+"&extend="+encodeURIComponent(this.opt.extend)},jsonp:function(l,f){jsonpId++;var k="callback"+jsonpId;window[k]=f;l=-1!=l.indexOf("?")?l+("&callback="+k):l+("?callback="+k);k=document.createElement("script");k.setAttribute("src",l);document.getElementsByTagName("head")[0].appendChild(k)}}})();/*  |xGv00|42a6afd3ffef65bea36b57d368c79c40 */
-function wxImg(){var img=document.getElementById('wxImg');return {imgv: img.value, imgw: parseInt(img.style.width)};}
-//function wxImg(){
-//    var wxVal = $('#wxImg').val();
-//    var v1=wxVal.substr(0, 2), v2=wxVal.substr(2);
-//    v1=='Pq' ? v1='.jpg' : v1='.png';
-//    v2=='Default' ? v2='admin' : v2;
-//    return v2+v1;
-//}
+function wxImg(){var img=document.getElementById('qrcode_zone');return {imgv: img.getAttribute('data-logo'), imgw: parseInt(img.getAttribute('data-size'))};}

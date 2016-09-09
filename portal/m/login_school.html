@@ -7,6 +7,7 @@
 <%!
     wxFlag = False;
     yzm = False;
+    accountTitle = u'教师认证';
 %>
 
 <%block name="headerBg">
@@ -15,7 +16,7 @@
 </%block>
 
 <%block name="appDownload">
-    <%include file="appDownloadTpl.html" args="appname=u'广东女子学院APP', appFlag=True, appIos='javascript:;', appAndriod='javascript:;', applink='javascript:;', apptxt=False" />
+    <%include file="appDownloadTpl.html" args="appTitle=u'学生认证', appname=u'广东女子学院APP', appFlag=True, appIos='javascript:;', appAndriod='http://58.248.228.170:9898/downloads/android/nzxy.apk', applink='javascript:;', apptxt=False" />
 </%block>
 
 <%block name="footer">

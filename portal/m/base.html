@@ -51,7 +51,7 @@
     <%block name="appDownload" />
 
     <div class="ns_box ${self.attr.color}" style="border: none;">
-        <h3>账户认证<span class="ns_msg"></span></h3>
+        <h3>${self.attr.accountTitle}<span class="ns_msg"></span></h3>
         <div class="ns_rz_wrapper">
             % if self.attr.yzm:
             <div class="ns_rz_group"><input type="text" placeholder="账号/手机号：" name="user" id="userCtrl" /></div>
@@ -74,7 +74,7 @@
     <div class="ns_ctx">
         <h3>无线上网业务</h3>
         <p>1.请保护好您的个人信息与资料，请勿访问非法网站，勿发布违法信息,如有违反造成的损失和法律责任，由您自行承担。</p>
-        <p>2.输入手机号，点击“获取密码”系统将下发密码短信至您的手机，输入密码后，点击“登录”即可上网。使用固定账号请咨询上网场所负责人获取账号 密码。</p>
+        <p>2.输入手机号，点击“获取密码”系统将下发密码短信至您的手机，输入密码后，点击“登录”即可上网。使用固定账号请咨询上网场所负责人获取账号密码。</p>
     </div>
     % endif
 
@@ -98,4 +98,5 @@
     duty = False;
     nsName = 'auto';
     yzm = True;
+    accountTitle = u'账户认证';
 %>

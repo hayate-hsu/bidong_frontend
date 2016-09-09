@@ -6,17 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>${self.attr.title}</title>
-    % if self.attr.wxscanFlag:
-    <link rel="stylesheet" href="/wx/css/style-pcdemo.css" />
+    <title>${config['title']}</title>
+    % if 'wxscan' in config['way']:
+    <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
     <script type="text/javascript" src="/wx/js/pcauth.js"></script>
-    <script type="text/javascript" src="/wx/js/pollpcresult.js"></script>
+    <script src="/wx/js/pollpcresult.js"></script>
     % endif
     <style type="text/css">
         *{margin:0;padding:0}
-        body{background:url("/images/nsimgs/${self.attr.pic}") top center no-repeat;font-family:"microsoft yahei","Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial;font-size:16px;
-            min-width: 1000px;
-        }
+        body{background:url("${config['pic']}") top center no-repeat;font-family:"microsoft yahei","Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial;font-size:16px;min-width: 1000px;}
         button,input{font-family:"microsoft yahei","Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial;font-size:16px;outline:none}
         button{background:none;border:none;cursor:pointer;font-weight:bold}
         a{text-decoration:none}
@@ -67,6 +65,7 @@
             line-height: normal;
             cursor: pointer;
             float: left;
+            font-size: 16px;
         }
         .pLogin h2.on,.pQrcode h2.on{
             margin-top: 8px;
@@ -105,18 +104,18 @@
         .main__content-qrcode{border:2px solid #009cff;height:128px}
         #portal_zone{padding:20px 20px 0 20px}
         #portal_zone div{
-            position:relative;
-            width:240px;
             margin-bottom:16px;
             border: 1px solid #acacac;
             border-radius: 4px;
+            line-height: normal;
         }
         #portal_zone div input{
             border: none;
             height: 40px;
             background:none;
             width: 100%;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
             font-size: 14px;
             color: #009cff;
             text-indent: 10px;
@@ -135,7 +134,8 @@
             font-size: 14px;
             font-weight: normal;
             color: #009cff;
-            float: right;
+            display: inline-block;
+            vertical-align: middle;
         }
         #portal_zone div span:before{
             content: " ";
@@ -174,52 +174,59 @@
         #appDL:hover{background-position:0 -238px}
         .logo,.aDwn,.aUp{display:inline-block;vertical-align:middle;margin-top:-2px}
         /* ../images/portal.png?20160707153309 */
-        .logo,.aDwn,.aUp,h2.on .aDwn,h2.on .aUp,#autoAuthor,#autoAuthor:hover,#appDL,#appDL:hover{background-image:url(/images/nsimgs/portal.png?20160707153309);}
+        .logo,.aDwn,.aUp,h2.on .aDwn,h2.on .aUp,#autoAuthor,#autoAuthor:hover,#appDL,#appDL:hover{background-image:url("/images/nsimgs/portal.png?20160707153309");}
     </style>
 </head>
 
 <body>
+    <input type="hidden" id="user" value="${user}" />
+    <input type="hidden" id="password" value="${password}" />
+    <input type="hidden" id="openid" value="${openid}" />
+    <input type="hidden" id="ac_ip" value="${ac_ip}" />
+    <input type="hidden" id="vlanId" value="${vlan}" />
+    <input type="hidden" id="ssid" value="${ssid}" />
+    <input type="hidden" id="user_ip" value="${user_ip}" />
+    <input type="hidden" id="user_mac" value="${user_mac}" />
+    <input type="hidden" id="ap_mac" value="${ap_mac}" />
+    <input type="hidden" id="firsturl" value="${firsturl}" />
+    <input type="hidden" id="urlparam" value="${urlparam}" />
+    <input type="hidden" id="appid" value="${appid}" />
+    <input type="hidden" id="shopid" value="${shopid}" />
+    <input type="hidden" id="pn" value="${pn}" />
+
+    % if config['nav'] == 'top':
     <div class="pBar">
+    % else:
+    <div class="pBar pbtm">
+    % endif
         <div class="pWrapper">
             <div class="pTitle">
-                <h1>${self.attr.name}</h1>
-                <a href="http://mbd.cniotroot.cn/"><i class="logo"></i>壁咚分布式认证系统</a>
+                <h1>${config['title']}</h1>
+                <a href="http://mbd.cniotroot.cn/" target="_blank"><i class="logo"></i>壁咚分布式认证系统</a>
             </div>
             <div class="pAuthor">
-                % if self.attr.autoFlag:
+                % if 'auto' in config['way']:
                 <div class="pAuto">
                     <button type="button" id="autoAuthor">一键认证</button>
                 </div>
                 % endif
-                % if self.attr.appFlag:
+                % if 'app' in config['way']:
                 <div class="pApp">
                     <a href="javascript:;" id="appDL" target="_blank">APP认证上网</a>
                 </div>
                 % endif
-                % if self.attr.accountFlag:
+                % if 'account' in config['way']:
                 <div class="pLogin">
                     <h2 class="" id="pLogin">短信/账户上网<i class="aDwn"></i></h2>
-                    <div class="pForm" id="pForm">
-                        <!--<div id="portal_zone">-->
-                            <!--<div>-->
-                                <!--<input type="text" id="portal_user" name="portal_user" placeholder="账号/手机号" />-->
-                                <!--<span><button type="button" id="portal_yzm">获取验证码</button></span>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<input type="text" id="portal_pwd" name="portal_pwd" placeholder="密码/验证码" />-->
-                            <!--</div>-->
-                            <!--<button type="button" id="portal_login">登录</button>-->
-                        <!--</div>-->
-                    </div>
+                    <div class="pForm" id="pForm"></div>
                 </div>
                 % endif
-                % if self.attr.wxscanFlag:
+                % if 'wxscan' in config['way']:
                 <div class="pQrcode">
                     <h2 class="" id="pQrcode">微信扫一扫上网<i class="aDwn"></i></h2>
                     <div class="pEwm" id="pEwm">
                         <div class="main__content">
-                            <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:0 auto;width:128px;position:relative" data-logo="${logo}" data-size="28"></div>
-                            <!--<div class="main__content-info">使用微信扫描二维码</div>-->
+                            <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:0 auto;width:128px;height:128px;position:relative" data-logo="${logo}" data-size="28"></div>
                         </div>
                     </div>
                 </div>
@@ -227,20 +234,15 @@
             </div>
         </div>
     </div>
-    % if self.attr.wxscanFlag:
+    % if 'wxscan' in config['way']:
     <script type="text/javascript">
-        function weixinScan(appId, shopId, extend, authUrl){
-            JSAPI.auth({
-                target : document.getElementById('qrcode_zone'),
-                appId : appId,
-                shopId : shopId,
-                extend : extend,
-                //authUrl : 'http://wifi.weixin.qq.com/mbl/default.xhtml'
-                authUrl : authUrl
-            });
-        }
-        weixinScan('${appid}', '${shopid}', '${extend}', '${authUrl}');
-
+        JSAPI.auth({
+            target : document.getElementById('qrcode_zone'),
+            appId : '${appid}',
+            shopId : '${shopid}',
+            extend : '${extend}',
+            authUrl : '${authUrl}'
+        });
         document.getElementById('pQrcode').onclick=function(){
             if(this.className=='on'){
                 this.className='';
@@ -252,7 +254,7 @@
         };
     </script>
     % endif
-    % if self.attr.accountFlag:
+    % if 'account' in config['way']:
     <script type="text/javascript" src="/js/portal.js"></script>
     <script>
         Portal.auth({
@@ -267,7 +269,8 @@
             firsturl: '${firsturl}',
             urlparam: '${urlparam}',
             appid: '${appid}',
-            shopid: '${shopid}'
+            shopid: '${shopid}',
+            pn: '${pn}'
         });
         document.getElementById('pLogin').onclick=function(){
             if(this.className=='on'){
@@ -286,12 +289,3 @@
     % endif
 </body>
 </html>
-<%!
-    title = u"南沙无线城市";
-    name = u"南沙无线城市";
-    pic = "banner_theatre.jpg";
-    autoFlag = True;
-    appFlag = True;
-    accountFlag = True;
-    wxscanFlag = True;
-%>

@@ -36,10 +36,10 @@
             div.innerHTML = '<div id="portal_zone">'+
                 '<div>'+
                     '<input type="text" id="portal_user" name="portal_user" placeholder="账号/手机号：" />'+
+                    '<button type="button" id="portal_yzm">获取验证码</button>'+
                 '</div>'+
                 '<div>'+
                     '<input type="text" id="portal_pwd" name="portal_pwd" placeholder="密码/验证码：" />'+
-                    '<button type="button" id="portal_yzm">获取验证码</button>'+
                 '</div>'+
                 '<button type="button" id="portal_login">登录</button>'+
             '</div>';
