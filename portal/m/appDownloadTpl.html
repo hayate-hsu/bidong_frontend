@@ -1,8 +1,8 @@
-<%page args="appTitle=u'客户端下载', appname=u'南沙通', appFlag=False, appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', applink='http://wnl.bidongwifi.com:9899/app.html', apptxt=True" />
+<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True" />
 
 <div class="ns_box">
     <h3>${appTitle}</h3>
-    <a href="${applink}" class="appDownload">${appname}下载</a>
+    <a href="${appAndriod}" class="appDownload">${appname}下载</a>
     % if apptxt:
     <ul>
         <li>安装即可上网，优先接入，速度更快</li>
@@ -11,7 +11,6 @@
     % endif
 </div>
 
-% if appFlag:
 <script type="text/javascript">
     var u = navigator.userAgent;
     if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
@@ -20,4 +19,3 @@
         $('.appDownload').attr('href', '${appAndriod}');
     }
 </script>
-% endif
