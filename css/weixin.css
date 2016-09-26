@@ -164,13 +164,19 @@ input.green, .green{ background:#65bc22;}
 }
 .wbox .wlist{ margin-top:0; border:none; margin:0;}
 
+.ads{
+	height: 92px;
+	margin-bottom: 15px;
+}
+.ads iframe{
+	height: 92px;
+}
 .fweb{
     box-sizing: border-box;
     background: #fff;
     padding: 6px;
     /*border-top: 1px solid #d9d9d9;*/
     /*border-bottom: 1px solid #d9d9d9;*/
-    margin-bottom: 15px;
     overflow: hidden;
 }
 .fweb li{

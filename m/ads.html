@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>广告</title>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var user = ${user};
+            $.get('https://mp.bidongwifi.com/adinfo?user='+user, function(data){
+                if(data.code==200){
+                    var param={
+                        im_dev:	data.im_dev,
+                        im_long: data.im_long,
+                        im_lat: data.im_lat,
+                        im_tel: data.im_tel,
+                        im_ssid: data.ssid
+                    };
+                    var $img=$('img').attr('src');
+                    $('img').attr('src', $img+$.param(param));
+                }
+            });
+        });
+    </script>
+    <style type="text/css">
+        *{margin: 0; padding: 0;}  body, html{width: 100%; height: 100%;}  a, img{width: 100%; height: 100%; display: block;}
+    </style>
+</head>
+
+<body>
+    <a href="http://wr.iwifi.com/?IM_SRC=160819161701&IM_HND=12&f_ease_1603221736_P01=CLY-160819-001" target="_parent">
+        <img src='http://wr.iwifi.com/?IM_SRC=160819161701&f_ease_1603221736_P01=CLY-160819-001&' />
+    </a>
+</body>
+</html>
