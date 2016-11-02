@@ -155,11 +155,11 @@
 </body>
 <script type="text/javascript">
     $(function(){
-        $.get('/cms/message?groups=${groups}&page=0&per=5', function(data){
+        $.get('http://cms.cniotroot.cn/message?groups=${groups}&page=0&per=5', function(data){
             for(var i= 0, h=''; i<data.messages.length; i++){
                 var mes=data.messages[i];
                 h='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
-                    '<img src="'+mes.image+'" />'+
+                    '<img src="http://cms.cniotroot.cn'+mes.image+'" />'+
                     '<p>'+mes.title+'</p>'+
                     '<span class="shadow"></span>'+
                 '</a>';
