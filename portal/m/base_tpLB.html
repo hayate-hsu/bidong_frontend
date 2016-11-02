@@ -158,7 +158,7 @@
         $.get('/cms/message?groups=${groups}&page=0&per=5', function(data){
             for(var i= 0, h=''; i<data.messages.length; i++){
                 var mes=data.messages[i];
-                h='<a href="https://cms.cniotroot.cn/message/'+mes.id+'">'+
+                h='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
                     '<img src="'+mes.image+'" />'+
                     '<p>'+mes.title+'</p>'+
                     '<span class="shadow"></span>'+
