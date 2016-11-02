@@ -158,28 +158,19 @@
         $.get('http://cms.cniotroot.cn/message?groups=${groups}&page=0&per=5', function(data){
             for(var i= 0, h=''; i<data.messages.length; i++){
                 var mes=data.messages[i];
-                h='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
+                h+='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
                     '<img src="http://cms.cniotroot.cn'+mes.image+'" />'+
                     '<p>'+mes.title+'</p>'+
                     '<span class="shadow"></span>'+
                 '</a>';
             }
             $('#banner').html(h);
-            if(data.messages.length>1){
-                $('#banner').owlCarousel({
-                    items: 1,
-                    loop: true,
-                    center: true,
-                    autoplay: true
-                });
-            }else{
-                $('#banner').owlCarousel({
-                    items: 1,
-                    loop: false,
-                    center: true,
-                    autoplay: false
-                });
-            }
+            $('#banner').owlCarousel({
+                items: 1,
+                loop: true,
+                center: true,
+                autoplay: true
+            });
         });
         $('#weixinAuthor').click(function(){
             Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
