@@ -75,7 +75,7 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
 }
 
 $(function(){
-    var isyzm = false, verify;
+    var isyzm = false, verify, isnamenotNull=false, ispwdnotNull=false, isterm=true;
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -108,7 +108,7 @@ $(function(){
 
     //账号类型检测
     $('#userCtrl').change(function(){
-        $('input[name=password]').val('');
+        //$('input[name=password]').val('');
         if(/^1\d{10}$/.test($(this).val())){
             isyzm = true;
             $('input[name=password]').attr('type', 'text');
@@ -215,7 +215,7 @@ $(function(){
                 success: function(data){
                     verify = data.verify;
                     alert("验证码已下发到手机，请注意查收！");
-                    $this.html('<span>60</span>秒重新获取').addClass('disabled').attr('disabled', 'disabled');
+                    $this.html('<span>60</span>秒重新获取').attr('disabled', true);
                     //delayYZMMbo($this);
                     delayYZMMbo();
                 },
@@ -225,6 +225,46 @@ $(function(){
                 }
             });
         }
+    });
+
+
+    // 2016-10-27新增
+    // 条款
+    var loginAble = function(isnamenotnull, ispwdnotnull, isterm){
+        if(isnamenotnull && ispwdnotnull && isterm){
+            $('#login').attr('disabled', false);
+        }else{
+            $('#login').attr('disabled', true);
+        }
+    };
+    $(document).on('click', '.term a', function(){
+        $('.termWrapper').fadeIn();
+    });
+    $(document).on('click', '#termCheck', function(){
+        $('.termWrapper').fadeOut();
+    });
+    $('.chkcls').on('click', function(){
+        if($(this).find('i').hasClass('chk')){
+            $('.chkcls i').addClass('unchk').removeClass('chk');
+            $('#weixinAuthor').attr('disabled', true);
+            isterm = false;
+            loginAble(isnamenotNull, ispwdnotNull, isterm);
+        }else{
+            $('.chkcls i').addClass('chk').removeClass('unchk');
+            $('#weixinAuthor').attr('disabled', false);
+            isterm = true;
+            loginAble(isnamenotNull, ispwdnotNull, isterm);
+        }
+    });
+    $('input[name=user]').bind('input propertychange', function() {
+        var user=$(this).val();
+        isnamenotNull = (user=='' ? false : true);
+        loginAble(isnamenotNull, ispwdnotNull, isterm);
+    });
+    $('input[name=password]').bind('input propertychange', function() {
+        var pwd=$(this).val();
+        ispwdnotNull = (pwd=='' ? false : true);
+        loginAble(isnamenotNull, ispwdnotNull, isterm);
     });
 });
 
@@ -236,25 +276,33 @@ function adminAuthor(obj, firsturl, urlparam, user){
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(obj),
         dataType: "json",
+        timeout: 30000,
         beforeSend: function(){
-            $('.ns_msg').text('正在为您验证...').css('color', '#68d68f');
-            $('#ns_login, #login').attr('disabled', 'disabled');
+            $('#ns_login, #login').text('正在验证').attr('disabled', true);
         },
         success: function (data) {
             if($('#autoLogin').length>0 && $('#autoLogin input').is(':checked')){
                 var name = $('#autoLogin').data('name');
                 localStorage[name]=user;
             }
-            $('.ns_msg').text('验证成功').css('color', '#68d68f');
+            $('.ns_msg').text('验证成功，可以上网').css('color', '#68d68f');
+            setTimeout(function(){
+                $('.ns_msg').fadeOut();
+            }, 5000);
             if($('#ns_login').hasClass('theNode')){
                 window.location.href= 'http://www.thenode.cn/web/index.do';
             }else{
                 window.location.href= urlChange(firsturl, urlparam);
             }
         },
-        complete: function(){
-            $('.ns_msg').text('');
-            $('#ns_login, #login').removeAttr('disabled');
+        complete: function(xmlhttp, status){
+            if(status=='timeout'){   // 超时,status还有success,error等值的情况
+                $('.ns_msg').text('请求超时，请重新登录').css('color', '#ef635c');
+                setTimeout(function(){
+                    $('.ns_msg').fadeOut();
+                }, 5000);
+            }
+            $('#ns_login, #login').text('登录').attr('disabled', false);
         },
         error: function (error) {
             alert('验证失败：'+error.responseJSON.Msg);
@@ -290,7 +338,7 @@ function delayYZMMbo(){
         canyzm = false;
     }else{
         clearTimeout(t);
-        $('#yzmMbo, #yzm').html('获取验证码').removeClass('disabled').removeAttr("disabled");
+        $('#yzmMbo, #yzm').html('获取验证码').attr('disabled', false);
         canyzm = true;
     }
 }

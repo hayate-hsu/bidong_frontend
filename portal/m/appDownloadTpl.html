@@ -1,4 +1,4 @@
-<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True" />
+<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True, appQrimg='app_ios.png'" />
 
 <div class="ns_box">
     <h3>${appTitle}</h3>
@@ -10,12 +10,31 @@
     </ul>
     % endif
 </div>
+<div class="ns_modal">
+    <div class="ns_body">
+        <a href="javascript:;" class="ns_close">X</a>
+        <div>
+            <p>扫描或点击二维码下载</p>
+            <a id="qrcode" href="${appAndriod}"><img src="/static/images/nsimgs/${appQrimg}" /></a>
+        </div>
+    </div>
+</div>
 
-<script type="text/javascript">
+<script>
     var u = navigator.userAgent;
     if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
         $('.appDownload').attr('href', '${appIos}');
     }else{
-        $('.appDownload').attr('href', '${appAndriod}');
+        $('.appDownload').attr('href', 'javascript:;').addClass('appAndriod');
     }
+</script>
+<script>
+    $(function(){
+        $('.appAndriod').click(function(){
+            $('.ns_modal').addClass('in');
+        });
+        $('.ns_close').click(function(){
+            $('.ns_modal').removeClass('in');
+        });
+    });
 </script>
