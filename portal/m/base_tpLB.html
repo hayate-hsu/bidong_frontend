@@ -157,7 +157,7 @@
     $(function(){
         $.ajax({
             method: 'get',
-            url: 'http://cms.cniotroot.cn/message?groups=${group}&page=0&per=5',
+            url: 'http://cms.cniotroot.cn/message?groups=${groups}&page=0&per=5',
             dataType: "json"
         }).done(function(data){
             console.log(data);
