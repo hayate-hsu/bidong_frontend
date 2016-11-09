@@ -51,8 +51,8 @@
     <%block name="appDownload" />
 
     <div class="ns_box ${self.attr.color}" style="border: none;">
-        <h3>${self.attr.accountTitle}<span class="ns_msg"></span></h3>
-        <div class="ns_rz_wrapper">
+        <h3>${self.attr.accountTitle}</h3>
+        <div class="ns_rz_wrapper FormAccount">
             % if self.attr.yzm:
             <div class="ns_rz_group"><input type="text" placeholder="账号/手机号：" name="user" id="userCtrl" /></div>
             <div class="ns_rz_group"><input type="password" placeholder="密码/验证码：" name="password" /><button type="button" id="yzm">获取验证码</button></div>
@@ -64,8 +64,9 @@
             <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
             <button type="button" id="login">登录</button>
+            <span class="ns_msg"></span>
             % if self.attr.duty:
-            <label id="autoDuty"><input type="checkbox" />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+            <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
             % endif
         </div>
     </div>
@@ -86,9 +87,7 @@
             Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
         });
     });
-</script>
-<script type="text/javascript">
-	document.addEventListener('visibilitychange', putNoResponse, false);
+    document.addEventListener('visibilitychange', putNoResponse, false);
     document.body.addEventListener('touchstart', function(){});
 </script>
 </html>

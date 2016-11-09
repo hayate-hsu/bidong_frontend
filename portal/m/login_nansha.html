@@ -91,7 +91,7 @@
         <div><img src="/images/nsimgs/adimgs/nansha03.jpg" /></div>
     </div>
     <div class="wifiWrapper">
-        <div class="boxWrapper">
+        <div class="boxWrapper FormAccount">
             <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
             <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
             <div class="inputWrapper">
@@ -150,6 +150,46 @@
 </body>
 <script type="text/javascript">
     $(function(){
+        // 2016-10-27新增
+        // 条款
+        var isnamenotNull=false, ispwdnotNull=false, isterm=true;
+        var loginAble = function(isnamenotnull, ispwdnotnull, isterm){
+            if(isnamenotnull && ispwdnotnull && isterm){
+                $('#login').attr('disabled', false);
+            }else{
+                $('#login').attr('disabled', true);
+            }
+        };
+        $(document).on('click', '.term a', function(){
+            $('.termWrapper').fadeIn();
+        });
+        $(document).on('click', '#termCheck', function(){
+            $('.termWrapper').fadeOut();
+        });
+        $('.chkcls').on('click', function(){
+            if($(this).find('i').hasClass('chk')){
+                $('.chkcls i').addClass('unchk').removeClass('chk');
+                $('#weixinAuthor').attr('disabled', true);
+                isterm = false;
+                loginAble(isnamenotNull, ispwdnotNull, isterm);
+            }else{
+                $('.chkcls i').addClass('chk').removeClass('unchk');
+                $('#weixinAuthor').attr('disabled', false);
+                isterm = true;
+                loginAble(isnamenotNull, ispwdnotNull, isterm);
+            }
+        });
+        $('input[name=user]').bind('input propertychange', function() {
+            var user=$(this).val();
+            isnamenotNull = (user=='' ? false : true);
+            loginAble(isnamenotNull, ispwdnotNull, isterm);
+        });
+        $('input[name=password]').bind('input propertychange', function() {
+            var pwd=$(this).val();
+            ispwdnotNull = (pwd=='' ? false : true);
+            loginAble(isnamenotNull, ispwdnotNull, isterm);
+        });
+        // 新闻轮播
         $('#banner').owlCarousel({
             items: 1,
             loop: true,

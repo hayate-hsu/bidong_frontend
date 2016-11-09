@@ -1,4 +1,4 @@
-<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True, appQrimg='app_ios.png'" />
+<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True, appQrimg='app_ios.png',login=False" />
 
 <div class="ns_box">
     <h3>${appTitle}</h3>
@@ -9,13 +9,22 @@
         <li>政务早知道，办事一键通</li>
     </ul>
     % endif
+    % if login:
+    <h3 style="margin-top:15px;color:#5da0cb;text-decoration:underline" id="account">账户登录</h3>
+    <div class="ns_rz_wrapper FormAccount" style="display:none">
+        <div class="ns_rz_group"><input type="text" placeholder="账号：" name="user" /></div>
+        <div class="ns_rz_group"><input type="password" placeholder="密码：" name="password" /></div>
+        <button type="button" id="loginAccount">登录</button>
+        <span class="ns_msg"></span>
+    </div>
+    % endif
 </div>
 <div class="ns_modal">
     <div class="ns_body">
         <a href="javascript:;" class="ns_close">X</a>
         <div>
             <p>扫描或点击二维码下载</p>
-            <a id="qrcode" href="${appAndriod}"><img src="/static/images/nsimgs/${appQrimg}" /></a>
+            <a id="qrcode" href="${appAndriod}"><img src="/images/nsimgs/${appQrimg}" /></a>
         </div>
     </div>
 </div>
@@ -30,6 +39,11 @@
 </script>
 <script>
     $(function(){
+        % if login:
+        $('#account').click(function(){
+            $(this).next('.ns_rz_wrapper').slideToggle();
+        });
+        % endif
         $('.appAndriod').click(function(){
             $('.ns_modal').addClass('in');
         });

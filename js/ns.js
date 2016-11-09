@@ -75,7 +75,7 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
 }
 
 $(function(){
-    var isyzm = false, verify, isnamenotNull=false, ispwdnotNull=false, isterm=true;
+    var isyzm = false, verify;
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -108,14 +108,15 @@ $(function(){
 
     //账号类型检测
     $('#userCtrl').change(function(){
+        var $parent = $(this).parent().siblings('div');
         //$('input[name=password]').val('');
         if(/^1\d{10}$/.test($(this).val())){
             isyzm = true;
-            $('input[name=password]').attr('type', 'text');
+            $parent.find('input[name=password]').attr('type', 'text');
             $('#yzm').show();
         }else{
             isyzm = false;
-            $('input[name=password]').attr('type', 'password');
+            $parent.find('input[name=password]').attr('type', 'password');
             if(!$('#yzm').hasClass('sYzm'))
                 $('#yzm').hide();
         }
@@ -123,8 +124,10 @@ $(function(){
 
     //账户登录验证
     $(document).on('click', '#ns_login, #login', function(){
-        var user=$('input[name=user]').val(),
-            pwd=$('input[name=password]').val(),
+        var $parent = $(this).parents('.FormAccount');
+
+        var user=$parent.find('input[name=user]').val(),
+            pwd=$parent.find('input[name=password]').val(),
             $apmac=$('#ap_mac').val(),
             $firsturl=$('#firsturl').val(),
             $urlparam=$('#urlparam').val();
@@ -147,19 +150,19 @@ $(function(){
 
         if(user==''||user==null){
             // mobile
-            $('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
             // pc
-            $('.ns_msg').text('*输入账号/手机号').css('color', '#f36144').show();
-            $('input[name=user]').focus();
+            //$parent.find('.ns_msg').text('*输入账号/手机号').css('color', '#f36144').show();
+            $parent.find('input[name=user]').focus();
             // all
             return false;
         }
         if(pwd==''||pwd==null){
             // mobile
-            $('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
             // pc
-            $('.ns_msg').text('*输入密码/验证码').css('color', '#f36144').show();
-            $('input[name=password]').focus();
+            //$parent.find('.ns_msg').text('*输入密码/验证码').css('color', '#f36144').show();
+            $parent.find('input[name=password]').focus();
             // all
             return false;
         }
@@ -168,12 +171,13 @@ $(function(){
             return false;
         }
         // mobile
-        $('.ns_rz_group').removeClass('borderRed');
+        $parent.find('.ns_rz_group').removeClass('borderRed');
         // pc
-        $('.ns_msg').text('');
+        $parent.find('.ns_msg').text('');
         // all
-        if(isyzm){
-            if(MD5yzm(pwd)==verify){
+        // 普通认证
+        if (isyzm) {
+            if (MD5yzm(pwd) == verify) {
                 $.ajax({
                     method: "post",
                     url: '/wnl/register',
@@ -183,19 +187,64 @@ $(function(){
                         mask: 256,
                         mac: $apmac
                     },
-                    success: function(data){
-                        obj.user=data.user;
-                        obj.password=data.password;
-                        adminAuthor(obj, $firsturl, $urlparam, user);
+                    success: function (data) {
+                        obj.user = data.user;
+                        obj.password = data.password;
+                        adminAuthor(obj, $firsturl, $urlparam, user, $(this));
                     }
                 });
-            }else{
-                $('input[name=password]').val('');
+            } else {
+                $parent.find('input[name=password]').val('');
                 alert('验证码错误');
             }
-        }else{
-            adminAuthor(obj, $firsturl, $urlparam, user);
+        } else {
+            adminAuthor(obj, $firsturl, $urlparam, user, $(this));
         }
+    });
+    $(document).on('click', '#loginAccount', function(){
+        var $parent = $(this).parents('.FormAccount');
+
+        var user=$parent.find('input[name=user]').val(),
+            pwd=$parent.find('input[name=password]').val(),
+            $apmac=$('#ap_mac').val(),
+            $firsturl=$('#firsturl').val(),
+            $urlparam=$('#urlparam').val();
+
+        var obj = {
+            user: user,
+            password: pwd,
+            openid: $('#openid').val(),
+            ac_ip: $('#ac_ip').val(),
+            vlanId: $('#vlanId').val(),
+            ssid: $('#ssid').val(),
+            user_ip: $('#user_ip').val(),
+            user_mac: $('#user_mac').val(),
+            ap_mac: $apmac,
+            firsturl: $firsturl,
+            urlparam: $urlparam,
+            appid: $('#appid').val(),
+            shopid: $('#shopid').val()
+        };
+
+        if(user==''||user==null){
+            // mobile
+            $parent.find('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('input[name=user]').focus();
+            // all
+            return false;
+        }
+        if(pwd==''||pwd==null){
+            // mobile
+            $parent.find('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('input[name=password]').focus();
+            // all
+            return false;
+        }
+        // mobile
+        $parent.find('.ns_rz_group').removeClass('borderRed');
+        // all
+        // 学生认证
+        adminAuthor(obj, $firsturl, $urlparam, user, $(this));
     });
 
     //验证码重发
@@ -226,50 +275,10 @@ $(function(){
             });
         }
     });
-
-
-    // 2016-10-27新增
-    // 条款
-    var loginAble = function(isnamenotnull, ispwdnotnull, isterm){
-        if(isnamenotnull && ispwdnotnull && isterm){
-            $('#login').attr('disabled', false);
-        }else{
-            $('#login').attr('disabled', true);
-        }
-    };
-    $(document).on('click', '.term a', function(){
-        $('.termWrapper').fadeIn();
-    });
-    $(document).on('click', '#termCheck', function(){
-        $('.termWrapper').fadeOut();
-    });
-    $('.chkcls').on('click', function(){
-        if($(this).find('i').hasClass('chk')){
-            $('.chkcls i').addClass('unchk').removeClass('chk');
-            $('#weixinAuthor').attr('disabled', true);
-            isterm = false;
-            loginAble(isnamenotNull, ispwdnotNull, isterm);
-        }else{
-            $('.chkcls i').addClass('chk').removeClass('unchk');
-            $('#weixinAuthor').attr('disabled', false);
-            isterm = true;
-            loginAble(isnamenotNull, ispwdnotNull, isterm);
-        }
-    });
-    $('input[name=user]').bind('input propertychange', function() {
-        var user=$(this).val();
-        isnamenotNull = (user=='' ? false : true);
-        loginAble(isnamenotNull, ispwdnotNull, isterm);
-    });
-    $('input[name=password]').bind('input propertychange', function() {
-        var pwd=$(this).val();
-        ispwdnotNull = (pwd=='' ? false : true);
-        loginAble(isnamenotNull, ispwdnotNull, isterm);
-    });
 });
 
 //账户认证
-function adminAuthor(obj, firsturl, urlparam, user){
+function adminAuthor(obj, firsturl, urlparam, user, $this){
     $.ajax({
         method: "POST",
         url: "/account",
@@ -278,18 +287,18 @@ function adminAuthor(obj, firsturl, urlparam, user){
         dataType: "json",
         timeout: 30000,
         beforeSend: function(){
-            $('#ns_login, #login').text('正在验证').attr('disabled', true);
+            $this.text('正在验证').attr('disabled', true);
         },
         success: function (data) {
             if($('#autoLogin').length>0 && $('#autoLogin input').is(':checked')){
                 var name = $('#autoLogin').data('name');
                 localStorage[name]=user;
             }
-            $('.ns_msg').text('验证成功，可以上网').css('color', '#68d68f');
+            $this.parent().find('.ns_msg').text('验证成功，可以上网').css('color', '#68d68f').show();
             setTimeout(function(){
-                $('.ns_msg').fadeOut();
+                $this.parent().find('.ns_msg').fadeOut();
             }, 5000);
-            if($('#ns_login').hasClass('theNode')){
+            if($this.hasClass('theNode')){
                 window.location.href= 'http://www.thenode.cn/web/index.do';
             }else{
                 window.location.href= urlChange(firsturl, urlparam);
@@ -297,12 +306,12 @@ function adminAuthor(obj, firsturl, urlparam, user){
         },
         complete: function(xmlhttp, status){
             if(status=='timeout'){   // 超时,status还有success,error等值的情况
-                $('.ns_msg').text('请求超时，请重新登录').css('color', '#ef635c');
+                $this.parent().find('.ns_msg').text('请求超时，请重新登录').css('color', '#ef635c').show();
                 setTimeout(function(){
-                    $('.ns_msg').fadeOut();
+                    $this.parent().find('.ns_msg').fadeOut();
                 }, 5000);
             }
-            $('#ns_login, #login').text('登录').attr('disabled', false);
+            $this.text('登录').attr('disabled', false);
         },
         error: function (error) {
             alert('验证失败：'+error.responseJSON.Msg);

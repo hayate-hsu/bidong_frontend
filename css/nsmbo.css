@@ -23,8 +23,8 @@ button{-webkit-user-select:none;user-select:none}
 .G_orange h3{color:#d46e00}
 .G_red h3{color:#d12236}
 .G_red #yzmMbo{color:#d12236}
-#login{background:#fea520;border-bottom:2px solid #d38b1f;margin:6px 0}
-#login:active{background:#ed9a20;border-bottom:2px solid #d48b1f}
+#login,#loginAccount{background:#fea520;border-bottom:2px solid #d38b1f;margin:6px 0}
+#login:active,#loginAccount:active{background:#ed9a20;border-bottom:2px solid #d48b1f}
 .G_red #login{background:#d12236;border-bottom:2px solid #d12236}
 .G_red #login:active{background:#ab1b2c;border-bottom:2px solid #ab1b2c}
 #weixinAuthor{padding:7px 0;background:#2fe033;border-bottom:2px solid #40c243}
@@ -40,7 +40,7 @@ button{-webkit-user-select:none;user-select:none}
 #yzm{padding:14px 0;color:#489ad8;border-radius:0;border-top-right-radius:7px;border-bottom-right-radius:7px;background:0 0;width:90px;font-size:1.3rem;text-decoration:underline;display:none;position:absolute;right:0;top:0}
 #yzm.disabled{color:#999}
 .ns_rz_wrapper p{margin-top:7px;font-size:1.3rem;color:#9e9e9e;text-align:left}
-.ns_msg{color:#4ed754}
+.ns_msg{color:#4ed754;text-align:center;display:block}
 .ns_ctx{padding:0 21px}
 .ns_ctx h3{font-size:1.3rem}
 .ns_ctx p{text-align:justify;line-height:1.5;margin-top:6px}
