@@ -63,9 +63,9 @@
         .ns_msg{text-align:center}
     </style>
     <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/owl.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
     <script type="text/javascript" src="/js/ns.js"></script>
-    <script type="text/javascript" src="/js/owl.js"></script>
 </head>
 
 <body>
@@ -157,6 +157,43 @@
 <script type="text/javascript">
     $(function(){
         // 2016-10-27新增
+        // 新闻轮播
+        $.ajax({
+            method: 'get',
+            url: 'http://cms.cniotroot.cn/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
+            dataType: "json"
+        }).done(function(data){
+            console.log(data);
+            if(data.messages.length>0){
+                for(var i= 0, h=''; i<data.messages.length; i++){
+                    var mes=data.messages[i];
+                    var img = (mes.image=='' ? "" : '<img src="http://cms.cniotroot.cn'+mes.image+'" />');
+                    h+='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
+                        img+
+                        '<p>'+mes.title+'</p>'+
+                        '<span class="shadow"></span>'+
+                    '</a>';
+                }
+                $('#banner').html(h);
+                if(data.messages.length>1){
+                    $('#banner').owlCarousel({
+                        items: 1,
+                        loop: true,
+                        center: true,
+                        autoplay: true
+                    });
+                }else{
+                    $('#banner').owlCarousel({
+                        items: 1,
+                        loop: false,
+                        center: true,
+                        autoplay: false
+                    });
+                }
+            }
+        }).fail(function(error){
+            console.log(error);
+        });
         // 条款
         var isnamenotNull=false, ispwdnotNull=false, isterm=true;
         var loginAble = function(isnamenotnull, ispwdnotnull, isterm){
@@ -196,34 +233,6 @@
             loginAble(isnamenotNull, ispwdnotNull, isterm);
         });
 
-        // 新闻轮播
-        $.ajax({
-            method: 'get',
-            url: 'http://cms.cniotroot.cn/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
-            dataType: "json"
-        }).done(function(data){
-            console.log(data);
-            if(data.messages.length>0){
-                for(var i= 0, h=''; i<data.messages.length; i++){
-                    var mes=data.messages[i];
-                    var img = (mes.image=='' ? "" : '<img src="http://cms.cniotroot.cn'+mes.image+'" />');
-                    h+='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
-                        img+
-                        '<p>'+mes.title+'</p>'+
-                        '<span class="shadow"></span>'+
-                    '</a>';
-                }
-                $('#banner').html(h);
-                $('#banner').owlCarousel({
-                    items: 1,
-                    loop: true,
-                    center: true,
-                    autoplay: true
-                });
-            }
-        }).fail(function(error){
-            console.log(error);
-        });
         $('#weixinAuthor').click(function(){
             Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
         });

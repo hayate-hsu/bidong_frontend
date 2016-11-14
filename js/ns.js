@@ -257,7 +257,7 @@ $(function(){
                 url: '/wnl/mobile',
                 dataType: "json",
                 data: {
-                    mobile: $('input[name=user]').val(),
+                    mobile: $this.parents('.FormAccount').find('input[name=user]').val(),
                     mask: 256,
                     pn: $('#pn').val()
                 },
@@ -314,7 +314,12 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             $this.text('登录').attr('disabled', false);
         },
         error: function (error) {
-            alert('验证失败：'+error.responseJSON.Msg);
+            try{
+                alert('验证失败：'+error.responseJSON.Msg);
+            }catch(e) {
+                alert('验证失败：'+e);
+            }
+
         }
     });
 }
