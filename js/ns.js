@@ -124,7 +124,7 @@ $(function(){
 
     //账户登录验证
     $(document).on('click', '#ns_login, #login', function(){
-        var $parent = $(this).parents('.FormAccount');
+        var $parent = $(this).parents('.FormAccount'), self = $(this);
 
         var user=$parent.find('input[name=user]').val(),
             pwd=$parent.find('input[name=password]').val(),
@@ -190,7 +190,7 @@ $(function(){
                     success: function (data) {
                         obj.user = data.user;
                         obj.password = data.password;
-                        adminAuthor(obj, $firsturl, $urlparam, user, $(this));
+                        adminAuthor(obj, $firsturl, $urlparam, user, self);
                     }
                 });
             } else {
@@ -198,11 +198,11 @@ $(function(){
                 alert('验证码错误');
             }
         } else {
-            adminAuthor(obj, $firsturl, $urlparam, user, $(this));
+            adminAuthor(obj, $firsturl, $urlparam, user, self);
         }
     });
     $(document).on('click', '#loginAccount', function(){
-        var $parent = $(this).parents('.FormAccount');
+        var $parent = $(this).parents('.FormAccount'), self = $(this);
 
         var user=$parent.find('input[name=user]').val(),
             pwd=$parent.find('input[name=password]').val(),
@@ -244,7 +244,7 @@ $(function(){
         $parent.find('.ns_rz_group').removeClass('borderRed');
         // all
         // 学生认证
-        adminAuthor(obj, $firsturl, $urlparam, user, $(this));
+        adminAuthor(obj, $firsturl, $urlparam, user, self);
     });
 
     //验证码重发
