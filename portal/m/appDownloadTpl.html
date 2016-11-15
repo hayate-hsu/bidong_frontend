@@ -1,54 +1,21 @@
-<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True, appQrimg='app_ios.png',login=False" />
+<%page args="appTitle=u'客户端下载', appname=u'南沙通', appIos='http://wnl.bidongwifi.com:9899/app.html', appAndriod='http://wnl.bidongwifi.com:9899/app.html', apptxt=True" />
 
 <div class="ns_box">
     <h3>${appTitle}</h3>
-    <a href="${appAndriod}" class="appDownload">${appname}下载</a>
+    <a href="javascript:;" class="appDownload">${appname}下载</a>
     % if apptxt:
     <ul>
         <li>安装即可上网，优先接入，速度更快</li>
         <li>政务早知道，办事一键通</li>
     </ul>
     % endif
-    % if login:
-    <h3 style="margin-top:15px;color:#5da0cb;text-decoration:underline" id="account">账户登录</h3>
-    <div class="ns_rz_wrapper FormAccount" style="display:none">
-        <div class="ns_rz_group"><input type="text" placeholder="账号：" name="user" /></div>
-        <div class="ns_rz_group"><input type="password" placeholder="密码：" name="password" /></div>
-        <button type="button" id="loginAccount">登录</button>
-        <span class="ns_msg"></span>
-    </div>
-    % endif
-</div>
-<div class="ns_modal">
-    <div class="ns_body">
-        <a href="javascript:;" class="ns_close">X</a>
-        <div>
-            <p>扫描或点击二维码下载</p>
-            <a id="qrcode" href="${appAndriod}"><img src="/images/nsimgs/${appQrimg}" /></a>
-        </div>
-    </div>
 </div>
 
-<script>
+<script type="text/javascript">
     var u = navigator.userAgent;
     if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
         $('.appDownload').attr('href', '${appIos}');
     }else{
-        $('.appDownload').attr('href', 'javascript:;').addClass('appAndriod');
+        $('.appDownload').attr('href', '${appAndriod}');
     }
-</script>
-<script>
-    $(function(){
-        % if login:
-        $('#account').click(function(){
-            $(this).next('.ns_rz_wrapper').slideToggle();
-        });
-        % endif
-        $('.appAndriod').click(function(){
-            $('.ns_modal').addClass('in');
-        });
-        $('.ns_close').click(function(){
-            $('.ns_modal').removeClass('in');
-        });
-    });
 </script>

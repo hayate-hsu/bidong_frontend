@@ -79,10 +79,27 @@
     </div>
     % endif
 
+    % if self.attr.qrcode:
+    <div class="ns_box" style="border-top:2px solid #f5f5f5;border-bottom:none">
+        <h3>广东女院APP下载</h3>
+        <a href="https://itunes.apple.com/us/app/id1127133673" class="ns_qrcode">
+            <img src="/images/nsimgs/app_ios_school.png" />
+        </a>
+    </div>
+    % endif
+
     <%block name="footer" />
 </body>
 <script type="text/javascript">
     $(function(){
+        var u = navigator.userAgent;
+        if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            $('.ns_qrcode').attr('href', 'https://itunes.apple.com/us/app/id1127133673');
+            $('.ns_qrcode img').attr('src', '/images/nsimgs/app_ios_school.png');
+        }else{
+            $('.ns_qrcode').attr('href', 'http://58.248.228.170:9898/downloads/android/nzxy.apk');
+            $('.ns_qrcode img').attr('src', '/images/nsimgs/app_andriod_school.png');
+        }
         $('#weixinAuthor').click(function(){
             Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
         });
@@ -98,4 +115,5 @@
     nsName = 'auto';
     yzm = True;
     accountTitle = u'账户认证';
+    qrcode = False;
 %>

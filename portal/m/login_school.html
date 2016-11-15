@@ -6,16 +6,13 @@
 
 <%!
     wxFlag = False;
-    accountTitle = u'教师认证';
+    yzm = False;
+    qrcode = True;
 %>
 
 <%block name="headerBg">
     <img src="/images/nsimgs/bg2.jpg" class="ns_bg" />
     <div>广东女子职业技术学院</div>
-</%block>
-
-<%block name="appDownload">
-    <%include file="appDownloadTpl.html" args="appTitle=u'学生认证', appname=u'广东女子学院APP', appIos='https://itunes.apple.com/us/app/id1127133673', appAndriod='http://58.248.228.170:9898/downloads/android/nzxy.apk', apptxt=False, appQrimg='app_andriod_school.png', login=True" />
 </%block>
 
 <%block name="footer">

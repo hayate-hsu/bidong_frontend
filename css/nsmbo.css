@@ -44,6 +44,9 @@ button{-webkit-user-select:none;user-select:none}
 .ns_ctx{padding:0 21px}
 .ns_ctx h3{font-size:1.3rem}
 .ns_ctx p{text-align:justify;line-height:1.5;margin-top:6px}
+.ns_qrcode{display:block;width:200px;height:200px;margin:0 auto}
+.ns_qrcode img{display:block;width:200px;height:200px}
+/*
 .ns_modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;opacity:0;transform:translate(0,100%);transition:all .5s ease-out}
 .in{transform:translate(0,0);opacity:1}
 .ns_body{background:#fff;width:90%;margin-top:20%;margin-left:5%;box-sizing:border-box;border-radius:5px;position:relative}
@@ -53,6 +56,7 @@ button{-webkit-user-select:none;user-select:none}
 #qrcode img{display:block;width:200px;height:200px}
 .ns_close{background:url(../images/nsimgs/ns_closed.png) 0 0 no-repeat;width:42px;height:42px;display:block;text-indent:-9999px;position:absolute;top:-50px;right:0}
 .ns_close:active{background-position:0 -42px}
+*/
 .anthor button{color:#fff;font-size:1.6rem;width:100%;padding:12px 0;border-radius:8px;margin-bottom:18px}
 .anthor{padding:76px 20px;position:fixed;top:0;left:0;width:100%;box-sizing:border-box;z-index:1000;height:100%;background:rgba(255,255,255,.8);text-align:center;display:none}
 .anthor div{margin:20px 0;line-height:1.5}
