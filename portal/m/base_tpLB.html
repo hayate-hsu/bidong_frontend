@@ -153,16 +153,28 @@
     </div>
     % endif
 </body>
-<script type="text/javascript">
+<script>
+    // 新闻轮播
     $(function(){
-        // 2016-10-27新增
-        // 新闻轮播
-        $.ajax({
-            method: 'get',
-            url: 'http://cms.cniotroot.cn/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
-            dataType: "json"
-        }).done(function(data){
-            console.log(data);
+        // 2016-11-17新增
+        function NewsHot(){
+            this.data = '';
+        }
+        NewsHot.prototype.getNewsImg = function(){
+            var self = this;
+            $.ajax({
+                method: 'get',
+                url: 'http://cms.cniotroot.cn/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
+                dataType: "json"
+            }).done(function(data){
+                console.log(data);
+                self.data = data;
+                self.renderBanner(data);
+            }).fail(function(error){
+                console.log(error);
+            });
+        };
+        NewsHot.prototype.renderBanner = function(data){
             if(data.messages.length>0){
                 for(var i= 0, h=''; i<data.messages.length; i++){
                     var mes=data.messages[i];
@@ -190,9 +202,9 @@
                     });
                 }
             }
-        }).fail(function(error){
-            console.log(error);
-        });
+        };
+        var Getnews = new NewsHot();
+        Getnews.getNewsImg();
         // 条款
         var isnamenotNull=false, ispwdnotNull=false, isterm=true;
         var loginAble = function(isnamenotnull, ispwdnotnull, isterm){
