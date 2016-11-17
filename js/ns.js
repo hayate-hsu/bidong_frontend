@@ -1,6 +1,6 @@
 /**
  * Created by JavieChan on 2015/7/4.
- * Updated by JavieChan on 2016/2/16.
+ * Updated by JavieChan on 2016/11/17.
  */
 
 //weixin-portal
@@ -317,7 +317,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             try{
                 alert('验证失败：'+error.responseJSON.Msg);
             }catch(e) {
-                alert('验证失败：'+e);
+                alert('验证失败，请重新登录！');
             }
 
         }
