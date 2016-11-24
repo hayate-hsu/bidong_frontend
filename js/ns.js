@@ -201,51 +201,6 @@ $(function(){
             adminAuthor(obj, $firsturl, $urlparam, user, self);
         }
     });
-    $(document).on('click', '#loginAccount', function(){
-        var $parent = $(this).parents('.FormAccount'), self = $(this);
-
-        var user=$parent.find('input[name=user]').val(),
-            pwd=$parent.find('input[name=password]').val(),
-            $apmac=$('#ap_mac').val(),
-            $firsturl=$('#firsturl').val(),
-            $urlparam=$('#urlparam').val();
-
-        var obj = {
-            user: user,
-            password: pwd,
-            openid: $('#openid').val(),
-            ac_ip: $('#ac_ip').val(),
-            vlanId: $('#vlanId').val(),
-            ssid: $('#ssid').val(),
-            user_ip: $('#user_ip').val(),
-            user_mac: $('#user_mac').val(),
-            ap_mac: $apmac,
-            firsturl: $firsturl,
-            urlparam: $urlparam,
-            appid: $('#appid').val(),
-            shopid: $('#shopid').val()
-        };
-
-        if(user==''||user==null){
-            // mobile
-            $parent.find('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
-            $parent.find('input[name=user]').focus();
-            // all
-            return false;
-        }
-        if(pwd==''||pwd==null){
-            // mobile
-            $parent.find('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
-            $parent.find('input[name=password]').focus();
-            // all
-            return false;
-        }
-        // mobile
-        $parent.find('.ns_rz_group').removeClass('borderRed');
-        // all
-        // 学生认证
-        adminAuthor(obj, $firsturl, $urlparam, user, self);
-    });
 
     //验证码重发
     $(document).on('click', '#yzm', function(){
@@ -305,6 +260,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             }
         },
         complete: function(xmlhttp, status){
+            console.log(xmlhttp);
             if(status=='timeout'){   // 超时,status还有success,error等值的情况
                 $this.parent().find('.ns_msg').text('请求超时，请重新登录').css('color', '#ef635c').show();
                 setTimeout(function(){
@@ -315,7 +271,18 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
         },
         error: function (error) {
             try{
-                alert('验证失败：'+error.responseJSON.Msg);
+                if(error.responseJSON.Code==428){
+                    if(confirm("在线终端数超限，是否要下线终端？")){
+                        var dm={
+                            user: user,
+                            macs: error.responseJSON.macs
+                        };
+                        console.log(dm);
+                        downMacs(dm);
+                    }
+                }else{
+                    alert('验证失败：'+error.responseJSON.Msg);
+                }
             }catch(e) {
                 alert('验证失败，请重新登录！');
             }
@@ -323,6 +290,24 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
         }
     });
 }
+function downMacs(obj){
+    $.ajax({
+        method: "delete",
+        url: "/account",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(obj),
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            alert("请在5秒后重新认证!");
+        },
+        error: function (error) {
+            console.log(error);
+            alert("下线失败");
+        }
+    });
+}
+
 //验证码倒计时
 var canyzm = true;//判断倒计时是否结束   【作用域全局】
 //function delayYZM($this){
