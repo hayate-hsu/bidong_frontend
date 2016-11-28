@@ -9,6 +9,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title><%block name="title">无线验证</%block></title>
     <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
+    % if self.attr.autoAccount:
+    <style>
+        #autoAccount{
+            background: url("/images/nsimgs/btn.png") no-repeat;
+            background-size: 144px;
+            width: 144px;
+            height: 35px;
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            margin-left: -72px;
+            font-size: 1.4rem;
+        }
+    </style>
+    % endif
     <%block name="jscode">
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
@@ -35,6 +50,9 @@
     <div class="ns_header">
         <%block name="headerBg">
         <img src="/images/nsimgs/bg.jpg" class="ns_bg" />
+        % if self.attr.autoAccount:
+        <button type="button" id="autoAccount" onclick="autoAccount()">一键认证</button>
+        % endif
         <!--<div>南横村</div>-->
         </%block>
     </div>
@@ -120,6 +138,50 @@
     });
     document.addEventListener('visibilitychange', putNoResponse, false);
     document.body.addEventListener('touchstart', function(){});
+
+    % if self.attr.autoAccount:
+    function autoAccount(){
+        var obj={
+            user: '55532',
+            password: '987012',
+            openid: '${openid}',
+            ac_ip: '${ac_ip}',
+            vlanId: '${vlan}',
+            ssid: '${ssid}',
+            user_ip: '${user_ip}',
+            user_mac: '${user_mac}',
+            ap_mac: '${ap_mac}',
+            firsturl: '${firsturl}',
+            urlparam: '${urlparam}',
+            appid: '${appid}',
+            shopid: '${shopid}'
+        };
+        $.ajax({
+            method: "POST",
+            url: "/account",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            timeout: 30000,
+            success: function (data) {
+                window.location.href= urlChange('${firsturl}', '${urlparam}');
+            },
+            complete: function(xmlhttp, status){
+                console.log(xmlhttp);
+                if(status=='timeout'){
+                    alert('认证超时，请重新认证！');
+                }
+            },
+            error: function (error) {
+                try{
+                    alert('验证失败：'+error.responseJSON.Msg);
+                }catch(e) {
+                    alert('验证失败，请重新认证！');
+                }
+            }
+        });
+    }
+    % endif
 </script>
 </html>
 <%!
@@ -130,4 +192,5 @@
     yzm = True;
     accountTitle = u'账户认证';
     qrcode = False;
+    autoAccount = False;
 %>

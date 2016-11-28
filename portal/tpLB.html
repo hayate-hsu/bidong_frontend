@@ -193,7 +193,7 @@
                 % if shopid:
                 <div class="ns_byWx">
                     <p>扫一扫微信二维码轻松上网</p>
-                    <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:0 auto;width:160px;position:relative;padding:0"  data-logo="${logo}" data-size="50"></div>
+                    <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:0 auto;width:160px;position:relative"  data-logo="${logo}" data-size="50"></div>
                     <div class="main__content-info">使用微信扫描二维码</div>
                 </div>
                 % endif
@@ -205,9 +205,11 @@
             % endif
         </div>
 
+        % if self.attr.ad:
         <a href="http://www.apple.com/cn/watch/" target="_blank">
             <img src="/images/nsimgs/ad001.png" class="ns_ad" />
         </a>
+        % endif
     </div>
 
     <div class="ns_footer">
@@ -223,4 +225,5 @@
     color = '#00afeb';
     adFlag = True;
     adimg = 'ad01.png';
+    ad = True;
 %>
