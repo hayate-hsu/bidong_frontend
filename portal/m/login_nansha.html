@@ -61,6 +61,18 @@
         #termCheck{height:33px;width:80px;background:#f4f4f4;border:thin solid #cecece;border-radius:2px;position:absolute;right:26px;top:8px}
         #termCheck:active{background:#3b9ce7;color:#fff}
         .ns_msg{text-align:center}
+
+        .ns_dmc{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
+        .ns_dmc>div{position:absolute;top:15%;left:5%;width:90%;background:#fff;border-radius:5px;box-sizing:border-box;padding:20px 20px 30px}
+        .ns_dmc h3{text-align:center;font-size:16px}
+        .ns_dmc .dmlist{margin:20px 0;height:170px;overflow-y:auto}
+        .ns_dmc label{width:90%;display:table;margin:10px auto}
+        .ns_dmc input{display:table-cell;vertical-align:middle;width:20px;height:20px}
+        .ns_dmc span{display:table-cell;font-size:16px;vertical-align:middle;padding:0 10px}
+        .ns_dmc .btngroups{text-align:center}
+        .ns_dmc .btngroups button{color:#fff;font-size:16px;padding:10px 0;border-radius:8px;width:40%;margin:0 5%}
+        #dmSub{background:#6fccf7}
+        #dmQuit{background:#9e9e9e}
     </style>
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
@@ -147,6 +159,18 @@
             </div>
         </div>
     </div>
+
+    % if downMacs:
+    <div class="ns_dmc">
+        <div>
+            <h3>选择下线设备</h3>
+            <div class="dmlist"></div>
+            <div class="btngroups">
+                <button type="button" id="dmSub">确定</button><button type="button" id="dmQuit">取消</button>
+            </div>
+        </div>
+    </div>
+    % endif
 </body>
 <script type="text/javascript">
     $(function(){

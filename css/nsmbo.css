@@ -46,17 +46,17 @@ button{-webkit-user-select:none;user-select:none}
 .ns_ctx p{text-align:justify;line-height:1.5;margin-top:6px}
 .ns_qrcode{display:block;width:200px;height:200px;margin:0 auto}
 .ns_qrcode img{display:block;width:200px;height:200px}
-/*
-.ns_modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;opacity:0;transform:translate(0,100%);transition:all .5s ease-out}
-.in{transform:translate(0,0);opacity:1}
-.ns_body{background:#fff;width:90%;margin-top:20%;margin-left:5%;box-sizing:border-box;border-radius:5px;position:relative}
-.ns_body div{padding:20px 0 30px}
-.ns_body div p{font-size:1.4rem;text-align:center;line-height:2.5}
-#qrcode{display:block;width:200px;margin:0 auto}
-#qrcode img{display:block;width:200px;height:200px}
-.ns_close{background:url(../images/nsimgs/ns_closed.png) 0 0 no-repeat;width:42px;height:42px;display:block;text-indent:-9999px;position:absolute;top:-50px;right:0}
-.ns_close:active{background-position:0 -42px}
-*/
+.ns_dmc{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
+.ns_dmc>div{position:absolute;top:15%;left:5%;width:90%;background:#fff;border-radius:5px;box-sizing:border-box;padding:20px 20px 30px}
+.ns_dmc h3{text-align:center;font-size:1.6rem}
+.ns_dmc .dmlist{margin:20px 0;height:170px;overflow-y:auto}
+.ns_dmc label{width:90%;display:table;margin:10px auto}
+.ns_dmc input{display:table-cell;vertical-align:middle;width:20px;height:20px}
+.ns_dmc span{display:table-cell;font-size:1.6rem;vertical-align:middle;padding:0 10px}
+.ns_dmc .btngroups{text-align:center}
+.ns_dmc .btngroups button{color:#fff;font-size:1.6rem;padding:10px 0;border-radius:8px;width:40%;margin:0 5%}
+#dmSub{background:#6fccf7}
+#dmQuit{background:#9e9e9e}
 .anthor button{color:#fff;font-size:1.6rem;width:100%;padding:12px 0;border-radius:8px;margin-bottom:18px}
 .anthor{padding:76px 20px;position:fixed;top:0;left:0;width:100%;box-sizing:border-box;z-index:1000;height:100%;background:rgba(255,255,255,.8);text-align:center;display:none}
 .anthor div{margin:20px 0;line-height:1.5}

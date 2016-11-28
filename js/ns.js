@@ -75,7 +75,7 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
 }
 
 $(function(){
-    var isyzm = false, verify;
+    var isyzm = false, verify, $dmuser;
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -188,6 +188,7 @@ $(function(){
                         mac: $apmac
                     },
                     success: function (data) {
+                        $dmuser = data.user;
                         obj.user = data.user;
                         obj.password = data.password;
                         adminAuthor(obj, $firsturl, $urlparam, user, self);
@@ -198,6 +199,7 @@ $(function(){
                 alert('验证码错误');
             }
         } else {
+            $dmuser = user;
             adminAuthor(obj, $firsturl, $urlparam, user, self);
         }
     });
@@ -220,7 +222,6 @@ $(function(){
                     verify = data.verify;
                     alert("验证码已下发到手机，请注意查收！");
                     $this.html('<span>60</span>秒重新获取').attr('disabled', true);
-                    //delayYZMMbo($this);
                     delayYZMMbo();
                 },
                 error: function(msg){
@@ -229,6 +230,28 @@ $(function(){
                 }
             });
         }
+    });
+
+    // 下线设备
+    $(document).on('click', '#dmSub', function(){
+        var $mac=[];
+        $('.dmlist label input').each(function(i, n){
+            if($(n).is(':checked')){
+                $mac.push($(n).siblings('.mac').text());
+            }
+        });
+        if($mac.length>0){
+            var $obj={
+                user: $dmuser,
+                macs: $mac.join(',')
+            };
+            downMacs($obj);
+        }else{
+            alert('请选择下线设备！');
+        }
+    });
+    $(document).on('click', '#dmQuit', function(){
+        $('.ns_dmc').fadeOut();
     });
 });
 
@@ -271,24 +294,24 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
         },
         error: function (error) {
             try{
-                if(error.responseJSON.Code==428){
-                    if(confirm("在线终端数超限，是否要下线终端？")){
-                        var dm={
-                            user: user,
-                            macs: error.responseJSON.macs
-                        };
-                        console.log(dm);
-                        downMacs(dm);
-                    }
+                if((error.responseJSON.Code==428) && ($('.ns_dmc').length>0)){
+                    dmList(error.responseJSON.macs);
                 }else{
                     alert('验证失败：'+error.responseJSON.Msg);
                 }
             }catch(e) {
                 alert('验证失败，请重新登录！');
             }
-
         }
     });
+}
+function dmList(macs){
+    for(var h='',i= 0,len=macs.split(',').length;i<len; i++){
+        var $m = (len>1 ? macs.split(',')[i] : macs);
+        h+='<label><input type="checkbox" /><span class="mac">'+$m+'</span></label>';
+    }
+    $('.dmlist').html(h);
+    $('.ns_dmc').fadeIn();
 }
 function downMacs(obj){
     $.ajax({
@@ -299,7 +322,9 @@ function downMacs(obj){
         dataType: "json",
         success: function (data) {
             console.log(data);
-            alert("请在5秒后重新认证!");
+            $('.ns_dmc').fadeOut('normal', function(){
+                alert("请在5秒后重新认证!");
+            });
         },
         error: function (error) {
             console.log(error);
