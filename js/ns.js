@@ -294,7 +294,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
         },
         error: function (error) {
             try{
-                if((error.responseJSON.Code==428) && ($('.ns_dmc').length>0)){
+                if((error.responseJSON.Code==428) && (error.responseJSON.downMacs==1)){
                     dmList(error.responseJSON.macs);
                 }else{
                     alert('验证失败：'+error.responseJSON.Msg);
