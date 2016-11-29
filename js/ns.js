@@ -308,7 +308,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
 function dmList(macs){
     for(var h='',i= 0,len=macs.split(',').length;i<len; i++){
         var $m = (len>1 ? macs.split(',')[i] : macs);
-        h+='<label><input type="checkbox" /><span class="mac">'+$m+'</span></label>';
+        h+='<label><input type="checkbox" checked /><span class="mac">'+$m+'</span></label>';
     }
     $('.dmlist').html(h);
     $('.ns_dmc').fadeIn();
