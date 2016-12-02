@@ -57,29 +57,21 @@
         </%block>
     </div>
 
-    % if self.attr.wxFlag:
+    % if (policy >> 9 & 1) > 0:
     <div class="ns_box">
         <h3>第三方认证</h3>
-        % if shopid:
         <button type="button" id="weixinAuthor"><i></i>微信上网</button>
-        % else:
-        <button type="button" id="weixinAuthor" disabled><i></i>微信上网</button>
-        % endif
     </div>
     % endif
 
     <%block name="appDownload" />
 
+    % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
     <div class="ns_box ${self.attr.color}" style="border: none;">
         <h3>${self.attr.accountTitle}</h3>
         <div class="ns_rz_wrapper FormAccount">
-            % if self.attr.yzm:
             <div class="ns_rz_group"><input type="text" placeholder="账号/手机号：" name="user" id="userCtrl" /></div>
             <div class="ns_rz_group"><input type="password" placeholder="密码/验证码：" name="password" /><button type="button" id="yzm">获取验证码</button></div>
-            % else:
-            <div class="ns_rz_group"><input type="text" placeholder="账号：" name="user" /></div>
-            <div class="ns_rz_group"><input type="password" placeholder="密码：" name="password" /></div>
-            % endif
             % if self.attr.duty:
             <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
@@ -90,6 +82,39 @@
             % endif
         </div>
     </div>
+    % elif (policy >> 10 & 1) > 0:
+    <div class="ns_box ${self.attr.color}" style="border: none;">
+        <h3>${self.attr.accountTitle}</h3>
+        <div class="ns_rz_wrapper FormAccount">
+            <div class="ns_rz_group"><input type="text" placeholder="手机号：" name="user" /></div>
+            <div class="ns_rz_group"><input type="text" placeholder="验证码：" name="password" /><button type="button" id="yzm" style="display:block">获取验证码</button></div>
+            % if self.attr.duty:
+            <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+            % endif
+            <button type="button" id="login">登录</button>
+            <span class="ns_msg"></span>
+            % if self.attr.duty:
+            <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+            % endif
+        </div>
+    </div>
+    % elif (policy >> 8 & 1) > 0:
+    <div class="ns_box ${self.attr.color}" style="border: none;">
+        <h3>${self.attr.accountTitle}</h3>
+        <div class="ns_rz_wrapper FormAccount">
+            <div class="ns_rz_group"><input type="text" placeholder="账号：" name="user" /></div>
+            <div class="ns_rz_group"><input type="password" placeholder="密码：" name="password" /></div>
+            % if self.attr.duty:
+            <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+            % endif
+            <button type="button" id="login">登录</button>
+            <span class="ns_msg"></span>
+            % if self.attr.duty:
+            <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+            % endif
+        </div>
+    </div>
+    % endif
 
     % if self.attr.duty:
     <div class="ns_ctx">
@@ -184,10 +209,8 @@
 </html>
 <%!
     color = 'G_orange';
-    wxFlag = True;
     duty = False;
     nsName = 'auto';
-    yzm = True;
     accountTitle = u'账户认证';
     qrcode = False;
     autoAccount = False;

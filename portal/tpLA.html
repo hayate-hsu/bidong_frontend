@@ -277,10 +277,10 @@
                     </div>
                 </div>
             </div>
+            % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
             <div class="ns_admin">
                 <h3>账号密码认证上网</h3>
                 <div class="ns_box FormAccount">
-                    % if self.attr.yzm:
                     <div class="ns_group">
                         <label>账号/手机号：</label>
                         <input type="text" name="user" id="userCtrl" />
@@ -290,7 +290,31 @@
                         <input type="password" name="password" />
                         <button type="button" id="yzm">获取验证码</button>
                     </div>
-                    % else:
+                    <button type="button" id="ns_login">登录</button>
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % elif (policy >> 10 & 1) > 0:
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>手机号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>验证码：</label>
+                        <input type="text" name="password" />
+                        <button type="button" id="yzm" style="display:block">获取验证码</button>
+                    </div>
+                    <button type="button" id="ns_login">登录</button>
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % elif (policy >> 8 & 1) > 0:
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box FormAccount">
                     <div class="ns_group">
                         <label>账号：</label>
                         <input type="text" name="user" />
@@ -299,12 +323,12 @@
                         <label>密码：</label>
                         <input type="password" name="password" />
                     </div>
-                    % endif
                     <button type="button" id="ns_login">登录</button>
                     <div class="ns_msg"></div>
                 </div>
             </div>
-            % if shopid:
+            % endif
+            % if (policy >> 9 & 1) > 0:
             <div class="ns_yjsw">
                 <h3>微信扫一扫上网</h3>
                 <div class="ns_box">
@@ -365,5 +389,4 @@
     nsfooter = [
         u'ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心'
     ];
-    yzm = True;
 %>

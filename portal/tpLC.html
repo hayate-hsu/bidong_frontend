@@ -187,7 +187,7 @@
                 <div class="tn_po">
                     <i class="logo"></i>
                     <div class="scan">
-                        % if shopid:
+                        % if (policy >> 9 & 1) > 0:
                         <button type="button">微信认证</button>
                         % endif
                         <div class="tn_wx">
@@ -198,22 +198,36 @@
                 </div>
             </li>
             <li class="tn_r">
+                % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
                 <div class="tn_box FormAccount">
                     <em>账户认证：</em>
-                    % if self.attr.yzm:
                     <div class="btngroups userbtn">
-                        <input type="text" placeholder="请输入您的账号" name="user" id="userCtrl" />
+                        <input type="text" placeholder="请输入您的账号/手机号" name="user" id="userCtrl" />
                         <button type="button" id="yzm">获取验证码</button>
                     </div>
-                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
-                    % else:
-                    <div class="btngroups userbtn">
-                        <input type="text" placeholder="请输入您的账号" name="user" />
-                    </div>
-                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
-                    % endif
+                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码/验证码" name="password" /></div>
                     <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
                 </div>
+                % elif (policy >> 10 & 1) > 0:
+                <div class="tn_box FormAccount">
+                    <em>账户认证：</em>
+                    <div class="btngroups userbtn">
+                        <input type="text" placeholder="请输入您的手机号" name="user" />
+                        <button type="button" id="yzm" style="display:block">获取验证码</button>
+                    </div>
+                    <div class="btngroups pwdbtn"><input type="text" placeholder="请输入您的验证码" name="password" /></div>
+                    <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
+                </div>
+                % elif (policy >> 8 & 1) > 0:
+                <div class="tn_box FormAccount">
+                    <em>账户认证：</em>
+                    <div class="btngroups userbtn">
+                        <input type="text" placeholder="请输入您的账户" name="user" />
+                    </div>
+                    <div class="btngroups pwdbtn"><input type="password" placeholder="请输入您的密码" name="password" /></div>
+                    <div class="login"><i class="ns_msg">正在为您验证...</i><button type="button" id="ns_login" class="theNode">登录</button></div>
+                </div>
+                % endif
             </li>
         </ul>
     </div>
@@ -224,6 +238,5 @@
 <%!
     title = u'无线验证';
     nsnav = False;
-    yzm = True;
     bg = 'thenode_index.jpg';
 %>

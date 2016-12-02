@@ -103,6 +103,7 @@
         <div><img src="/images/nsimgs/adimgs/nansha03.jpg" /></div>
     </div>
     <div class="wifiWrapper">
+        % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
         <div class="boxWrapper FormAccount">
             <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
             <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
@@ -118,9 +119,43 @@
             <div class="ns_msg"></div>
             <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
         </div>
+        % elif (policy >> 10 & 1) > 0:
+        <div class="boxWrapper FormAccount">
+            <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
+            <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
+            <div class="inputWrapper">
+                <input type="text" placeholder="手机号" name="user" />
+                <button type="button" id="yzm" style="display:block">获取验证码</button>
+            </div>
+            <p>第2步：输入验证码，点击按钮即可免费上网</p>
+            <div class="inputWrapper">
+                <input type="text" placeholder="验证码" name="password" />
+            </div>
+            <button type="button" id="login" disabled>登录</button>
+            <div class="ns_msg"></div>
+            <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+        </div>
+        % elif (policy >> 8 & 1) > 0:
+        <div class="boxWrapper FormAccount">
+            <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
+            <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
+            <div class="inputWrapper">
+                <input type="text" placeholder="账号" name="user" />
+            </div>
+            <p>第2步：输入验证码，点击按钮即可免费上网</p>
+            <div class="inputWrapper">
+                <input type="password" placeholder="密码" name="password" />
+            </div>
+            <button type="button" id="login" disabled>登录</button>
+            <div class="ns_msg"></div>
+            <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+        </div>
+        % endif
+        % if (policy >> 9 & 1) > 0:
         <div class="boxWrapper">
             <button type="button" id="weixinAuthor"><i></i>微信一键上网</button>
         </div>
+        % endif
     </div>
     <div class="termWrapper">
         <div class="termbox">
@@ -160,7 +195,6 @@
         </div>
     </div>
 
-    % if downMacs:
     <div class="ns_dmc">
         <div>
             <h3>选择下线设备</h3>
@@ -170,7 +204,6 @@
             </div>
         </div>
     </div>
-    % endif
 </body>
 <script type="text/javascript">
     $(function(){

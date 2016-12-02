@@ -156,6 +156,7 @@
         <div class="seL">
             <div class="ns_sePortal">
                 <h3>欢迎登录${self.attr.title}</h3>
+                % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
                 <div class="ns_box FormAccount">
                     <div class="ns_group">
                         <label>账号/手机号：</label>
@@ -175,6 +176,46 @@
                         <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
                     </div>
                 </div>
+                % elif (policy >> 10 & 1) > 0:
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>手机号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>验证码：</label>
+                        <input type="text" name="password" />
+                        <button type="button" id="yzm" style="display:block">获取验证码</button>
+                    </div>
+                    <div class="ns_se">
+                        <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+                        <span class="ns_msg"></span>
+                    </div>
+                    <button type="button" id="ns_login">登录</button>
+                    <div class="ns_se">
+                        <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
+                    </div>
+                </div>
+                % elif (policy >> 8 & 1) > 0:
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>账号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>密码：</label>
+                        <input type="password" name="password" />
+                    </div>
+                    <div class="ns_se">
+                        <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+                        <span class="ns_msg"></span>
+                    </div>
+                    <button type="button" id="ns_login">登录</button>
+                    <div class="ns_se">
+                        <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
+                    </div>
+                </div>
+                % endif
             </div>
             <div class="ns_ctx">
                 <h3>无线上网业务说明</h3>
