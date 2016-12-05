@@ -15,6 +15,7 @@
         body{font-family:"microsoft yahei",Arial,Helvetica,sans-serif;font-size:16px}
         button,input{-webkit-tap-highlight-color:transparent;outline:0;font-family:"microsoft yahei","Helvetica Neue Light",HelveticaNeue-Light,"Helvetica Neue",Calibri,Helvetica,Arial}
         button{border:none}
+        li{list-style:none}
         #banner{background:#d8d8d8;height:200px;position:relative}
         #banner .shadow{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(9,27,42,0) 0,rgba(9,27,42,0) 80%,rgba(9,27,42,.2) 100%)}
         #banner a{height:200px;display:block;width:100%}
@@ -33,7 +34,7 @@
         .boxWrapper p{color:#444;font-size:14px;line-height:40px}
         .boxWrapper .inputWrapper{position:relative;border:thin solid #cecece;background:#f7f7f7;border-radius:7px}
         .boxWrapper .inputWrapper input{width:100%;height:45px;background:0 0;border:none;font-size:14px;text-indent:18px}
-        #yzm{position:absolute;top:0;right:0;width:90px;background:0 0;text-decoration:underline;color:#3b9ce7;height:45px;font-size:13px}
+        #yzm, #changepwd{position:absolute;top:0;right:0;width:90px;background:0 0;text-decoration:underline;color:#3b9ce7;height:45px;font-size:13px}
         #yzm:disabled{color:#9e9e9e;text-decoration:none}
         #login,#weixinAuthor{width:100%;height:42px;color:#fff;border-radius:7px;font-size:16px;margin-top:12px}
         #login{background:#3b9ce7}
@@ -62,17 +63,22 @@
         #termCheck:active{background:#3b9ce7;color:#fff}
         .ns_msg{text-align:center}
 
-        .ns_dmc{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
-        .ns_dmc>div{position:absolute;top:15%;left:5%;width:90%;background:#fff;border-radius:5px;box-sizing:border-box;padding:20px 20px 30px}
-        .ns_dmc h3{text-align:center;font-size:16px}
+        .ns_zz{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
+        .ns_zz>div{position:absolute;top:15%;left:5%;width:90%;background:#fff;border-radius:5px;box-sizing:border-box;padding:20px 20px 30px}
+        .ns_zz h3{text-align:center;font-size:16px}
+        .ns_zz .btngroups{text-align:center}
+        .ns_zz .btngroups button{color:#fff;font-size:16px;padding:10px 0;border-radius:8px;width:40%;margin:0 5%}
+        #dmSub,#cgSub{background:#6fccf7}
+        #dmQuit,#cgQuit{background:#9e9e9e}
         .ns_dmc .dmlist{margin:20px 0;height:170px;overflow-y:auto}
         .ns_dmc label{width:90%;display:table;margin:10px auto}
         .ns_dmc input{display:table-cell;vertical-align:middle;width:20px;height:20px}
         .ns_dmc span{display:table-cell;font-size:16px;vertical-align:middle;padding:0 10px}
-        .ns_dmc .btngroups{text-align:center}
-        .ns_dmc .btngroups button{color:#fff;font-size:16px;padding:10px 0;border-radius:8px;width:40%;margin:0 5%}
-        #dmSub{background:#6fccf7}
-        #dmQuit{background:#9e9e9e}
+        .ns_cgpwd .cgpwd{margin:20px 0}
+        .ns_cgpwd .cgpwd li{font-size:16px;margin:10px 0;display:-webkit-box;display:box}
+        .ns_cgpwd .cgpwd li label{width:100px;line-height:40px}
+        .ns_cgpwd .cgpwd li>div{-webkit-box-flex:1;box-flex:1;border:thin solid #cecece;border-radius:7px;overflow:hidden}
+        .ns_cgpwd .cgpwd li input{height:40px;width:100%;text-indent:15px;border:none}
     </style>
     <%namespace file="base.html" name="jscode" />
     ${jscode.jscode()}
@@ -115,6 +121,7 @@
             <p>第2步：输入验证码，点击按钮即可免费上网</p>
             <div class="inputWrapper">
                 <input type="text" placeholder="输入密码/验证码" name="password" />
+                <!--<button type="button" id="changepwd">修改密码</button>-->
             </div>
             <button type="button" id="login" disabled>登录</button>
             <div class="ns_msg"></div>
@@ -142,14 +149,14 @@
         </div>
         % elif (policy >> 8 & 1) > 0:
         <div class="boxWrapper FormAccount">
-            <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
-            <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
+            <p>第1步：填写账号</p>
             <div class="inputWrapper">
                 <input type="text" placeholder="账号" name="user" />
             </div>
-            <p>第2步：输入验证码，点击按钮即可免费上网</p>
+            <p>第2步：输入密码</p>
             <div class="inputWrapper">
                 <input type="password" placeholder="密码" name="password" />
+                <!--<button type="button" id="changepwd">修改密码</button>-->
             </div>
             <button type="button" id="login" disabled>登录</button>
             <div class="ns_msg"></div>
@@ -204,7 +211,7 @@
     </div>
     % endif
 
-    <div class="ns_dmc">
+    <div class="ns_zz ns_dmc">
         <div>
             <h3>选择下线设备</h3>
             <div class="dmlist"></div>
@@ -213,14 +220,26 @@
             </div>
         </div>
     </div>
+
+    <!--<div class="ns_zz ns_cgpwd">-->
+        <!--<div>-->
+            <!--<h3>修改密码</h3>-->
+            <!--<ul class="cgpwd">-->
+                <!--<li><label>输入旧密码：</label><div><input type="password" name="oldpwd" /></div></li>-->
+                <!--<li><label>输入新密码：</label><div><input type="password" name="newpwd" /></div></li>-->
+                <!--<li><label>确认新密码：</label><div><input type="password" name="new2pwd" /></div></li>-->
+            <!--</ul>-->
+            <!--<div class="btngroups">-->
+                <!--<button type="button" id="cgSub">确定</button><button type="button" id="cgQuit">取消</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 </body>
 <script>
     // 新闻轮播
     $(function(){
         // 2016-11-17新增
-        function NewsHot(){
-            this.data = '';
-        }
+        function NewsHot(){this.data = '';}
         NewsHot.prototype.getNewsImg = function(){
             var self = this;
             $.ajax({
@@ -304,7 +323,7 @@
             ispwdnotNull = (pwd=='' ? false : true);
             loginAble(isnamenotNull, ispwdnotNull, isterm);
         });
-
+        // Wechat
         $('#weixinAuthor').click(function(){
             Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
         });
