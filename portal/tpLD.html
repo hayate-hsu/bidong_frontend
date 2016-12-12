@@ -171,7 +171,7 @@
                         <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
                         <span class="ns_msg"></span>
                     </div>
-                    <button type="button" id="ns_login">登录</button>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
                     <div class="ns_se">
                         <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
                     </div>
@@ -191,7 +191,7 @@
                         <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
                         <span class="ns_msg"></span>
                     </div>
-                    <button type="button" id="ns_login">登录</button>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
                     <div class="ns_se">
                         <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
                     </div>
@@ -210,7 +210,7 @@
                         <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
                         <span class="ns_msg"></span>
                     </div>
-                    <button type="button" id="ns_login">登录</button>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
                     <div class="ns_se">
                         <label id="autoDuty"><input type="checkbox" checked /><b>我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</b></label>
                     </div>
@@ -243,4 +243,5 @@
 <%!
     title = u'无线验证';
     nsName = 'auto';
+    locationUrl = '';
 %>

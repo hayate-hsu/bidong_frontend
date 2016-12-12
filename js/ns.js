@@ -74,8 +74,9 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
+var isyzm = false;   //【全局变量】
 $(function(){
-    var isyzm = false, verify, $dmuser;
+    var verify, $dmuser;
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -195,7 +196,7 @@ $(function(){
                     }
                 });
             } else {
-                $parent.find('input[name=password]').val('');
+                //$parent.find('input[name=password]').val('');
                 alert('验证码错误');
             }
         } else {
@@ -207,14 +208,18 @@ $(function(){
     //验证码重发
     $(document).on('click', '#yzm', function(){
         var $this=$(this);
-        if(!isyzm){alert('请输入正确的手机号');return false;}
+        var mobile = $this.parents('.FormAccount').find('input[name=user]').val();
+        if(!(/^1\d{10}$/.test(mobile))){
+            alert('请输入正确的手机号');return false;
+        }
+        //if(!isyzm){alert('请输入正确的手机号');return false;}
         if(canyzm){
             $.ajax({
                 method: "post",
                 url: '/wnl/mobile',
                 dataType: "json",
                 data: {
-                    mobile: $this.parents('.FormAccount').find('input[name=user]').val(),
+                    mobile: mobile,
                     mask: 256,
                     pn: $('#pn').val()
                 },
@@ -253,6 +258,63 @@ $(function(){
     $(document).on('click', '#dmQuit', function(){
         $('.ns_dmc').fadeOut();
     });
+
+    // 2016-12-05新增
+    // 修改密码
+    function hidecgpwd(){
+        $('.ns_cgpwd').fadeOut('normal', function(){
+            $('.ns_cgpwd input').val('');
+        });
+    }
+    $(document).on('click', '#changepwd', function(){
+        var user = $('input[name=user]').val();
+        if(user==''){
+            alert('请输入账号！');
+            return false;
+        }
+        $('.ns_cgpwd').fadeIn();
+    });
+    $(document).on('click', '#cgQuit', function(){hidecgpwd();});
+    $(document).on('click', '#cgSub', function(){
+        var user = $('input[name=user]').val();
+        var $cgpwd = $('.ns_cgpwd .cgpwd');
+        var $oldpwd = $cgpwd.find('input[name=oldpwd]'),
+            $newpwd= $cgpwd.find('input[name=newpwd]'),
+            $new2pwd= $cgpwd.find('input[name=new2pwd]');
+        var oldpwd = $oldpwd.val(),
+            newpwd = $newpwd.val(),
+            new2pwd = $new2pwd.val();
+        if(oldpwd==''){$oldpwd.focus();return false;}
+        if(newpwd==''){$newpwd.focus();return false;}
+        if(new2pwd==''){$new2pwd.focus();return false;}
+        if(newpwd==new2pwd){
+            var param = {
+                newp: newpwd,
+                password: oldpwd
+            };
+            $.ajax({
+                method: "put",
+                url: "/wnl/account/"+user,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(param),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    alert("修改密码成功");
+                    hidecgpwd();
+                },
+                error: function (error) {
+                    try{
+                        alert('修改密码失败：'+error.responseJSON.Msg);
+                    }catch(e) {
+                        alert('修改密码失败，请重新提交！');
+                    }
+                }
+            });
+        }else{
+            alert("两次新密码不一致!");
+        }
+    });
 });
 
 //账户认证
@@ -276,11 +338,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             setTimeout(function(){
                 $this.parent().find('.ns_msg').fadeOut();
             }, 5000);
-            if($this.hasClass('theNode')){
-                window.location.href= 'http://www.thenode.cn/web/index.do';
-            }else{
-                window.location.href= urlChange(firsturl, urlparam);
-            }
+            window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
         },
         complete: function(xmlhttp, status){
             console.log(xmlhttp);
@@ -334,25 +392,7 @@ function downMacs(obj){
 }
 
 //验证码倒计时
-var canyzm = true;//判断倒计时是否结束   【作用域全局】
-//function delayYZM($this){
-//    var delay = $this.find('span').text();
-//    var t = setTimeout(_delayYZM($this), 1000);
-//    if(delay>1){
-//        delay--;
-//        $this.find('span').text(delay);
-//        canyzm = false;
-//    }else{
-//        clearTimeout(t);
-//        $this.html('获取验证码').removeClass('disabled').removeAttr('disabled');
-//        canyzm = true;
-//    }
-//}
-//function _delayYZM($this){
-//    return function (){
-//        delayYZM($this);
-//    }
-//}
+var canyzm = true;//判断倒计时是否结束;
 function delayYZMMbo(){
     var delay = $('#yzmMbo span, #yzm span').text();
     var t = setTimeout('delayYZMMbo()', 1000);
@@ -366,6 +406,27 @@ function delayYZMMbo(){
         canyzm = true;
     }
 }
+//function delayYZMMbo($this){
+//    var delay = $this.find('span').text();
+//    var t = setTimeout(_delayYZM($this), 1000);
+//    if(delay>1){
+//        console.log(delay+'haha');
+//        delay--;
+//        $this.find('span').text(delay);
+//        return false;
+//    }else{
+//        console.log(delay);
+//        clearTimeout(t);
+//        //if(typeof(callback)=="function") callback();
+//        $this.html('获取验证码').attr('disabled', false);
+//        return true;
+//    }
+//}
+//function _delayYZM($this){
+//    return function (){
+//        delayYZMMbo($this);
+//    }
+//}
 
 //错误提示
 var err; //错误提示超时检测  【作用域全局】

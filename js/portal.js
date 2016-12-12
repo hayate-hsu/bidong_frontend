@@ -1,6 +1,6 @@
 /**
  * Created by JavieChan on 2016/6/23.
- * Updated by JavieChan on 2016/6/27.
+ * Updated by JavieChan on 2016/12/9.
  */
 
 ;(function(){
@@ -19,39 +19,75 @@
             urlparam: '',
             appid: '',
             shopid: '',
-            pn: ''
+            pn: '',
+            policy: 1280
         },
         auth: function(param){
             for(var i in param)
                 this.opt[i] = param[i];
             this.porHTML();
-            this.userChange();
             this.unitLogin();
-            this.unitYzm();
+            //this.userChange();
+            //this.unitYzm();
             //this.opt.appid ? this.opt.shopid ? this.opt.urlparam ? (console.log("done")) : alert("urlparam不能为空") : alert("shopid不能为空") : alert("appid不能为空");
         },
         porHTML: function(){
             var self = this;
             var div = self.opt.target;
-            div.innerHTML = '<div id="portal_zone">'+
-                '<div>'+
-                    '<input type="text" id="portal_user" name="portal_user" placeholder="账号/手机号：" />'+
-                    '<button type="button" id="portal_yzm">获取验证码</button>'+
-                '</div>'+
-                '<div>'+
-                    '<input type="text" id="portal_pwd" name="portal_pwd" placeholder="密码/验证码：" />'+
-                '</div>'+
-                '<button type="button" id="portal_login">登录</button>'+
-            '</div>';
+
+            if( ((self.opt.policy>>10 & 1) & (self.opt.policy>>8 & 1)) > 0 ){
+                div.innerHTML = '<div id="portal_zone">'+
+                    '<div>'+
+                        '<input type="text" id="portal_user" class="portal_user" name="portal_user" placeholder="账号/手机号：" />'+
+                        '<button type="button" id="portal_yzm">获取验证码</button>'+
+                    '</div>'+
+                    '<div>'+
+                        '<input type="text" id="portal_pwd" name="portal_pwd" placeholder="密码/验证码：" />'+
+                        '<button type="button" id="portal_changePwd">修改密码</button>'+
+                    '</div>'+
+                    '<button type="button" id="portal_login">登录</button>'+
+                '</div>';
+
+                self.userCls = document.getElementsByClassName('portal_user')[0];
+                self.yzm = document.getElementById('portal_yzm');
+                //为user输入框添加change事件
+                self.userChange();
+                self.unitYzm();
+            }else if( (self.opt.policy >> 10 & 1) > 0 ){
+                div.innerHTML = '<div id="portal_zone">'+
+                    '<div>'+
+                        '<input type="text" id="portal_user" name="portal_user" placeholder="手机号：" />'+
+                        '<button type="button" id="portal_yzm">获取验证码</button>'+
+                    '</div>'+
+                    '<div>'+
+                        '<input type="text" id="portal_pwd" name="portal_pwd" placeholder="验证码：" />'+
+                    '</div>'+
+                    '<button type="button" id="portal_login">登录</button>'+
+                '</div>';
+                self.yzm = document.getElementById('portal_yzm');
+                self.unitYzm();
+                isMobile = true;
+            }else if( (self.opt.policy >> 8 & 1) > 0 ){
+                div.innerHTML = '<div id="portal_zone">'+
+                    '<div>'+
+                        '<input type="text" id="portal_user" name="portal_user" placeholder="账号：" />'+
+                    '</div>'+
+                    '<div>'+
+                        '<input type="password" id="portal_pwd" name="portal_pwd" placeholder="密码：" />'+
+                        '<button type="button" id="portal_changePwd">修改密码</button>'+
+                    '</div>'+
+                    '<button type="button" id="portal_login">登录</button>'+
+                '</div>';
+            }
+
             self.user = document.getElementById('portal_user');
             self.pwd = document.getElementById('portal_pwd');
-            self.yzm = document.getElementById('portal_yzm');
             self.login = document.getElementById('portal_login');
         },
         userChange: function(){
             var self = this;
             //为user输入框添加change事件
-            self.addEventHandler(self.user, 'change', function(e) {
+            self.addEventHandler(self.userCls, 'change', function(e) {
                 var evt = e || window.event;
                 var target = evt.srcElement || evt.target;
                 var val = target.value.trim();
@@ -70,7 +106,8 @@
         unitYzm: function(){
             var self = this;
             self.addEventHandler(self.yzm, 'click', function(e) {
-                if(!isMobile){alert('请输入正确的手机号!');return false;}
+                if(!(/^1\d{10}$/).test(self.user.value.trim())){alert('请输入正确的手机号!');return false;}
+                //if(!isMobile){alert('请输入正确的手机号!');return false;}
                 self.unitAjax('/wnl/mobile', 'mobile='+self.user.value.trim()+'&mask=256&pn='+self.opt.pn, function(data){
                     eval("var objSucc =" + data);
                     verify = objSucc.verify;
@@ -87,8 +124,8 @@
             var self = this;
             self.addEventHandler(self.login, 'click', function(e) {
                 var user = self.user.value.trim(), pwd = self.pwd.value.trim();
-                if(!user){alert('请填写账号/手机号'); self.user.focus(); return false;}
-                if(!pwd){alert('请填写密码/验证码'); self.pwd.focus(); return false;}
+                if(!user){ self.user.focus(); return false;}
+                if(!pwd){ self.pwd.focus(); return false;}
                 var obj = {
                     user: user,
                     password: pwd,

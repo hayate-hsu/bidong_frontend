@@ -7,7 +7,8 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>${config['title']}</title>
-    % if 'wxscan' in config['way']:
+    <script src="/js/jquery.js"></script>
+    % if (policy >> 9 & 1) > 0:
     <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
     <script type="text/javascript" src="/wx/js/pcauth.js"></script>
     <script src="/wx/js/pollpcresult.js"></script>
@@ -18,6 +19,7 @@
         button,input{font-family:"microsoft yahei","Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial;font-size:16px;outline:none}
         button{background:none;border:none;cursor:pointer;font-weight:bold}
         a{text-decoration:none}
+        li{list-style:none}
         .pBar{
             position: fixed;
             /*top: 0;*/
@@ -103,11 +105,12 @@
         .main__content{padding-top:20px;background:none}
         .main__content-qrcode{border:2px solid #009cff;height:128px}
         #portal_zone{padding:20px 20px 0 20px}
-        #portal_zone div{
+        #portal_zone>div{
             margin-bottom:16px;
             border: 1px solid #acacac;
             border-radius: 4px;
             line-height: normal;
+            position: relative;
         }
         #portal_zone div input{
             border: none;
@@ -120,14 +123,16 @@
             color: #009cff;
             text-indent: 10px;
         }
-        #portal_zone #portal_user{width:138px}
         #portal_zone div span{
             position: absolute;
             right: 0;
             top: 1px;
             display: block;
         }
-        #portal_yzm{
+        #portal_yzm,#portal_changePwd{
+            position: absolute;
+            top: 0;
+            right: 0;
             height: 40px;
             padding: 0;
             width: 100px;
@@ -175,6 +180,23 @@
         .logo,.aDwn,.aUp{display:inline-block;vertical-align:middle;margin-top:-2px}
         /* ../images/portal.png?20160707153309 */
         .logo,.aDwn,.aUp,h2.on .aDwn,h2.on .aUp,#autoAuthor,#autoAuthor:hover,#appDL,#appDL:hover{background-image:url("/images/nsimgs/portal.png?20160707153309");}
+
+        .ns_zz{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
+        .ns_zz>div{width:405px;height:346px;margin:10% auto;background:#fff;border-radius:5px;box-sizing:border-box;padding:30px 40px}
+        .ns_zz h3{text-align:center;font-size:18px}
+        .ns_zz .btngroups{text-align:center;margin-top:20px}
+        .ns_zz .btngroups button{width:120px;height:40px;background:#6bb2ff;color:#fff;border-radius:5px;margin:0 10px;border:none;font-family:"microsoft yahei", "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;font-size:16px}
+        .ns_dmc .dmlist{margin:20px 0;height:175px;overflow-y:auto}
+        .ns_dmc label{width:100%;display:table;margin-bottom:10px}
+        .ns_dmc input{display:table-cell;vertical-align:middle;width:18px;height:18px}
+        .ns_dmc span{display:table-cell;font-size:16px;vertical-align:middle;padding:0 10px}
+        #dmSub,#cgSub{background:#6bb2ff}
+        #dmQuit,#cgQuit{background:#9e9e9e}
+        .ns_cgpwd .cgpwd{margin:30px 0}
+        .ns_cgpwd .cgpwd li{font-size:16px;margin:10px 0}
+        .ns_cgpwd .cgpwd li label{width:32%;vertical-align:middle;display:inline-block}
+        .ns_cgpwd .cgpwd li>div{width:67%;border:thin solid #cecece;border-radius:7px;overflow:hidden;display:inline-block;vertical-align:middle;box-sizing:border-box}
+        .ns_cgpwd .cgpwd li input{height:40px;width:100%;text-indent:15px;border:none}
     </style>
 </head>
 
@@ -194,34 +216,27 @@
     <input type="hidden" id="shopid" value="${shopid}" />
     <input type="hidden" id="pn" value="${pn}" />
 
-    % if config['nav'] == 'top':
     <div class="pBar">
-    % else:
-    <div class="pBar pbtm">
-    % endif
         <div class="pWrapper">
             <div class="pTitle">
                 <h1>${config['title']}</h1>
                 <a href="http://mbd.cniotroot.cn/" target="_blank"><i class="logo"></i>壁咚分布式认证系统</a>
             </div>
             <div class="pAuthor">
-                % if 'auto' in config['way']:
-                <div class="pAuto">
-                    <button type="button" id="autoAuthor">一键认证</button>
-                </div>
-                % endif
-                % if 'app' in config['way']:
-                <div class="pApp">
-                    <a href="javascript:;" id="appDL" target="_blank">APP认证上网</a>
-                </div>
-                % endif
-                % if 'account' in config['way']:
+                <!--<div class="pAuto">-->
+                    <!--<button type="button" id="autoAuthor">一键认证</button>-->
+                <!--</div>-->
+                <!---->
+                <!--<div class="pApp">-->
+                    <!--<a href="javascript:;" id="appDL" target="_blank">APP认证上网</a>-->
+                <!--</div>-->
+                % if ((policy>>10 & 1) | (policy>>8 & 1)) > 0:
                 <div class="pLogin">
                     <h2 class="" id="pLogin">短信/账户上网<i class="aDwn"></i></h2>
                     <div class="pForm" id="pForm"></div>
                 </div>
                 % endif
-                % if 'wxscan' in config['way']:
+                % if (policy >> 9 & 1) > 0:
                 <div class="pQrcode">
                     <h2 class="" id="pQrcode">微信扫一扫上网<i class="aDwn"></i></h2>
                     <div class="pEwm" id="pEwm">
@@ -234,7 +249,20 @@
             </div>
         </div>
     </div>
-    % if 'wxscan' in config['way']:
+    <div class="ns_zz ns_cgpwd">
+        <div>
+            <h3>修改密码</h3>
+            <ul class="cgpwd">
+                <li><label>输入旧密码：</label><div><input type="password" name="oldpwd" /></div></li>
+                <li><label>输入新密码：</label><div><input type="password" name="newpwd" /></div></li>
+                <li><label>确认新密码：</label><div><input type="password" name="new2pwd" /></div></li>
+            </ul>
+            <div class="btngroups">
+                <button type="button" id="cgSub">确定</button><button type="button" id="cgQuit">取消</button>
+            </div>
+        </div>
+    </div>
+    % if (policy >> 9 & 1) > 0:
     <script type="text/javascript">
         JSAPI.auth({
             target : document.getElementById('qrcode_zone'),
@@ -254,7 +282,7 @@
         };
     </script>
     % endif
-    % if 'account' in config['way']:
+    % if ((policy>>10 & 1) | (policy>>8 & 1)) > 0:
     <script type="text/javascript" src="/js/portal.js"></script>
     <script>
         Portal.auth({
@@ -270,13 +298,17 @@
             urlparam: '${urlparam}',
             appid: '${appid}',
             shopid: '${shopid}',
-            pn: '${pn}'
+            pn: '${pn}',
+            policy: '${policy}'
         });
         document.getElementById('pLogin').onclick=function(){
             if(this.className=='on'){
                 this.className='';
                 document.getElementById('pForm').style.display='none';
             }else{
+                % if (policy >> 9 & 1) <= 0:
+                document.getElementById('pForm').style.right = 2+'px';
+                % endif
                 this.className='on';
                 document.getElementById('pForm').style.display='block';
             }
@@ -287,5 +319,66 @@
         }
     </script>
     % endif
+    <script>
+        $(function(){
+            // 2016-12-05新增
+            // 修改密码
+            function hidecgpwd(){
+                $('.ns_cgpwd').fadeOut('normal', function(){
+                    $('.ns_cgpwd input').val('');
+                });
+            }
+            $(document).on('click', '#portal_changePwd', function(){
+                var user = $('input[name=portal_user]').val();
+                if(user==''){
+                    alert('请输入账号！');
+                    $('input[name=portal_user]').focus();
+                    return false;
+                }
+                $('.ns_cgpwd').fadeIn();
+            });
+            $(document).on('click', '#cgQuit', function(){hidecgpwd();});
+            $(document).on('click', '#cgSub', function(){
+                var user = $('input[name=portal_user]').val();
+                var $cgpwd = $('.ns_cgpwd .cgpwd');
+                var $oldpwd = $cgpwd.find('input[name=oldpwd]'),
+                    $newpwd= $cgpwd.find('input[name=newpwd]'),
+                    $new2pwd= $cgpwd.find('input[name=new2pwd]');
+                var oldpwd = $oldpwd.val(),
+                    newpwd = $newpwd.val(),
+                    new2pwd = $new2pwd.val();
+                if(oldpwd==''){$oldpwd.focus();return false;}
+                if(newpwd==''){$newpwd.focus();return false;}
+                if(new2pwd==''){$new2pwd.focus();return false;}
+                if(newpwd==new2pwd){
+                    var param = {
+                        newp: newpwd,
+                        password: oldpwd
+                    };
+                    $.ajax({
+                        method: "put",
+                        url: "/wnl/account/"+user,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(param),
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            alert("修改密码成功");
+                            hidecgpwd();
+                        },
+                        error: function (error) {
+                            try{
+                                alert('修改密码失败：'+error.responseJSON.Msg);
+                            }catch(e) {
+                                alert('修改密码失败，请重新提交！');
+                            }
+                        }
+                    });
+                }else{
+                    alert("两次新密码不一致!");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

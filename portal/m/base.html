@@ -27,7 +27,10 @@
     <%block name="jscode">
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/md5.js"></script>
-    <script type="text/javascript" src="/js/ns.js?v=1.0.2"></script>
+    <script type="text/javascript" src="/js/ns.js?v=1.0.3"></script>
+    % if ((policy >> 10 & 1) > 0) & ((policy >> 8 & 1) <= 0) > 0  :
+    <script>isyzm=true</script>
+    % endif
     </%block>
 </head>
 
@@ -75,7 +78,7 @@
             % if self.attr.duty:
             <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
-            <button type="button" id="login">登录</button>
+            <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
             <span class="ns_msg"></span>
             % if self.attr.duty:
             <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
@@ -91,7 +94,7 @@
             % if self.attr.duty:
             <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
-            <button type="button" id="login">登录</button>
+            <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
             <span class="ns_msg"></span>
             % if self.attr.duty:
             <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
@@ -107,7 +110,7 @@
             % if self.attr.duty:
             <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
             % endif
-            <button type="button" id="login">登录</button>
+            <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
             <span class="ns_msg"></span>
             % if self.attr.duty:
             <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
@@ -214,4 +217,5 @@
     accountTitle = u'账户认证';
     qrcode = False;
     autoAccount = False;
+    locationUrl = '';
 %>
