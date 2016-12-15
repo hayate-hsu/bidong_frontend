@@ -19,7 +19,7 @@
         li {list-style: none;}
         a, button, input{font-family: "microsoft yahei", Arial, Helvetica, sans-serif; outline: none;}
         .ns_banner{
-            background: url("/images/nsimgs/${self.attr.bannerImg}") top center no-repeat;
+            background: url("/static/images/nsimgs/${self.attr.bannerImg}") top center no-repeat;
             height: 320px;
             margin-bottom: 12px;
         }
@@ -244,17 +244,17 @@
         .ns_cgpwd .cgpwd li>div{width:67%;border:thin solid #cecece;border-radius:7px;overflow:hidden;display:inline-block;vertical-align:middle;box-sizing:border-box}
         .ns_cgpwd .cgpwd li input{height:40px;width:100%;text-indent:15px;border:none}
     </style>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/json2.js"></script>
-    <script src="/js/md5.js"></script>
-    <script src="/js/ns.js?v=1.0.3"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/json2.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/ns.js?v=1.0.3"></script>
     % if ((policy >> 10 & 1) > 0) & ((policy >> 8 & 1) <= 0) > 0  :
     <script>isyzm=true</script>
     % endif
     % if (policy >> 9 & 1) > 0:
-    <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
-    <script type="text/javascript" src="/wx/js/pcauth.js"></script>
-    <script src="/wx/js/pollpcresult.js"></script>
+    <link rel="stylesheet" href="/static/wx/css/style-pcdemo.css">
+    <script type="text/javascript" src="/static/wx/js/pcauth.js"></script>
+    <script src="/static/wx/js/pollpcresult.js"></script>
     % endif
     </%block>
 </head>
