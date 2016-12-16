@@ -330,6 +330,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             $this.text('正在验证').attr('disabled', true);
         },
         success: function (data) {
+            console.log(data);
             if($('#autoLogin').length>0 && $('#autoLogin input').is(':checked')){
                 var name = $('#autoLogin').data('name');
                 localStorage[name]=user;
@@ -338,7 +339,11 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             setTimeout(function(){
                 $this.parent().find('.ns_msg').fadeOut();
             }, 5000);
-            window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
+            if(!data.Token){
+                window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
+            }else{
+                window.location.href = '/user/'+user+'?token='+data.Token+'&code='+data.Code+'&pn='+data.pn+'&ssid='+data.ssid;
+            }
         },
         complete: function(xmlhttp, status){
             console.log(xmlhttp);
@@ -351,11 +356,14 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             $this.text('登录').attr('disabled', false);
         },
         error: function (error) {
+            var err = error.responseJSON;
             try{
-                if((error.responseJSON.Code==428) && (error.responseJSON.downMacs==1)){
-                    dmList(error.responseJSON.macs);
+                if((err.Code==428) && (err.downMacs==1)){
+                    dmList(err.macs);
+                }else if(!err.Token){
+                    alert('验证失败：'+err.Msg);
                 }else{
-                    alert('验证失败：'+error.responseJSON.Msg);
+                    window.location.href = '/user/'+user+'?token='+err.Token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
                 }
             }catch(e) {
                 alert('验证失败，请重新登录！');

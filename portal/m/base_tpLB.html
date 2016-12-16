@@ -256,7 +256,7 @@
             var self = this;
             $.ajax({
                 method: 'get',
-                url: 'http://cms.cniotroot.cn/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
+                url: '${self.attr.cmsUrl}/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
                 dataType: "json"
             }).done(function(data){
                 console.log(data);
@@ -270,8 +270,8 @@
             if(data.messages.length>0){
                 for(var i= 0, h=''; i<data.messages.length; i++){
                     var mes=data.messages[i];
-                    var img = (mes.image=='' ? "" : '<img src="http://cms.cniotroot.cn'+mes.image+'" />');
-                    h+='<a href="http://cms.cniotroot.cn/message/'+mes.id+'">'+
+                    var img = (mes.image=='' ? "" : '<img src="${self.attr.cmsImgUrl}'+mes.image+'" />');
+                    h+='<a href="${self.attr.cmsUrl}/message/'+mes.id+'">'+
                         img+
                         '<p>'+mes.title+'</p>'+
                         '<span class="shadow"></span>'+
@@ -350,5 +350,7 @@
     title = u"南沙无线城市";
     name = u"南沙无线城市";
     term = False;
+    cmsUrl = 'http://cms.cniotroot.cn';
+    cmsImgUrl = 'http://cms.cniotroot.cn';
     locationUrl = '';
 %>
