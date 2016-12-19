@@ -362,7 +362,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
                 if((err.Code==428) && (err.downMacs==1)){
                     dmList(err.macs);
                 }else if((err.pn=='15914') && ispc){
-                    window.location.href = '/user/'+user+'?token='+err.token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
+                    window.location.href = '/user/'+user+'?token='+err.Token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
                 }else{
                     alert('验证失败：'+err.Msg);
                 }
