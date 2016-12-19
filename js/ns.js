@@ -340,7 +340,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
                 $this.parent().find('.ns_msg').fadeOut();
             }, 5000);
             if((data.pn=='15914') && ispc){
-                window.location.href = '/user/'+user+'?token='+data.token+'&code='+data.Code+'&pn='+data.pn+'&ssid='+data.ssid;
+                window.location.href = '/user/'+user+'?token='+data.Token+'&code='+data.Code+'&pn='+data.pn+'&ssid='+data.ssid;
             }else{
                 window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
             }
