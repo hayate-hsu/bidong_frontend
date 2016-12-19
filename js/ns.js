@@ -151,7 +151,7 @@ $(function(){
 
         if(user==''||user==null){
             // mobile
-            $parent.find('.ns_rz_group:eq(0)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('input[name=user]').parents('.ns_rz_group').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
             // pc
             //$parent.find('.ns_msg').text('*输入账号/手机号').css('color', '#f36144').show();
             $parent.find('input[name=user]').focus();
@@ -160,7 +160,7 @@ $(function(){
         }
         if(pwd==''||pwd==null){
             // mobile
-            $parent.find('.ns_rz_group:eq(1)').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
+            $parent.find('input[name=password]').parents('.ns_rz_group').addClass('borderRed').siblings('.ns_rz_group').removeClass('borderRed');
             // pc
             //$parent.find('.ns_msg').text('*输入密码/验证码').css('color', '#f36144').show();
             $parent.find('input[name=password]').focus();
@@ -339,10 +339,10 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             setTimeout(function(){
                 $this.parent().find('.ns_msg').fadeOut();
             }, 5000);
-            if(!data.Token){
-                window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
+            if(data.pn=='15914'){
+                window.location.href = '/user/'+user+'?token='+data.token+'&code='+data.Code+'&pn='+data.pn+'&ssid='+data.ssid;
             }else{
-                window.location.href = '/user/'+user+'?token='+data.Token+'&code='+data.Code+'&pn='+data.pn+'&ssid='+data.ssid;
+                window.location.href = ( (!$this.data('url')) ? urlChange(firsturl, urlparam) : $this.data('url') );
             }
         },
         complete: function(xmlhttp, status){
@@ -360,10 +360,10 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             try{
                 if((err.Code==428) && (err.downMacs==1)){
                     dmList(err.macs);
-                }else if(!err.Token){
-                    alert('验证失败：'+err.Msg);
+                }else if(data.pn=='15914'){
+                    window.location.href = '/user/'+user+'?token='+err.token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
                 }else{
-                    window.location.href = '/user/'+user+'?token='+err.Token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
+                    alert('验证失败：'+err.Msg);
                 }
             }catch(e) {
                 alert('验证失败，请重新登录！');

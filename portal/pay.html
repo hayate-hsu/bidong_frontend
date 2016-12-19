@@ -69,7 +69,7 @@
         .helpWrapper{background:#ec8f5c;height:70px;margin-bottom:20px}
         .helpWrapper .wrapper{}
         .helplink{text-align:center;color:#fff;font-size:16px;line-height:70px}
-        .helplink a{color:#fff;background:#e07744;display:inline-block;width:223px;height:34px;font-size:16px;margin-right:15px;text-decoration:none;line-height:34px;border-radius:5px}
+        .helplink a{color:#fff;background:#e07744;display:inline-block;width:223px;height:34px;font-size:16px;margin-left:15px;text-decoration:none;line-height:34px;border-radius:5px}
         .helplink a:hover{background:#df6c3f}
     </style>
     <script src="/js/jquery.js"></script>
@@ -90,14 +90,16 @@
             </div>
         </div>
     </div>
+    % if code != 200:
     <div class="helpWrapper">
         <div class="wrapper">
             <p class="helplink">
-                认证失败处理步骤：
+                认证失败：${msg}
                 <a href="win10dhcp.html" target="_blank">Windows10 网络设置步骤</a><a href="win7dhcp.html" target="_blank">Windows7 网络设置步骤</a>
             </p>
         </div>
     </div>
+    % endif
     <div class="payWrapper">
         <div class="wrapper">
             <div class="payForm">
@@ -151,7 +153,7 @@
         <div class="exTimeModal">
             <h3>上网时间兑换</h3>
             <div>
-                <p>亲，您有<span><em class="exH">${hours}</em>小时</span>的上网时间可兑换</p>
+                <p>亲，您有<span><em class="exH">${ex_hours}</em>小时</span>的上网时间可兑换</p>
                 <input type="number" placeholder="输入小时数" name="hours" min="1" />
                 <button type="button" class="btn" id="excharge">立即兑换</button>
                 <div class="errmsg"></div>
@@ -174,7 +176,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    if(data.code==200){
+                    if( (data.code==200) && (data.policys.length>0)){
                         for(var i=0, h=''; i<data.policys.length; i++){
                             var policy=data.policys[i];
                             h += '<span data-id="'+policy.id+'">'+policy.label+'</span>';
