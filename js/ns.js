@@ -360,7 +360,7 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             try{
                 if((err.Code==428) && (err.downMacs==1)){
                     dmList(err.macs);
-                }else if(data.pn=='15914'){
+                }else if(err.pn=='15914'){
                     window.location.href = '/user/'+user+'?token='+err.token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
                 }else{
                     alert('验证失败：'+err.Msg);
