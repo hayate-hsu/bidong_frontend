@@ -74,9 +74,10 @@ function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, ma
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-var isyzm = false, ispc=false;   //【全局变量】
+var isyzm = false, ispc = false, verify;   //【全局变量】
 $(function(){
-    var verify, $dmuser;
+    var $dmuser;  // 下线user
+
     // tpLC二维码
     $('.tn_l .tn_po').hover(function(){
         $('.tn_wx').show();
@@ -356,12 +357,12 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             $this.text('登录').attr('disabled', false);
         },
         error: function (error) {
-            var err = error.responseJSON;
             try{
-                console.log(ispc);
+                var err = error.responseJSON;
+                console.log(!!err.Token);
                 if((err.Code==428) && (err.downMacs==1)){
                     dmList(err.macs);
-                }else if((err.pn=='15914') && ispc){
+                }else if((err.pn=='15914') && ispc && (!!err.Token)){
                     window.location.href = '/user/'+user+'?token='+err.Token+'&code='+err.Code+'&pn='+err.pn+'&ssid='+err.ssid;
                 }else{
                     alert('验证失败：'+err.Msg);

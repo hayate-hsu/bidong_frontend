@@ -34,11 +34,11 @@ button{-webkit-user-select:none;user-select:none}
 .appDownload:active{color:#fff;background:#43a0de;border-bottom:2px solid #4595cf}
 .ns_rz_wrapper .ns_rz_group{background:#efefef;border-radius:7px;position:relative;margin-bottom:7px;border:1px solid #d9d9d9}
 .ns_rz_wrapper .borderRed{border:1px solid #f36144}
-.ns_rz_wrapper .ns_rz_group input{border-radius:inherit;padding:14px 0;font-size:1.3rem;text-indent:18px;background:0 0;width:100%}
+.ns_rz_group input{border-radius:inherit;padding:14px 0;font-size:1.3rem;text-indent:18px;background:0 0;width:100%}
 .ns_rz_wrapper label{font-size:1.3rem;color:#878787}
 .ns_rz_wrapper label a{text-decoration:underline;color:#333}
 #yzm{padding:14px 0;color:#489ad8;border-radius:0;border-top-right-radius:7px;border-bottom-right-radius:7px;background:0 0;width:90px;font-size:1.3rem;text-decoration:underline;display:none;position:absolute;right:0;top:0}
-#yzm.disabled{color:#999}
+#yzm:disabled{color:#999}
 .ns_rz_wrapper p{margin-top:7px;font-size:1.3rem;color:#9e9e9e;text-align:left}
 .ns_msg{color:#4ed754;text-align:center;display:block}
 .ns_ctx{padding:0 21px}

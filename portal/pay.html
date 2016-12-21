@@ -66,11 +66,12 @@
         .errmsg{margin-top:5px;color:#ff6138}
         #pay{margin-left:-80px}
         #pay.disbtn{background:#999}
-        .helpWrapper{background:#ec8f5c;height:70px;margin-bottom:20px}
-        .helpWrapper .wrapper{}
-        .helplink{text-align:center;color:#fff;font-size:16px;line-height:70px}
-        .helplink a{color:#fff;background:#e07744;display:inline-block;width:223px;height:34px;font-size:16px;margin-left:15px;text-decoration:none;line-height:34px;border-radius:5px}
-        .helplink a:hover{background:#df6c3f}
+        .errorWrapper{background:#fff;padding:8px 0}
+        .errorBox{position:relative;width:1312px;margin:0 auto}
+        .errorBox img{display:block}
+        .error{position:absolute;top:0;left:0;width:326px;height:220px;background:#F1F1F1;display:table}
+        .error p{display:table-cell;vertical-align:middle;text-align:center;font-size:16px;font-weight:700;color:#e95032;padding:0 20px}
+        @media screen and (max-width:1312px){.footer,.header,.payWrapper,.errorWrapper{width:1312px}}
     </style>
     <script src="/js/jquery.js"></script>
 </head>
@@ -91,12 +92,12 @@
         </div>
     </div>
     % if code != 200:
-    <div class="helpWrapper">
-        <div class="wrapper">
-            <p class="helplink">
-                认证失败：${msg}
-                <a href="win10dhcp.html" target="_blank">Windows10 网络设置步骤</a><a href="win7dhcp.html" target="_blank">Windows7 网络设置步骤</a>
-            </p>
+    <div class="errorWrapper">
+        <div class="errorBox">
+            <div class="error">
+                <p>认证失败：${msg}</p>
+            </div>
+            <img src="/images/help/error/tp.jpg" />
         </div>
     </div>
     % endif
@@ -114,7 +115,7 @@
                         <ul>
                             <li>姓名：${user}</li>
                             <li>手机号：${mobile}</li>
-                            <li>到期时间：${expired}小时</li>
+                            <li>到期时间：${expired}</li>
                         </ul>
                         <button type="button" class="bdbtn" id="exHours">兑换</button>
                     </div>
@@ -136,7 +137,7 @@
             <div class="payBox pcHelp">
                 <h3><em>家用电脑上网指南</em></h3>
                 <ul>
-                    <li><i class="helpIco01"></i><div><span>选择WiFI：壁咚WiFi</span></div></li>
+                    <li><i class="helpIco01"></i><div><span>选择WiFI：${ssid}</span></div></li>
                     <li><i class="helpIco02"></i><div><span>打开浏览器</span></div></li>
                     <li><i class="helpIco03"></i><div><span>输入以下内容</span><span class="pcpwd">账号：${user}      密码：${password}</span></div></li>
                 </ul>
