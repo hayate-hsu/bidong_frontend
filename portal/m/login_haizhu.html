@@ -18,8 +18,8 @@
         #infoCheck:active,#login:active{background:#1b8bda;border:none}
         #infoCheck:disabled,#login:disabled{background:#a8cbe7}
         #deptWrapper{width:100%;position:relative}
-        #deptWrapper li{width:32%;display:inline-block;font-size:1.6rem;color:#444;box-sizing:border-box;border:1px solid #86bce2;border-radius:5px;text-align:center;padding:7px 0;margin-right:1%;background:#fff;margin-top:0;vertical-align:top}
-        #deptWrapper li.on,#deptWrapper li:active{background:#e0f6ff;color:#0971c9}
+        #deptWrapper a{width:32%;display:inline-block;font-size:1.6rem;color:#444;box-sizing:border-box;border:1px solid #86bce2;border-radius:5px;text-align:center;padding:7px 0;margin-right:1%;background:#fff;margin-top:0;vertical-align:top}
+        #deptWrapper a.on,#deptWrapper a:active{background:#e0f6ff;color:#0971c9}
         #deptWrapper>div{background:rgba(0,0,0,.5);position:absolute;top:0;left:0;right:0;bottom:0;color:#fff;text-align:center;box-sizing:border-box;padding-top:10px;display:none}
         .hz_msg{color:#e7491f;font-size:1.3rem;margin:9px 0;display:block}
         .deptBox{display:none}
@@ -67,7 +67,7 @@
     <div class="ns_box deptBox" style="border:none;border-top:1px solid #d9d9d9">
         <h3>选择部门</h3>
         <div id="deptWrapper">
-            <ul data-value=""></ul>
+            <p data-value=""></p>
             <div></div>
         </div>
         <p class="hz_msg"></p>
@@ -136,9 +136,9 @@
                         var deptArr = showDept(data.department);
                         for(var i=0, h=''; i<deptArr.length; i++){
                             var dept = deptArr[i];
-                            h += '<li>'+dept+'</li>';
+                            h += '<a href="javascript:;">'+dept+'</a>';
                         }
-                        $('#deptWrapper ul').data('value', data.department).html(h);
+                        $('#deptWrapper p').data('value', data.department).html(h);
                         $('.deptBox').slideDown();
                     },
                     error: function(error){
@@ -155,7 +155,7 @@
                 });
             }
         });
-        $(document).on('click', '#deptWrapper li', function(){
+        $(document).on('click', '#deptWrapper a', function(){
             $(this).addClass('on').siblings().removeClass('on');
             var dept = $(this).text(), deptId = $(this).parent().data('value');
             if((deptId == dept) && canyzm){
