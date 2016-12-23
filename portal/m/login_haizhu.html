@@ -10,9 +10,9 @@
     <title>海珠机关无线网</title>
     <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
     <style>
-        .ns_rz_group{display:-webkit-box;overflow:hidden}
+        .ns_rz_group{box-sizing:border-box;display:-webkit-box;overflow:hidden}
         .ns_rz_group>div{-webkit-box-flex:1}
-        .ns_rz_group>span{color:#9e9e9e;display:inline-block;line-height:45px;padding-left:20px}
+        .ns_rz_group>span{color:#9e9e9e;display:inline-block;line-height:45px;text-indent:20px}
         .ns_rz_group>div input{height:45px;padding:0;text-indent:5px}
         #infoCheck,#login{background:#1e9ef7;margin-top:18px;border:none}
         #infoCheck:active,#login:active{background:#1b8bda;border:none}
@@ -21,73 +21,75 @@
         #deptWrapper a{width:32%;display:inline-block;font-size:1.6rem;color:#444;box-sizing:border-box;border:1px solid #86bce2;border-radius:5px;text-align:center;padding:7px 0;margin-right:1%;background:#fff;margin-top:0;vertical-align:top}
         #deptWrapper a.on,#deptWrapper a:active{background:#e0f6ff;color:#0971c9}
         #deptWrapper>div{background:rgba(0,0,0,.5);position:absolute;top:0;left:0;right:0;bottom:0;color:#fff;text-align:center;box-sizing:border-box;padding-top:10px;display:none}
-        .hz_msg{color:#e7491f;font-size:1.3rem;margin:9px 0;display:block}
+        .hz_msg{color:#e7491f;font-size:1.3rem;margin:9px 0;display:block;text-align:justify}
         .deptBox{display:none}
         p.hz_msg{margin:0;height:35px}
         p.hz_msg:before{content:"";padding-top:9px;display:block}
+        .footer{text-align:center;padding:30px 0;white-space:pre}
     </style>
     <%namespace file="base.html" name="jscode" />
     ${jscode.jscode()}
     <script>isyzm=true</script>
+    % if not ismobile:
+    <script>ispc=true</script>
+    <style>
+        .ns_rz_group{box-sizing:border-box;display:block;overflow:hidden}
+        .ns_rz_group>div{width:420px;display:inline-block}
+        .ns_rz_group>span{width:auto}
+
+        .ns_zz>div{position:relative;top:0;left:0;width:405px;height:346px;margin:10% auto;padding:30px 40px}
+        .ns_zz h3{font-size:18px}
+        .ns_zz .btngroups{margin-top:20px}
+        .ns_zz .btngroups button{width:120px;height:40px;background:#6bb2ff;color:#fff;border-radius:5px;margin:0 10px;border:none;font-family:"microsoft yahei", "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;font-size:16px}
+        .ns_dmc .dmlist{height:175px}
+        .ns_dmc label{width:100%;margin-bottom:10px}
+        .ns_dmc input{width:18px;height:18px}
+
+        @media screen and (min-width: 415px)  {
+            .FormAccount{width:600px;margin:0 auto;height:100%;background:#fff;box-shadow:0 0 3px 5px rgba(0,0,0,0.1)}
+        }
+    </style>
+    % endif
 </head>
 
-<body class="FormAccount">
-    <input type="hidden" id="user" value="${user}" />
-    <input type="hidden" id="password" value="${password}" />
-    <input type="hidden" id="openid" value="${openid}" />
-    <input type="hidden" id="ac_ip" value="${ac_ip}" />
-    <input type="hidden" id="vlanId" value="${vlan}" />
-    <input type="hidden" id="ssid" value="${ssid}" />
-    <input type="hidden" id="user_ip" value="${user_ip}" />
-    <input type="hidden" id="user_mac" value="${user_mac}" />
-    <input type="hidden" id="ap_mac" value="${ap_mac}" />
-    <input type="hidden" id="firsturl" value="${firsturl}" />
-    <input type="hidden" id="urlparam" value="${urlparam}" />
-    <input type="hidden" id="appid" value="${appid}" />
-    <input type="hidden" id="shopid" value="${shopid}" />
-    <input type="hidden" id="pn" value="${pn}" />
+<body>
+    <div class="FormAccount">
+        <div class="ns_header">
+            <img src="/images/nsimgs/bg_haizhu.jpg" class="ns_bg" />
+        </div>
 
-    <div class="ns_header">
-        <img src="/images/nsimgs/bg_haizhu.jpg" class="ns_bg" />
-    </div>
+        <div class="ns_box" style="border-bottom:none">
+            <h3>账户认证</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group">
+                    <span>姓名：</span><div><input type="text" name="name" /></div>
+                </div>
+                <div class="ns_rz_group">
+                    <span>手机号：</span><div><input type="text" name="user" /></div>
+                </div>
+                <button type="button" id="infoCheck" disabled>信息验证</button>
+                <span class="hz_msg"></span>
+            </div>
+        </div>
+        <div class="ns_box deptBox" style="border:none;border-top:1px solid #d9d9d9">
+            <h3>选择部门</h3>
+            <div id="deptWrapper">
+                <p data-value=""></p>
+                <div></div>
+            </div>
+            <p class="hz_msg"></p>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group">
+                    <span>请输入验证码：</span><div><input type="text" name="password" /></div>
+                </div>
+            </div>
+            <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+        </div>
 
-    <div class="ns_box" style="border-bottom:none">
-        <h3>账户认证</h3>
-        <div class="ns_rz_wrapper">
-            <div class="ns_rz_group">
-                <span>姓名：</span><div><input type="text" name="name" /></div>
-            </div>
-            <div class="ns_rz_group">
-                <span>手机号：</span><div><input type="text" name="user" /></div>
-            </div>
-            <button type="button" id="infoCheck" disabled>信息验证</button>
-            <span class="hz_msg"></span>
-        </div>
-    </div>
-    <div class="ns_box deptBox" style="border:none;border-top:1px solid #d9d9d9">
-        <h3>选择部门</h3>
-        <div id="deptWrapper">
-            <p data-value=""></p>
-            <div></div>
-        </div>
-        <p class="hz_msg"></p>
-        <div class="ns_rz_wrapper">
-            <div class="ns_rz_group">
-                <span>请输入验证码：</span><div><input type="text" name="password" /></div>
-            </div>
-        </div>
-        <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+        <!--<div class="footer">联系人：郑加才、付云飞<br>电话：89088737、89088722</div>-->
     </div>
 
-    <div class="ns_dmc">
-        <div>
-            <h3>选择下线设备</h3>
-            <div class="dmlist"></div>
-            <div class="btngroups">
-                <button type="button" id="dmSub">确定</button><button type="button" id="dmQuit">取消</button>
-            </div>
-        </div>
-    </div>
+    <%include file="hidwx.html" />
 </body>
 <script type="text/javascript">
     document.addEventListener('visibilitychange', putNoResponse, false);
@@ -145,7 +147,7 @@
                         try{
                             console.log(error.responseJSON);
                             $('.deptBox').slideUp('normal', function(){
-                                $this.next('.hz_msg').text('您的信息填写有误，请核对后重新输入');
+                                $this.next('.hz_msg').text('温馨提示：如因未注册海珠区OA用户或个人信息中未登记手机号码的，将无法获取短信验证码完成认证上网。具体可联系区政务办电子政务技术信息中心，联系人：郑加才、付云飞、电话：89088737、89088722。');
                             });
                         }catch (e){
                             $this.next('.hz_msg').text('请检查网络状态');

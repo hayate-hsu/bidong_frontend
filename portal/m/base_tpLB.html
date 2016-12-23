@@ -86,8 +86,8 @@
             height: 100%;
             width: 100%;
         }
-        #banner{background:#d8d8d8;height:265px;position:relative}
-        #banner img{display:block;width:100%;height:265px}
+        #banner{height:265px}
+        #banner img{height:265px}
         #weixinAuthor{height:56px;border-radius:28px;font-size:20px;margin-top:60px}
         #weixinAuthor i{background-size:27px;width:27px;height:22px}
         % endif
@@ -98,90 +98,77 @@
 </head>
 
 <body>
-    <input type="hidden" id="user" value="${user}" />
-    <input type="hidden" id="password" value="${password}" />
-    <input type="hidden" id="openid" value="${openid}" />
-    <input type="hidden" id="ac_ip" value="${ac_ip}" />
-    <input type="hidden" id="vlanId" value="${vlan}" />
-    <input type="hidden" id="ssid" value="${ssid}" />
-    <input type="hidden" id="user_ip" value="${user_ip}" />
-    <input type="hidden" id="user_mac" value="${user_mac}" />
-    <input type="hidden" id="ap_mac" value="${ap_mac}" />
-    <input type="hidden" id="firsturl" value="${firsturl}" />
-    <input type="hidden" id="urlparam" value="${urlparam}" />
-    <input type="hidden" id="appid" value="${appid}" />
-    <input type="hidden" id="shopid" value="${shopid}" />
-    <input type="hidden" id="pn" value="${pn}" />
-
-    <div class="header"><i></i>欢迎连接${self.attr.name}wifi</div>
-    <div id="banner" class="owl-carousel">
-        <!--<a href="/news.html">-->
-            <!--<img src="" />-->
-            <!--<p></p>-->
-            <!--<span class="shadow"></span>-->
-        <!--</a>-->
-    </div>
-    <div class="wifiWrapper">
-        % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
-        <div class="boxWrapper FormAccount">
-            <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
-            <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
-            <div class="inputWrapper">
-                <input type="text" placeholder="输入账号/手机号" name="user" id="userCtrl" />
-                <button type="button" id="yzm" class="sYzm">获取验证码</button>
+    <div class="FormAccount">
+        <div class="header"><i></i>欢迎连接${self.attr.name}wifi</div>
+        <div id="banner" class="owl-carousel">
+            <!--<a href="/news.html">-->
+                <!--<img src="" />-->
+                <!--<p></p>-->
+                <!--<span class="shadow"></span>-->
+            <!--</a>-->
+        </div>
+        <div class="wifiWrapper">
+            % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
+            <div class="boxWrapper">
+                <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
+                <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
+                <div class="inputWrapper">
+                    <input type="text" placeholder="输入账号/手机号" name="user" id="userCtrl" />
+                    <button type="button" id="yzm" class="sYzm">获取验证码</button>
+                </div>
+                <p>第2步：输入验证码，点击按钮即可免费上网</p>
+                <div class="inputWrapper">
+                    <input type="text" placeholder="输入密码/验证码" name="password" />
+                    <button type="button" id="changepwd">修改密码</button>
+                </div>
+                <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+                <div class="ns_msg"></div>
+                % if self.attr.term:
+                <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+                % endif
             </div>
-            <p>第2步：输入验证码，点击按钮即可免费上网</p>
-            <div class="inputWrapper">
-                <input type="text" placeholder="输入密码/验证码" name="password" />
-                <button type="button" id="changepwd">修改密码</button>
+            % elif (policy >> 10 & 1) > 0:
+            <div class="boxWrapper">
+                <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
+                <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
+                <div class="inputWrapper">
+                    <input type="text" placeholder="手机号" name="user" />
+                    <button type="button" id="yzm">获取验证码</button>
+                </div>
+                <p>第2步：输入验证码，点击按钮即可免费上网</p>
+                <div class="inputWrapper">
+                    <input type="text" placeholder="验证码" name="password" />
+                </div>
+                <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+                <div class="ns_msg"></div>
+                % if self.attr.term:
+                <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+                % endif
             </div>
-            <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
-            <div class="ns_msg"></div>
-            % if self.attr.term:
-            <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+            % elif (policy >> 8 & 1) > 0:
+            <div class="boxWrapper">
+                <p>第1步：填写账号</p>
+                <div class="inputWrapper">
+                    <input type="text" placeholder="账号" name="user" />
+                </div>
+                <p>第2步：输入密码</p>
+                <div class="inputWrapper">
+                    <input type="password" placeholder="密码" name="password" />
+                    <button type="button" id="changepwd">修改密码</button>
+                </div>
+                <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+                <div class="ns_msg"></div>
+                % if self.attr.term:
+                <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
+                % endif
+            </div>
+            % endif
+            % if (policy >> 9 & 1) > 0:
+            <div class="boxWrapper">
+                <button type="button" id="weixinAuthor"><i></i>微信一键上网</button>
+            </div>
             % endif
         </div>
-        % elif (policy >> 10 & 1) > 0:
-        <div class="boxWrapper FormAccount">
-            <p style="line-height:1;margin-top:10px">第1步：填写手机号，点击按钮获取验证码</p>
-            <p style="color:#999;font-size:12px;text-indent:50px;line-height:30px">提示：非本地号码，请用微信验证上网</p>
-            <div class="inputWrapper">
-                <input type="text" placeholder="手机号" name="user" />
-                <button type="button" id="yzm">获取验证码</button>
-            </div>
-            <p>第2步：输入验证码，点击按钮即可免费上网</p>
-            <div class="inputWrapper">
-                <input type="text" placeholder="验证码" name="password" />
-            </div>
-            <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
-            <div class="ns_msg"></div>
-            % if self.attr.term:
-            <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
-            % endif
-        </div>
-        % elif (policy >> 8 & 1) > 0:
-        <div class="boxWrapper FormAccount">
-            <p>第1步：填写账号</p>
-            <div class="inputWrapper">
-                <input type="text" placeholder="账号" name="user" />
-            </div>
-            <p>第2步：输入密码</p>
-            <div class="inputWrapper">
-                <input type="password" placeholder="密码" name="password" />
-                <button type="button" id="changepwd">修改密码</button>
-            </div>
-            <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
-            <div class="ns_msg"></div>
-            % if self.attr.term:
-            <label class="term"><span class="chkcls"><i class="chk"></i>我已阅读并同意</span><a href="javascript:;">（南沙无线城市上网服务协议）</a></label>
-            % endif
-        </div>
-        % endif
-        % if (policy >> 9 & 1) > 0:
-        <div class="boxWrapper">
-            <button type="button" id="weixinAuthor"><i></i>微信一键上网</button>
-        </div>
-        % endif
     </div>
     % if self.attr.term:
     <div class="termWrapper">
@@ -223,16 +210,6 @@
     </div>
     % endif
 
-    <div class="ns_zz ns_dmc">
-        <div>
-            <h3>选择下线设备</h3>
-            <div class="dmlist"></div>
-            <div class="btngroups">
-                <button type="button" id="dmSub">确定</button><button type="button" id="dmQuit">取消</button>
-            </div>
-        </div>
-    </div>
-
     <div class="ns_zz ns_cgpwd">
         <div>
             <h3>修改密码</h3>
@@ -246,6 +223,8 @@
             </div>
         </div>
     </div>
+
+    <%include file="hidwx.html" />
 </body>
 <script>
     // 新闻轮播

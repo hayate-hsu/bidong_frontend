@@ -106,12 +106,11 @@ $(function(){
     }
 
     //响应输入框
-    $('.ns_group').click(function(){$(this).find('input').focus();});
+    $('.ns_group,.ns_rz_group').click(function(){$(this).find('input').focus();});
 
     //账号类型检测
     $('#userCtrl').change(function(){
-        var $parent = $(this).parent().siblings('div');
-        //$('input[name=password]').val('');
+        var $parent = $(this).parents('.FormAccount');
         if(/^1\d{10}$/.test($(this).val())){
             isyzm = true;
             $parent.find('input[name=password]').attr('type', 'text');
