@@ -230,7 +230,6 @@ $(function(){
                     delayYZMMbo();
                 },
                 error: function(msg){
-                    console.log(msg);
                     alert('请检查网络状态');
                 }
             });
@@ -299,7 +298,6 @@ $(function(){
                 data: JSON.stringify(param),
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     alert("修改密码成功");
                     hidecgpwd();
                 },
@@ -330,7 +328,6 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             $this.text('正在验证').attr('disabled', true);
         },
         success: function (data) {
-            console.log(data);
             if($('#autoLogin').length>0 && $('#autoLogin input').is(':checked')){
                 var name = $('#autoLogin').data('name');
                 localStorage[name]=user;
@@ -346,19 +343,17 @@ function adminAuthor(obj, firsturl, urlparam, user, $this){
             }
         },
         complete: function(xmlhttp, status){
-            console.log(xmlhttp);
+            $this.text('登录').attr('disabled', false);
             if(status=='timeout'){   // 超时,status还有success,error等值的情况
                 $this.parent().find('.ns_msg').text('请求超时，请重新登录').css('color', '#ef635c').show();
                 setTimeout(function(){
                     $this.parent().find('.ns_msg').fadeOut();
                 }, 5000);
             }
-            $this.text('登录').attr('disabled', false);
         },
         error: function (error) {
             try{
                 var err = error.responseJSON;
-                console.log(!!err.Token);
                 if((err.Code==428) && (err.downMacs==1)){
                     dmList(err.macs);
                 }else if((err.pn=='15914') && ispc && (!!err.Token)){
@@ -388,13 +383,11 @@ function downMacs(obj){
         data: JSON.stringify(obj),
         dataType: "json",
         success: function (data) {
-            console.log(data);
             $('.ns_dmc').fadeOut('normal', function(){
                 alert("请在5秒后重新认证!");
             });
         },
         error: function (error) {
-            console.log(error);
             alert("下线失败");
         }
     });
@@ -419,12 +412,10 @@ function delayYZMMbo(){
 //    var delay = $this.find('span').text();
 //    var t = setTimeout(_delayYZM($this), 1000);
 //    if(delay>1){
-//        console.log(delay+'haha');
 //        delay--;
 //        $this.find('span').text(delay);
 //        return false;
 //    }else{
-//        console.log(delay);
 //        clearTimeout(t);
 //        //if(typeof(callback)=="function") callback();
 //        $this.html('获取验证码').attr('disabled', false);
