@@ -10,22 +10,24 @@
     <title>海珠机关无线网</title>
     <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
     <style>
+        .ns_box{padding:21px}
+        .ns_box button{font-size:1.8rem}
         .ns_rz_group{box-sizing:border-box;display:-webkit-box;overflow:hidden}
         .ns_rz_group>div{-webkit-box-flex:1}
-        .ns_rz_group>span{color:#777;display:inline-block;line-height:45px;text-indent:20px;font-size:1.6rem}
-        .ns_rz_group>div input{height:45px;padding:0;text-indent:5px;font-size:1.6rem}
+        .ns_rz_group>span{color:#777;display:inline-block;line-height:45px;text-indent:20px;font-size:2.2rem}
+        .ns_rz_group>div input{height:45px;padding:0;text-indent:5px;font-size:2.2rem}
         #infoCheck,#login{background:#1e9ef7;margin-top:18px;border:none}
         #infoCheck:active,#login:active{background:#1b8bda;border:none}
         #infoCheck:disabled,#login:disabled{background:#a8cbe7}
         #deptWrapper{width:100%;position:relative}
-        #deptWrapper a{width:32%;display:inline-block;font-size:1.6rem;color:#444;box-sizing:border-box;border:1px solid #86bce2;border-radius:5px;text-align:center;padding:7px 0;margin-right:1%;background:#fff;margin-top:0;vertical-align:top}
+        #deptWrapper a{width:32%;display:inline-block;font-size:2rem;color:#444;box-sizing:border-box;border:1px solid #86bce2;border-radius:5px;text-align:center;padding:7px 0;margin-right:1%;background:#fff;margin-top:0;vertical-align:top}
         #deptWrapper a.on,#deptWrapper a:active{background:#e0f6ff;color:#0971c9}
         #deptWrapper>div{background:rgba(0,0,0,.5);position:absolute;top:0;left:0;right:0;bottom:0;color:#fff;text-align:center;box-sizing:border-box;padding-top:10px;display:none}
-        .hz_msg{color:#e7491f;font-size:1.5rem;margin:9px 0;display:block;text-align:justify}
-        .deptBox{display:none}
-        p.hz_msg{margin:0;height:35px}
-        p.hz_msg:before{content:"";padding-top:9px;display:block}
-        .footer{text-align:center;padding:30px 0;white-space:pre}
+        .hz_msg{color:#e7491f;font-size:1.8rem;margin:9px 0;display:block;text-align:justify}
+        .deptBox{display:none;padding-bottom:50px}
+        p.hz_msg{margin:0;padding:5px 0;min-height:25px}
+        p.hz_msg:before{content:"";display:block}
+        .ns_msg{font-size:1.8rem}
     </style>
     <%namespace file="base.html" name="jscode" />
     ${jscode.jscode()}
@@ -59,7 +61,7 @@
         </div>
 
         <div class="ns_box" style="border-bottom:none">
-            <h3>账户认证</h3>
+            <!--<h3>账户认证</h3>-->
             <div class="ns_rz_wrapper">
                 <div class="ns_rz_group">
                     <span>姓名：</span><div><input type="text" name="name" /></div>
@@ -74,19 +76,20 @@
         <div class="ns_box deptBox" style="border:none;border-top:1px solid #d9d9d9">
             <h3>选择部门</h3>
             <div id="deptWrapper">
-                <p data-value=""></p>
+                <p data-value="">
+                    <!--<a href="javascript:;">人事部</a><a href="javascript:;">开发部</a><a href="javascript:;">技术部</a>-->
+                </p>
                 <div></div>
             </div>
             <p class="hz_msg"></p>
             <div class="ns_rz_wrapper">
                 <div class="ns_rz_group">
-                    <span>请输入验证码：</span><div><input type="text" name="password" /></div>
+                    <span>验证码：</span><div><input type="text" name="password" /></div>
                 </div>
             </div>
             <button type="button" id="login" data-url="${self.attr.locationUrl}" disabled>登录</button>
+            <div class="ns_msg"></div>
         </div>
-
-        <!--<div class="footer">联系人：郑加才、付云飞<br>电话：89088737、89088722</div>-->
     </div>
 
     <%include file="hidwx.html" />
