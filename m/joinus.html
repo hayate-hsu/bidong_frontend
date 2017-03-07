@@ -3,82 +3,73 @@
 <head>
     <meta charset="utf-8" />
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>壁咚-加盟壁咚</title>
+    <title>加盟壁咚-壁咚</title>
     <link rel="stylesheet" href="/css/weixin.css" />
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/checkFunc.js"></script>
-    <script type="text/javascript" src="/js/login.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/checkFunc.js"></script>
+    <script src="/js/login.js"></script>
 </head>
 
 <body>
 	<div class="wrapper" id="wrapper">
-        <ul class="wlist slist">
-            <li class="wmid">
-                <div class="notlink">
-                    <img src="/images/tel2.png" />
-                    <div class="wtext">
-                        <h1>你可以直接联系张先生</h1>
-                        <p>186-8885-9064</p>
-                    </div>
+        <div class="wbox">
+            <div style="padding:13px 0">
+                <img src="/images/tel2.png" style="width:24px;height:24px;margin-left:15px" />
+                <div class="wtext">
+                    <p>联系电话</p>
+                    <p>020-3939-3309</p>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
 
     	<div class="wbox">
         	<p class="wp">小楼整栋无线</p>
-            <ul class="wlist">
-            	<li class="wbtm">
-                	<img src="/images/ico009.png" />
-                    <div class="wtext">
-                    	<h1>不用拉线，设备免费！</h1>
-                    </div>                  
-                </li>
-                <li class="wbtm">
-                	<img src="/images/ico010.png" />
-                    <div class="wtext">
-                    	<h1>不用维护！超低辐射！</h1>
-                    </div>                  
-                </li>
-                <li class="wbtm">
-                	<img src="/images/ico011.png" />
-                    <div class="wtext">
-                    	<h1>创新科技，1条宽带20户用！</h1>
-                    </div>                  
-                </li>
-                <li>
-                	<div class="midline">
-                        <input type="button" value="立即加盟" class="subbtn" id="addmeng" />
+            <ul class="listWrapper">
+            	<li>
+                    <div class="list">
+                        <i class="freeIco"></i>
+                        <div class="wtext">
+                            <p>不用拉线，设备免费！</p>
+                        </div>
                     </div>
                 </li>
-            </ul>           
-        </div>
-        
-        <div class="wbox" id="msgxx">
-            <input type="hidden" class="text" value="${Openid}" id="openid" />
-        	<ul class="wlist">
-            	<li class="wbord"><input type="text" class="iputxt" placeholder="联系人" id="atten" /></li>
-                <li class="wbord"><input type="text" class="iputxt" placeholder="联系电话" id="tel" /></li>
-            	<li class="arrow"><select id="selpro"></select></li>
-                <li class="arrow"><select id="selcity"></select></li>
-                <li class="arrow"><select id="selarea"></select></li>
-                <li class="wbord"><input type="text" class="iputxt" placeholder="详细地址" id="addrDet" /></li>
+                <li>
+                    <div class="list">
+                        <i class="zanIco"></i>
+                        <div class="wtext">
+                            <p>不用维护！超低辐射！</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="list">
+                        <i class="mapIco"></i>
+                        <div class="wtext">
+                            <p>创新科技，1条宽带20户用！</p>
+                        </div>
+                    </div>
+                </li>
             </ul>
-            <div class="fulline">
-                <input type="button" value="确定" class="subbtn" id="clientmsg" />
+            <div class="bbg">
+                <button type="button" class="wbtn" id="addmeng">立即加盟</button>
             </div>
         </div>
         
-        <!--<div class="wbox">-->
-        	<!--<p class="wp txtgreen">零售</p>-->
-            <!--<div class="sell">-->
-            	<!--<img src="/images/ico001.png" width="81" height="81" style="float:left;" />-->
-                <!--<p>能赚钱的超级路由</p><p>自动吸粉机</p><p>强力近场营销专家</p> -->
-            <!--</div>-->
-            <!--<div class="midline">-->
-                <!--<a href="address.html" class="btn green">申请试用</a>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="wbox hid" id="msgxx" style="margin-top:-15px">
+            <input type="hidden" class="text" value="${Openid}" id="openid" />
+        	<ul class="listWrapper linetop">
+            	<li><input type="text" class="iputxt" placeholder="联系人" id="atten" /></li>
+                <li><input type="text" class="iputxt" placeholder="联系电话" id="tel" /></li>
+            	<li><select id="selpro"></select></li>
+                <li><select id="selcity"></select></li>
+                <li><select id="selarea"></select></li>
+                <li><input type="text" class="iputxt" placeholder="详细地址" id="addrDet" /></li>
+            </ul>
+            <div class="bbg">
+                <button type="button" class="wbtn" id="clientmsg">确定</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

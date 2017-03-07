@@ -215,15 +215,9 @@ $(document).ready(function() {
 	});
 
     //送货地址
-    $('.arrowBottom').click(function(){
-        if($('.martop').is(":hidden")){
-            $('.martop').slideDown();
-            //$('.wlist .arrowBottom span').css({'background':'url("../images/aupdown.png") bottom center no-repeat'});
-            $('.wlist .arrowBottom span').css({'transform':'rotate(180deg)'});
-        }else{
-            $('.martop').slideUp();
-            $('.wlist .arrowBottom span').css({'transform':'rotate(0deg)'});
-        }
+    $('#huoAds').click(function(){
+        $('.hid').slideToggle();
+        $(this).toggleClass('on');
     });
 		
 	//切换支付方式
@@ -261,6 +255,10 @@ $(document).ready(function() {
 	});
 	
 	//选择城市
+    $('#address').click(function(){
+		$('#seladdr').show();
+        shade();
+	});
     //$.getJSON('/js/cityData.json', function(data){
     //
      //   var arr = [0,1,8,32,33];
@@ -408,7 +406,7 @@ function shade(){
     };
     var op = {
         z: 1001,
-        o: 0.7,
+        o: 0.5,
         bg: '#000'
     };
     var maskDiv = $('<div id="shade"></div>');

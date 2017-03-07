@@ -6,10 +6,10 @@
     <title>壁咚WiFi</title>
     <script type="text/javascript" src="/js/html5shiv.js"></script>
     <link rel="stylesheet" href="/css/weixin.css" />
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/msg.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/login.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/msg.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/login.js"></script>
 </head>
 
 <body>
@@ -21,24 +21,24 @@
 
         <p class="tiptitle">更多上网方式</p>
         <div class="wbox">
-            <ul>
-                <li class="wbord"><input type="text" class="iputxt" placeholder="输入门牌号/其他上网账号" value="10000" name="user" id="user" /></li>
-                <li class="wbord"><input type="password" class="iputxt" placeholder="输入密码" name="password" id="password" /></li>
+            <ul class="listWrapper">
+                <li><input type="text" class="iputxt" placeholder="输入门牌号/其他上网账号" value="10000" name="user" id="user" /></li>
+                <li><input type="password" class="iputxt" placeholder="输入密码" name="password" id="password" /></li>
             </ul>
-            <div class="fulline">
-                <input type="submit" value="验证" class="subbtn" id="sub" />
+            <div class="bbg">
+                <button type="submit" class="wbtn" id="sub">验证</button>
             </div>
         </div>
 
         <p class="tiptitle">上网说明</p>
-        <div class="wbox" style="margin-bottom: 0;">
+        <div class="wbox">
             <h3><span>微信上网：</span>关注微信就送免费上网</h3>
             <div class="info">
-                <img src="/images/ewm02.png" width="81" height="81" style="float:left;" />
+                <img src="/images/ewm02.png" width="81" height="81" style="float:left" />
                 <p>1. 关注官方微信公众号</p><em>搜索：<span>壁咚WiFi</span></em><p class="lineheight44">2. 点击<span>一键上网</span></p><p>3. 开始愉快的上网咯~</p>
             </div>
         </div>
-        <div class="wbox" style="border-top:0;">
+        <div class="wbox">
             <h3><span>租户上网（仅限壁咚WiFi已覆盖楼体）:</span><br>可向房东索要密码</h3>
             <div style="padding: 15px;"><img src="/images/sample.png" class="sample" /></div>
         </div>

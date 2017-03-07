@@ -400,7 +400,7 @@ function addData(arr, room, pwd, date, mask, ends){
 }
 
 function GetFDData(arr){
-	var t = $('#fdtoken').html();
+	var t = $('#fdtoken').val();
 	
 	var $obj = {};
 	$obj["rooms"] = arr;

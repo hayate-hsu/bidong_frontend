@@ -5,53 +5,62 @@
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>壁咚-选择地址</title>
     <link rel="stylesheet" href="/css/weixin.css" />
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/jquery.cxselect/jquery.cxselect.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.cxselect/jquery.cxselect.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 
 <body>
 	<div class="wrapper" id="wrapper">
     	<div class="wbox">
         	<ul class="wlist">
-            	<li><input type="text" class="iputxt" placeholder="联系人" style="border-bottom:1px solid #d9d9d9;"/></li>
-                <li><input type="text" class="iputxt" placeholder="联系电话" style="border-bottom:1px solid #d9d9d9;"/></li>
             	<li>
-                	<a href="javascript:void(0);" id="address">
-                        <div class="ktext">
-                            <h1 id="addr">送货地址</h1>
+                    <input type="text" class="iputxt" placeholder="联系人" />
+                </li>
+                <li>
+                    <input type="text" class="iputxt" placeholder="联系电话" />
+                </li>
+            	<li>
+                	<a href="javascript:;" class="wlink" id="address">
+                        <div class="wtext">
+                            <p id="addr">送货地址</p>
                         </div>
-                        <span>&nbsp;</span>
                     </a>
                 </li>
-                <li><input type="text" class="iputxt" placeholder="详细地址" style="border-top:1px solid #d9d9d9;"/></li>
+                <li>
+                    <input type="text" class="iputxt" placeholder="详细地址" />
+                </li>
             </ul>
-            <div class="midline fulline">
-                <a href="javascript:void(0)" class="btn blue">确定</a>
+            <div class="bbg">
+                <button type="button" class="wbtn">确定</button>
             </div>
         </div>
         
         <div class="wbox" id="seladdr">
-            <div id="element_id">
-            	<ul>
-                	<li><select class="province" data-value="广东省"></select></li>
-                    <li><select class="city" data-value="广州市"></select></li>
-                    <li><select class="area" data-value="南沙区"></select> </li>
-                </ul>
-                <div class="midline noline">
-                    <a href="javascript:void(0)" class="btn blue" id="btn">确定</a>
-                </div>           
+            <ul class="wlist fulne">
+                <li>
+                    <select class="province" data-value="广东省"></select>
+                </li>
+                <li>
+                    <select class="city" data-value="广州市"></select>
+                </li>
+                <li>
+                    <select class="area" data-value="南沙区"></select>
+                </li>
+            </ul>
+            <div class="bbg">
+                <button type="button" class="wbtn" id="btn">确定</button>
             </div>
         </div>
     </div>
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#element_id').cxSelect({ 
-		url: '/js/jquery.cxselect/cityData.json',      
-		selects: ['province', 'city', 'area'], 
-		nodata: 'none' 
-	});
-});
+<script>
+    $(function(){
+        $('#seladdr ul').cxSelect({
+            url: '/js/jquery.cxselect/cityData.json',
+            selects: ['province', 'city', 'area'],
+            nodata: 'none'
+        });
+    });
 </script>
 </html>

@@ -5,86 +5,67 @@
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>壁咚</title>
     <link rel="stylesheet" href="/css/weixin.css" />
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/msg.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/msg.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 
-<body>
+<body style="background:#fff">
 	<div class="wrapper">
-    	<ul class="wlist">
-        	<li>
-                % if mask>>3 & 1:
-                <a href="/holder/${user}?token=${token}">
-                % endif
-                	<img src="/images/face.jpg" class="wshort" />
-                    <div class="wtext" style="padding: 19px 0;">
-                    	<h1>${user}<!--<em>(租客)</em>--></h1>
-                    </div>
-                    % if mask>>3 & 1:
-					<span>房东管理</span>
-				</a>
-                    % endif
-                <div class="line"></div>
-            </li>
-            <!--<li class="wmid">-->
-                <!--<div class="notlink">-->
-                    <!--<img src="/images/ico004.png" />-->
-                    <!--<div class="wtext">-->
-                        <!--<h1>当前咚币</h1>-->
-                        <!--<p>${coin}</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="line"></div>-->
-            <!--</li>-->
-            <li class="wmid">
-                <div class="notlink">
-                    <img src="/images/ico005.png" />
-                    <div class="wtext">
-                        <h1>可上网时间</h1>
-                        <p>${days}天 + ${hours}</p>
-                    </div>
-                    <a href="/getdbi.html?user=${user}&token=${token}" class="btn wbtn">增加时间</a>
-                </div>
-            </li>
-        </ul>
-
         <div class="ads">
             % if ad_url:
             <iframe frameborder="0" width="100%" src="${ad_url}" scrolling="no"></iframe>
             % else:
-            <ul class="fweb">
-                <li><a href="https://m.baidu.com" class="web_baidu"><img src="/images/websiteIco_baidu.png" />百度</a></li>
-                <li><a href="http://3g.163.com/touch/" class="web_wangyi"><img src="/images/websiteIco_163.png" />网易</a></li>
-                <li><a href="https://m.taobao.com/#index" class="web_taobao"><img src="/images/websiteIco_taobao.png" />淘宝</a></li>
-            </ul>
+            <a href="http://bidongwifi.com/xsth5/index.html?user=${user}&mobile=${mobile}&token=${token}">
+                <img src="/images/hourstao.jpg" />
+            </a>
             % endif
         </div>
 
-        <div class="wbox pdg15">
-        	<p class="wp">家用电脑上网指南</p>
-            <ul class="wlist">
-            	<li class="wbtm">
-                	<img src="/images/ico006.png" />
-                    <div class="wtext">
-                    	<h1>选择WiFi：BIDONG</h1>
-                    </div>                  
+        <div class="wbox xst">
+            <ul class="listWrapper fulne">
+                <li>
+                    % if mask>>3 & 1:
+                    <a href="/holder/${user}?token=${token}" class="list">
+                    % else:
+                    <div class="list">
+                    % endif
+                        <i class="userIco"></i>
+                        <div class="wtext">
+                            <p>${user}</p>
+                        </div>
+                        % if mask>>3 & 1:
+                        <div class="rtxt">房东管理</div>
+                        % endif
+                    % if mask>>3 & 1:
+                    </a>
+                    % else:
+                    </li>
+                    % endif
                 </li>
-                <li class="wbtm">
-                	<img src="/images/ico007.png" />
-                    <div class="wtext">
-                    	<h1>打开浏览器</h1>
-                    </div>                  
-                </li>
-                <li class="wbtm">
-                	<img src="/images/ico008.png" />
-                    <div class="wtext">
-                    	<h1>输入以下内容</h1>
+                <li>
+                    <div class="list">
+                        <i class="timeIco"></i>
+                        <div class="wtext">
+                            <p style="color:#2fa16f">${days} + ${hours}</p>
+                        </div>
                     </div>
-                    <p>账号：${user}　密码：${password}</p>
                 </li>
+            </ul>
+            <div class="bbg">
+                <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="wbtn red">增加时间</a>
+            </div>
+        </div>
+
+        <div class="wbox pcHelp">
+            <h3>家用电脑上网指南</h3>
+            <ul>
+                <li><i class="wifiIco"></i><div><p>选择WiFI：${ssid}</p></div></li>
+                <li><i class="webIco"></i><div><p>打开浏览器</p></div></li>
+                <li><i class="listIco"></i><div><p>输入以下内容</p><p class="pcpwd">账号：${user}    密码：${password}</p></div></li>
             </ul>
         </div>
     </div>
+    <script>document.body.addEventListener('touchstart', function(){});</script>
 </body>
 </html>

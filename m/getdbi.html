@@ -3,72 +3,72 @@
 <head>
     <meta charset="utf-8" />
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>壁咚-赚咚币</title>
+    <title>赚咚币-壁咚</title>
     <link rel="stylesheet" href="/css/weixin.css" />
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/json2.js"></script>
-    <script type="text/javascript" src="/js/msg.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/login.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/json2.js"></script>
+    <script src="/js/msg.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/login.js"></script>
 </head>
 
 <body>
+    <input type="hidden" value="${user}" id="user" />
+    <input type="hidden" value="${token}" id="token" />
 	<div class="wrapper">
-    	<ul class="wlist">
-        	<li>
-            	<div class="stext">
-                	<p>当前咚币</p>
-                    <p><img src="/images/ico002.png" /><span class="font40">${coin}</span></p>
-                    <p>可用上网时间<span id="canustime">${days}天 + ${hours}小时</span></p>
-                </div>
-                <a href="javascript:void(0);" class="btn sbtn" id="msgcz">充值</a>
-            </li>
-        </ul>
+    	<div class="wbox coins">
+            <div>
+                <p>当前咚币</p>
+                <p><img src="/images/ico002.png" /><span class="font40">${coin}</span></p>
+                <p>可用上网时间<span id="canustime">${days}天 + ${hours}小时</span></p>
+            </div>
+            <a href="javascript:;" class="btn" id="msgcz">充值</a>
+        </div>
 
-        <ul class="wlist">
-            <li>
-                <a href="#" class="arrow">
-                    <img src="/images/ico012.png" class="wshort" />
-                    <div class="wtext">
-                        <h1>推荐分享+10咚币/次</h1>
-                    </div>
-                </a>
-                <div class="line"></div>
-            </li>
-            <li>
-                <a href="#" class="arrow">
-                    <img src="/images/ico013.png" class="wshort" />
-                    <div class="wtext">
-                        <h1>好友关注+20咚币/次</h1>
-                    </div>
-                </a>
-                <div class="line"></div>
-            </li>
-            <li>
-                <a href="#" class="arrow">
-                    <img src="/images/ico014.png" class="wshort" />
-                    <div class="wtext">
-                        <h1>下载壁咚WiFi即送60咚币</h1>
-                    </div>
-                </a>
-            </li>
-        </ul>
-        
-        <p class="tiptitle">租房用户可以向房东获取充值密码</p>
-        <div class="wbox margin15">
-        	<ul>
-            	<li class="wbord"><input type="text" class="iputxt" placeholder="请输入房间号" id="room" /></li>
-                <li class="wbord"><input type="password" class="iputxt" placeholder="请输入充值密码" id="password" /></li>
+        <div class="wbox">
+            <ul class="listWrapper">
+                <li>
+                    <a href="javascript:;" class="list">
+                        <i class="tjIco"></i>
+                        <div class="wtext">
+                            <p>推荐分享+10咚币/次</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="list">
+                        <i class="usertiIco"></i>
+                        <div class="wtext">
+                            <p>好友关注+20咚币/次</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="list">
+                        <i class="dlIco"></i>
+                        <div class="wtext">
+                            <p>下载壁咚WiFi即送60咚币</p>
+                        </div>
+                    </a>
+                </li>
             </ul>
-            <div class="midline fulline">
-                <input type="button" value="兑换上网时长" class="subbtn green" id="rechargeOnline" />
+        </div>
+
+        <p class="tiptitle">租房用户可以向房东获取充值密码</p>
+        <div class="wbox">
+        	<ul class="listWrapper">
+            	<li>
+                    <input type="text" class="iputxt" placeholder="请输入房间号" id="room" />
+                </li>
+                <li>
+                    <input type="password" class="iputxt" placeholder="请输入充值密码" id="password" />
+                </li>
+            </ul>
+            <div class="bbg">
+                <button type="button" class="wbtn green" id="rechargeOnline">兑换上网时长</button>
             </div>
         </div>
     </div>
-	<div>
-	    <input type="hidden" value="${user}" id="user" />
-	    <input type="hidden" value="${token}" id="token" />
-	</div>
 
     <script type="text/javascript">
         $(document).ready(function(){
