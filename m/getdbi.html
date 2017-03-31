@@ -17,7 +17,7 @@
                     <div class="list">
                         <i class="dayIco"></i>
                         <div class="wtext">
-                            <p><span>到期时间：</span>${days}</p>
+                            <p><span>到期时间：</span>${expired.strftime('%Y-%d-%m %H:%M')}</p>
                         </div>
                         <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26mobile%3d${mobile}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="btn">充值</a>
                     </div>
@@ -79,7 +79,7 @@
             <a href="javascript:;" class="closed"></a>
             <div class="modalContent">
                 <div class="subtxt">
-                    <p>您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换</p>
+                    <p>您有<em class="exhours">${hours}</em>小时上网时间可兑换</p>
                     <div><input type="text" placeholder="请输入兑换时间" name="hours" /><button type="button" class="btn" id="excharge">兑换</button></div>
                 </div>
                 <div class="succtxt">
