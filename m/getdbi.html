@@ -3,76 +3,179 @@
 <head>
     <meta charset="utf-8" />
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>赚咚币-壁咚</title>
+    <title>增加时间</title>
     <link rel="stylesheet" href="/css/weixin.css" />
     <script src="/js/jquery.js"></script>
     <script src="/js/json2.js"></script>
-    <script src="/js/msg.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/login.js"></script>
 </head>
 
 <body>
-    <input type="hidden" value="${user}" id="user" />
-    <input type="hidden" value="${token}" id="token" />
 	<div class="wrapper">
-    	<div class="wbox coins">
-            <div>
-                <p>当前咚币</p>
-                <p><img src="/images/ico002.png" /><span class="font40">${coin}</span></p>
-                <p>可用上网时间<span id="canustime">${days}天 + ${hours}小时</span></p>
-            </div>
-            <a href="javascript:;" class="btn" id="msgcz">充值</a>
+    	<div class="wbox">
+            <ul class="listWrapper fulne lrg-pdg">
+                <li>
+                    <div class="list">
+                        <i class="dayIco"></i>
+                        <div class="wtext">
+                            <p><span>到期时间：</span>${days}</p>
+                        </div>
+                        <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26mobile%3d${mobile}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="btn">充值</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="list">
+                        <i class="timeIco"></i>
+                        <div class="wtext">
+                            <p><span>可用时间：</span><em class="exhours">${hours}</em>小时</p>
+                        </div>
+                        <a href="javascript:;" class="btn" id="exHours">兑换</a>
+                    </div>
+                </li>
+            </ul>
         </div>
 
         <div class="wbox">
-            <ul class="listWrapper">
+            <ul class="listWrapper fulne lrg-pdg">
                 <li>
                     <a href="javascript:;" class="list">
-                        <i class="tjIco"></i>
+                        <i class="tj-ico"></i>
                         <div class="wtext">
-                            <p>推荐分享+10咚币/次</p>
+                            <p>推荐分享 +1小时</p>
                         </div>
                     </a>
                 </li>
                 <li>
                     <a href="javascript:;" class="list">
-                        <i class="usertiIco"></i>
+                        <i class="hy-ico"></i>
                         <div class="wtext">
-                            <p>好友关注+20咚币/次</p>
+                            <p>好友关注 +1小时</p>
                         </div>
                     </a>
                 </li>
                 <li>
                     <a href="javascript:;" class="list">
-                        <i class="dlIco"></i>
+                        <i class="xz-ico"></i>
                         <div class="wtext">
-                            <p>下载壁咚WiFi即送60咚币</p>
+                            <p>下载壁咚WiFi +1小时</p>
                         </div>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <p class="tiptitle">租房用户可以向房东获取充值密码</p>
-        <div class="wbox">
-        	<ul class="listWrapper">
-            	<li>
-                    <input type="text" class="iputxt" placeholder="请输入房间号" id="room" />
-                </li>
-                <li>
-                    <input type="password" class="iputxt" placeholder="请输入充值密码" id="password" />
-                </li>
-            </ul>
-            <div class="bbg">
-                <button type="button" class="wbtn green" id="rechargeOnline">兑换上网时长</button>
+        <div class="wbox recharge">
+            <h3>兑换上网时间</h3>
+            <div class="recharge-input-panel">
+                <div class="input-item"><input type="text" class="iputxt" placeholder="请输入房间号" id="room" /></div>
+                <div class="input-item"><input type="password" class="iputxt" placeholder="请输入充值密码" id="password" /></div>
+                <button type="button" class="wbtn" id="rechargeOnline">兑换上网时长</button>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#msgcz").click(function(){ alert("正在疯狂开发中...")});
+    <div class="modalCharge exTime">
+        <div class="modalBox">
+            <h3>兑换时间</h3>
+            <a href="javascript:;" class="closed"></a>
+            <div class="modalContent">
+                <div class="subtxt">
+                    <p>您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换</p>
+                    <div><input type="text" placeholder="请输入兑换时间" name="hours" /><button type="button" class="btn" id="excharge">兑换</button></div>
+                </div>
+                <div class="succtxt">
+                    <p>兑换成功！</p>
+                    <p class="expired">当前上网时间<em></em></p>
+                </div>
+                <div class="errmsg"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>document.body.addEventListener('touchstart', function(){});</script>
+    <script>
+        $(function(){
+            var payURL = 'http://mp.bidongwifi.com';
+
+            $(document).on('click', '#exHours', function(){$('.succtxt').hide();$('.subtxt').show();$('.exTime').fadeIn();});
+            $(document).on('click', '.exTime .closed', function(){
+                $('.exTime').fadeOut('normal', function(){
+                    $(this).find('input').val('');
+                    $(this).find('.errmsg').text('');
+                });
+            });
+            $(document).on('click', '#excharge', function() {
+                var $modal = $('.exTime');
+                var hours = parseInt($modal.find('input[name=hours]').val()),
+                    exhours = parseInt($modal.find('.exhours').text());
+
+                if (hours == '' || (!(/^[\d]+$/.test(hours)))) {
+                    $modal.find('.errmsg').text('需填写兑换小时数');
+                    $modal.find('input[name=hours]').focus();
+                    return false;
+                }
+                $modal.find('.errmsg').text('');
+                var param = {
+                    user: '${user}',
+                    minutes: hours * 60
+                };
+                $.ajax({
+                    method: "post",
+                    url: payURL + "/app/v1.0/exchange/",
+                    data: param,
+                    dataType: "json"
+                }).done(function(data){
+                    if (data.code == 200) {
+                        $('.succtxt .expired em').text(data.expired);
+                        $('.subtxt').hide();$('.succtxt').show();
+                        $('.exhours').text(exhours - hours);
+                    } else {
+                        $modal.find('.errmsg').text(data.reason);
+                    }
+                }).fail(function(error){
+                    $modal.find('.errmsg').text('兑换失败，请重新兑换！');
+                });
+            });
+            //兑换上网时间
+            $(document).on('click', '#rechargeOnline', function(){
+                var $modal = $('.exTime');
+                var room = $.trim($('#room').val()), password = $.trim($('#password').val()), $this=$(this);
+
+                if(room==''){$('#room').focus();return false;}
+                if(password==''){$('#password').focus();return false;}
+
+                var param = {
+                    room: room,
+                    password: password,
+                    token: '${token}'
+                };
+
+                $('.subtxt, .succtxt').hide();
+                $modal.fadeIn();
+
+                $.ajax({
+                    method: "POST",
+                    url: "account/"+${user}+"/bind",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(param),
+                    dataType: "json",
+                    beforeSend: function(){
+                        $this.attr('disabled', 'disabled');
+                    }
+                }).done(function (msg){
+                    if(msg.Code == 200){
+                        var _html = msg.days+'天 + ' + msg.hours+'小时';
+                        $('.succtxt .expired em').text(_html);
+                        $('.succtxt').show();
+                        $('#room').val("");$('#password').val("");
+                    }else{
+                        $modal.find('.errmsg').text('兑换失败，请重新兑换！');
+                    }
+                }).fail(function (msg){
+                    $modal.find('.errmsg').text('兑换失败，请重新兑换！');
+                }).always(function(){
+                    $this.removeAttr('disabled');
+                });
+            });
         });
     </script>
 </body>

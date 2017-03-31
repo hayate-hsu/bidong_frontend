@@ -10,20 +10,14 @@
     <script src="/js/main.js"></script>
 </head>
 
-<body style="background:#fff">
+<body>
 	<div class="wrapper">
-        <div class="ads">
-            % if ad_url:
-            <iframe frameborder="0" width="100%" src="${ad_url}" scrolling="no"></iframe>
-            % else:
-            <a href="http://www.bidongwifi.com/xsth5/index.html?user=${user}&mobile=${mobile}&token=${token}">
-                <img src="/images/hourstao.jpg" />
-            </a>
-            % endif
+        <div class="banner">
+            <img src="/images/adv03.jpg" />
         </div>
 
-        <div class="wbox xst">
-            <ul class="listWrapper fulne">
+        <div class="wbox">
+            <ul class="listWrapper fulne lrg-pdg">
                 <li>
                     % if mask>>3 & 1:
                     <a href="/holder/${user}?token=${token}" class="list">
@@ -32,7 +26,7 @@
                     % endif
                         <i class="userIco"></i>
                         <div class="wtext">
-                            <p>${user}</p>
+                            <p><span>账号：</span>${user}</p>
                         </div>
                         % if mask>>3 & 1:
                         <div class="rtxt">房东管理</div>
@@ -45,20 +39,41 @@
                 </li>
                 <li>
                     <div class="list">
+                        <i class="dayIco"></i>
+                        <div class="wtext">
+                            <p><span>到期时间：</span>${days}</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="list">
                         <i class="timeIco"></i>
                         <div class="wtext">
-                            <p style="color:#2fa16f">${days}天 + ${hours}</p>
+                            <p><span>可用时间：</span>${hours}小时</p>
                         </div>
                     </div>
                 </li>
             </ul>
             <div class="bbg">
-                <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="wbtn red">增加时间</a>
+                <a href="/getdbi.html?user=${user}&token=${token}" class="wbtn blue">增加时间</a>
             </div>
         </div>
 
+        <div class="wbox ads">
+            % if ad_url:
+            <iframe frameborder="0" width="100%" src="${ad_url}" scrolling="no"></iframe>
+            % else:
+            <ul class="fweb">
+                <li><a href="https://m.baidu.com" class="web_baidu"><img src="/images/websiteIco_baidu.png" />百度</a></li>
+                <li><a href="http://3g.163.com/touch/" class="web_wangyi"><img src="/images/websiteIco_163.png" />网易</a></li>
+                <li><a href="https://m.jd.com/" class="web_taobao"><img src="/images/websiteIco_jd.png" />京东</a></li>
+                <li><a href="http://www.bidongwifi.com/xsth5/index.html?user=${user}&mobile=${mobile}&token=${token}" class="web_xst"><img src="/images/websiteIco_xiaoshitao.png" />小时淘</a></li>
+            </ul>
+            % endif
+        </div>
+
         <div class="wbox pcHelp">
-            <h3>家用电脑上网指南</h3>
+            <h3>- 家用电脑上网指南 -</h3>
             <ul>
                 <li><i class="wifiIco"></i><div><p>选择WiFI：${ssid}</p></div></li>
                 <li><i class="webIco"></i><div><p>打开浏览器</p></div></li>
