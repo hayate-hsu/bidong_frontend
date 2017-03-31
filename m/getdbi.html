@@ -17,7 +17,7 @@
                     <div class="list">
                         <i class="dayIco"></i>
                         <div class="wtext">
-                            <p><span>到期时间：</span>${expired.strftime('%Y-%d-%m %H:%M')}</p>
+                            <p class="expired"><span>到期时间：</span>${expired.strftime('%Y-%d-%m %H:%M')}</p>
                         </div>
                         <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26mobile%3d${mobile}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="btn">充值</a>
                     </div>
@@ -125,7 +125,7 @@
                     dataType: "json"
                 }).done(function(data){
                     if (data.code == 200) {
-                        $('.succtxt .expired em').text(data.expired);
+                        $('.expired em').text(data.expired);
                         $('.subtxt').hide();$('.succtxt').show();
                         $('.exhours').text(exhours - hours);
                     } else {
