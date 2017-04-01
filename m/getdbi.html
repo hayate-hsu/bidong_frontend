@@ -17,7 +17,7 @@
                     <div class="list">
                         <i class="dayIco"></i>
                         <div class="wtext">
-                            <p class="expired"><span>到期时间：</span>${expired.strftime('%Y-%m-%d %H:%M')}</p>
+                            <p class="expired"><span>到期时间：</span><em>${expired.strftime('%Y-%m-%d %H:%M')}</em></p>
                         </div>
                         <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e09c0b3f5639426&redirect_uri=http%3a%2f%2fwww.bidongwifi.com%2fhourpay.html%3fuser%3d${user}%26mobile%3d${mobile}%26token%3d${token}&response_type=code&scope=snsapi_base#wechat_redirect" class="btn">充值</a>
                     </div>
@@ -161,16 +161,15 @@
                     beforeSend: function(){
                         $this.attr('disabled', 'disabled');
                     }
-                }).done(function (msg){
-                    if(msg.Code == 200){
-                        var _html = msg.days+'天 + ' + msg.hours+'小时';
-                        $('.succtxt .expired em').text(_html);
+                }).done(function (data){
+                    if(data.Code == 200){
+                        $('.expired em').text(data.expired);
                         $('.succtxt').show();
-                        $('#room').val("");$('#password').val("");
+                        $('#room, #password').val('');
                     }else{
                         $modal.find('.errmsg').text('兑换失败，请重新兑换！');
                     }
-                }).fail(function (msg){
+                }).fail(function (error){
                     $modal.find('.errmsg').text('兑换失败，请重新兑换！');
                 }).always(function(){
                     $this.removeAttr('disabled');

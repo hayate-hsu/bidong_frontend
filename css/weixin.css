@@ -429,6 +429,7 @@ div.list{
 	vertical-align: middle;
 	width: 64%;
 	margin-right: 5px;
+	font-size: 1.6rem;
 }
 .modalBox .modalContent .subtxt>div button{
 	font-size: 17px;
