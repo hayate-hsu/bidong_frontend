@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
     <title>壁咚</title>
     <link rel="stylesheet" href="/css/weixin.css" />
 </head>
@@ -61,10 +64,10 @@
             <iframe frameborder="0" width="100%" src="${ad_url}" scrolling="no"></iframe>
             % else:
             <ul class="fweb">
-                <li><a href="https://m.baidu.com" class="web_baidu"><img src="/images/websiteIco_baidu.png" />百度</a></li>
-                <li><a href="http://3g.163.com/touch/" class="web_wangyi"><img src="/images/websiteIco_163.png" />网易</a></li>
-                <li><a href="https://m.jd.com/" class="web_taobao"><img src="/images/websiteIco_jd.png" />京东</a></li>
-                <li><a href="http://www.bidongwifi.com/xsth5/index.html?user=${user}&mobile=${mobile}&token=${token}" class="web_xst"><img src="/images/websiteIco_xiaoshitao.png" />小时淘</a></li>
+                <li style="width:33%"><a href="https://m.baidu.com" class="web_baidu"><img src="/images/websiteIco_baidu.png" />百度</a></li>
+                <li style="width:34%"><a href="http://3g.163.com/touch/" class="web_wangyi"><img src="/images/websiteIco_163.png" />网易</a></li>
+                <li style="width:33%"><a href="https://m.jd.com/" class="web_taobao"><img src="/images/websiteIco_jd.png" />京东</a></li>
+                <!--<li><a href="http://www.bidongwifi.com/xsth5/index.html?user=${user}&mobile=${mobile}&token=${token}" class="web_xst"><img src="/images/websiteIco_xiaoshitao.png" />小时淘</a></li>-->
             </ul>
             % endif
         </div>
@@ -115,21 +118,25 @@
 
         $(function(){
             var mpUrl = 'http://mp.bidongwifi.com';
-            $.ajax({
-                method: "get",
-                url: mpUrl + '/wx/addtime/',
-                data: {
-                    user: '${user}'
-                },
-                dataType: "json"
-            }).done(function(data){
-                if(data.code==200){
-                    $('.expired').text(formatDate(data.expired));   // 到期时间
-                    $('.exhours').text(data.usable);       // 可用时间
-                }
-            }).fail(function(error){
-                console.log(error);
-            });
+            var getIntTime = function(){
+                $.ajax({
+                    method: "get",
+                    url: mpUrl + '/wx/addtime/',
+                    data: {
+                        user: '${user}'
+                    },
+                    dataType: "json"
+                }).done(function(data){
+                    if(data.code==200){
+                        $('.expired').text(formatDate(data.expired));   // 到期时间
+                        $('.exhours').text(data.usable);       // 可用时间
+                    }
+                }).fail(function(error){
+                    console.log(error);
+                });
+            };
+            getIntTime();
+            setInterval(getIntTime, 5000);
         });
     </script>
 </body>
