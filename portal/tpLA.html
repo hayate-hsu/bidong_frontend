@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>${self.attr.title}</title>
+    <style type="text/css">
+        * {margin: 0;padding: 0;}
+        body {
+            font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            color: #333;
+            background: #f5f5f5;
+            box-sizing: border-box;
+        }
+        li {list-style: none;}
+        a, button, input{font-family: "microsoft yahei", Arial, Helvetica, sans-serif; outline: none;}
+        .ns_banner{
+            background: url("/images/nsimgs/${self.attr.bannerImg}") top center no-repeat;
+            height: 320px;
+            margin-bottom: 12px;
+        }
+        .ns_wrapper{width: 1002px;margin: 0 auto;}
+        .ns_notice{
+            border: 1px solid #bed6ef;
+            position: relative;
+            background: #fff;
+        }
+        .ns_notice span{
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            background: #418ce6;
+            width: 96px;
+            height: 32px;
+            line-height: 32px;
+            color: #fff;
+        }
+        .ns_notice span i{
+            background: url("/images/nsimgs/ns_sprites.png") 0 0 no-repeat;
+            width: 20px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            margin: -2px 10px 0 15px;
+        }
+        .ns_notice p{
+            font-size: 14px;
+            line-height: 25px;
+            color: #444;
+            padding: 40px 20px 10px;
+            text-indent: 32px;
+        }
+        .ns_authen{margin: 10px 0;overflow: hidden;}
+        .ns_authen h3{
+            font-size: 18px;
+            font-weight: bold;
+            background: url("/images/nsimgs/bg_shadow.png") top center no-repeat;
+            height: 67px;
+            line-height: 67px;
+            text-align: center;
+        }
+        .ns_app li{
+            line-height: 20px;
+            color: #555;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: justify;
+        }
+        .ns_app, .ns_admin, .ns_yjsw{
+            float: left;
+            border: 1px solid #eaeaea;
+            height: 284px;
+            background: #fff;
+            width: 360px;
+        }
+        .ns_app .ns_box, .ns_admin .ns_box{
+            padding-top: 34px;
+            text-align: center;
+        }
+        .ns_app{margin-right: 8px;}
+        .ns_app .ns_box{
+            width: 310px;
+            margin: 0 auto;
+        }
+        .ns_app a{
+            width: 248px;
+            height: 40px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            line-height: 40px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            border-radius: 20px;
+            background: #3ab1ff;
+            border-bottom: 3px solid #257bd9;
+            display: block;
+            margin: 0 auto;
+        }
+        .ns_app a:hover{background: #2d91fe;}
+        .ns_app .ns_appnote{margin-top: 30px;}
+        .ns_app .ns_appnote img{
+            width: 62px;
+            height: 62px;
+            float: left;
+            display: block;
+            margin-right: 10px;
+        }
+        .ns_app ul{float: left;}
+        .ns_app li{
+            background: url("/images/nsimgs/ns_sprites.png") 0 -18px no-repeat;
+            padding-left: 12px;
+            width: 222px;
+            margin-bottom: 4px;
+        }
+        .ns_admin .ns_box{
+            width: 300px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .ns_group{
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            background: #d1ebf0;
+            position: relative;
+        }
+        .ns_group label{
+            font-size: 14px;
+            font-weight: bold;
+            color: #9b9e9f;
+            padding: 0 6px 0 12px;
+            float: left;
+        }
+        .ns_group input{
+            outline: none;
+            height: 40px;
+            line-height: 40px;
+            width: 179px;
+            border: none;
+            background: none;
+            float: left;
+            font-size: 16px;
+        }
+        #yzm{  /*hover样式*/
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 93px;
+            height: 40px;
+            background: #2d90ff;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease-in;
+            display: none;
+        }
+        #yzm:hover{background: #429fff;}
+        #yzm.disabled, #yzm.disabled:hover{ background: #d4d4d4;}
+        #yzm.sYzm{display: block;}
+        #ns_login{
+            width: 120px;
+            height: 40px;
+            background: #6bb2ff;
+            border: none;
+            border-bottom: 3px solid #66a3e4;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 9px;
+        }
+        #ns_login:hover{
+            background: #3ba1ff;
+            border-bottom: 3px solid #257bd9;
+        }
+        .ns_yjsw{
+            width: 260px;
+            float: right;
+            background: #fff url("/images/nsimgs/rocket.jpg") bottom center no-repeat;
+        }
+        .ns_yjsw h3{ background: url("/images/nsimgs/bg_shadow2.jpg") top center no-repeat;}
+        .ns_yjsw .ns_box{width: 220px;margin: 0 auto;}
+        .ns_msg{margin-top: 5px;color: #f36144;}
+        .ns_ad{
+            margin-bottom: 10px;
+            width: 100%;
+            display: block;
+        }
+        .ns_footer{
+            margin-top: 50px;
+            padding: 24px 15px;
+            background: #fff;
+            text-align: center;
+        }
+        .ns_footer p{
+            font-size: 14px;
+            color: #555;
+            line-height: 24px;
+        }
+        .ns_footer p span{margin: 0 15px;}
+
+        @media screen and (max-width: 900px) {
+            .ns_wrapper{
+                width: auto;
+                min-width: 360px;
+                margin: 0 15px;
+            }
+            .ns_app, .ns_admin, .ns_yjsw{
+                width: 100%;
+                min-width: 360px;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .ns_yjsw{margin-bottom: 0;}
+            .ns_footer{height: auto;}
+        }
+    </style>
+    <%block name="jscode">
+    <style>
+        .ns_zz{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2;display:none}
+        .ns_zz>div{width:405px;height:346px;margin:10% auto;background:#fff;border-radius:5px;box-sizing:border-box;padding:30px 40px}
+        .ns_zz h3{text-align:center;font-size:18px}
+        .ns_zz .btngroups{text-align:center;margin-top:20px}
+        .ns_zz .btngroups button{width:120px;height:40px;background:#6bb2ff;color:#fff;border-radius:5px;margin:0 10px;border:none;font-family:"microsoft yahei", "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;font-size:16px}
+        .ns_dmc .dmlist{margin:20px 0;height:175px;overflow-y:auto}
+        .ns_dmc label{width:100%;display:table;margin-bottom:10px}
+        .ns_dmc input{display:table-cell;vertical-align:middle;width:18px;height:18px}
+        .ns_dmc span{display:table-cell;font-size:16px;vertical-align:middle;padding:0 10px}
+        #dmSub,#cgSub{background:#6bb2ff}
+        #dmQuit,#cgQuit{background:#9e9e9e}
+        .ns_cgpwd .cgpwd{margin:30px 0}
+        .ns_cgpwd .cgpwd li{font-size:16px;margin:10px 0}
+        .ns_cgpwd .cgpwd li label{width:32%;vertical-align:middle;display:inline-block}
+        .ns_cgpwd .cgpwd li>div{width:67%;border:thin solid #cecece;border-radius:7px;overflow:hidden;display:inline-block;vertical-align:middle;box-sizing:border-box}
+        .ns_cgpwd .cgpwd li input{height:40px;width:100%;text-indent:15px;border:none}
+    </style>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/json2.js"></script>
+    <script src="/js/md5.js"></script>
+    <script src="/js/ns.js?v=1.0.3"></script>
+    <script>ispc=true</script>
+    % if ((policy >> 10 & 1) > 0) & ((policy >> 8 & 1) <= 0) > 0  :
+    <script>isyzm=true</script>
+    % endif
+    % if (policy >> 9 & 1) > 0:
+    <link rel="stylesheet" href="/wx/css/style-pcdemo.css">
+    <script type="text/javascript" src="/wx/js/pcauth.js"></script>
+    <script src="/wx/js/pollpcresult.js"></script>
+    % endif
+    </%block>
+</head>
+
+<body>
+    <div class="ns_banner"></div>
+
+    <div class="ns_wrapper">
+        % if self.attr.notice:
+        <div class="ns_notice">
+            <span><i></i>公告</span>
+            <p>${self.attr.nsNotice}</p>
+        </div>
+        %endif
+
+        <div class="ns_authen">
+            <div class="ns_app">
+                <h3>APP认证上网</h3>
+                <div class="ns_box">
+                    <a href="${self.attr.nsLink}">${self.attr.nsName}APP</a>
+                    <div class="ns_appnote">
+                        <img src="/images/nsimgs/${self.attr.applogo}" />
+                        <ul>
+                            % for nsitr in self.attr.nsItr:
+                            <li>${nsitr}</li>
+                            % endfor
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>账号/手机号：</label>
+                        <input type="text" name="user" id="userCtrl" />
+                    </div>
+                    <div class="ns_group">
+                        <label>密码/验证码：</label>
+                        <input type="password" name="password" />
+                        <button type="button" id="yzm">获取验证码</button>
+                    </div>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % elif (policy >> 10 & 1) > 0:
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>手机号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>验证码：</label>
+                        <input type="text" name="password" />
+                        <button type="button" id="yzm" style="display:block">获取验证码</button>
+                    </div>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % elif (policy >> 8 & 1) > 0:
+            <div class="ns_admin">
+                <h3>账号密码认证上网</h3>
+                <div class="ns_box FormAccount">
+                    <div class="ns_group">
+                        <label>账号：</label>
+                        <input type="text" name="user" />
+                    </div>
+                    <div class="ns_group">
+                        <label>密码：</label>
+                        <input type="password" name="password" />
+                    </div>
+                    <button type="button" id="ns_login" data-url="${self.attr.locationUrl}">登录</button>
+                    <div class="ns_msg"></div>
+                </div>
+            </div>
+            % endif
+            % if (policy >> 9 & 1) > 0:
+            <div class="ns_yjsw">
+                <h3>微信扫一扫上网</h3>
+                <div class="ns_box">
+                    <div class="main__content">
+                        <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:20px auto;width:170px;position:relative" data-logo="${logo}" data-size="50"></div>
+                        <div class="main__content-info">使用微信扫描二维码</div>
+                    </div>
+                </div>
+            </div>
+            % endif
+        </div>
+
+        % if len(self.attr.ads)>0:
+        % for ad in self.attr.ads:
+        <img src="/images/nsimgs/${ad}" class="ns_ad" />
+        % endfor
+        % endif
+    </div>
+
+    <div class="ns_footer">
+        % for foo in self.attr.nsfooter:
+        <p>${foo}</p>
+        % endfor
+    </div>
+
+    <!--<div class="ns_dialog">-->
+        <!--<p id="p2">正在验证，请耐心等待...</p>-->
+        <!--<p id="p1">用时：<span>0</span>秒</p>-->
+        <!--<button type="button">取消验证</button>-->
+    <!--</div>-->
+
+    <!--<div class="ns_modal fade">-->
+        <!--<div class="ns_download">-->
+            <!--<div>-->
+                <!--<a href="javascript:;" class="ns_ios" title="ios下载"><i></i>ios版</a>-->
+                <!--<a href="javascript:;" class="ns_andriod" title="andriod下载"><i></i>Andriod版</a>-->
+            <!--</div>-->
+            <!--<span class="closed">X</span>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <%include file="hidwx.html" />
+</body>
+</html>
+<%!
+    title = u'无线验证';
+    bannerImg = 'banner_web.jpg';
+    notice = False;
+    nsNotice = u'南沙福利来啦，由国家平台物联网开发的无线wifi南沙通APP正式上线，南沙通APP致力于方便快捷人们的网络生活，摆脱穿插在城市之间的繁杂网线让城市居民真正体验到在哪儿都能上网，无需再担心巨额的超时流量，随时随地轻松上网。南沙通APP特点：免注册，全区wifi直连，上网优先，速度更快政务信息早知道，南沙办事一键通。';
+    applogo = 'applogo.png';
+    nsLink = 'http://wnl.bidongwifi.com:9899/app.html';
+    nsName = u'南沙通';
+    nsItr = [
+        u'安装即可上,上网免注册,全区无感漫游，优先接入，速度更快',
+        u'政务信息早知道，南沙办事一键通'
+    ];
+    ads = [];
+    nsfooter = [
+        u'ICP备案编号：粤ICP备05115616号-2 版权所有：中国科学院计算机网络信息中心'
+    ];
+    locationUrl = '';
+%>

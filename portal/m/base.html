@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title><%block name="title">无线验证</%block></title>
+    <link rel="stylesheet" type="text/css" href="/css/nsmbo.css">
+    % if self.attr.autoAccount:
+    <style>
+        #autoAccount{
+            background: url("/images/nsimgs/btn.png") no-repeat;
+            background-size: 144px;
+            width: 144px;
+            height: 35px;
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            margin-left: -72px;
+            font-size: 1.4rem;
+        }
+    </style>
+    % endif
+    <%block name="jscode">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/md5.js"></script>
+    <script src="/js/ns.js?v=1.0.3"></script>
+    % if ((policy >> 10 & 1) > 0) & ((policy >> 8 & 1) <= 0) > 0  :
+    <script>isyzm=true</script>
+    % endif
+    </%block>
+</head>
+
+<body>
+    <div class="FormAccount">
+        <div class="ns_header">
+            <%block name="headerBg">
+            <img src="/images/nsimgs/bg.jpg" class="ns_bg" />
+            % if self.attr.autoAccount:
+            <button type="button" id="autoAccount" onclick="autoAccount()">一键认证</button>
+            % endif
+            <!--<div>南横村</div>-->
+            </%block>
+        </div>
+
+        % if (policy >> 9 & 1) > 0:
+        <div class="ns_box">
+            <h3>第三方认证</h3>
+            <button type="button" id="weixinAuthor"><i></i>微信上网</button>
+        </div>
+        % endif
+
+        <%block name="appDownload" />
+
+        % if ((policy>>10 & 1) & (policy>>8 & 1)) > 0:
+        <div class="ns_box ${self.attr.color}" style="border: none;">
+            <h3>${self.attr.accountTitle}</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group"><input type="text" placeholder="账号/手机号：" name="user" id="userCtrl" /></div>
+                <div class="ns_rz_group"><input type="password" placeholder="密码/验证码：" name="password" /><button type="button" id="yzm">获取验证码</button></div>
+                % if self.attr.duty:
+                <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+                % endif
+                <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
+                <span class="ns_msg"></span>
+                % if self.attr.duty:
+                <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+                % endif
+            </div>
+        </div>
+        % elif (policy >> 10 & 1) > 0:
+        <div class="ns_box ${self.attr.color}" style="border: none;">
+            <h3>${self.attr.accountTitle}</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group"><input type="text" placeholder="手机号：" name="user" /></div>
+                <div class="ns_rz_group"><input type="text" placeholder="验证码：" name="password" /><button type="button" id="yzm" style="display:block">获取验证码</button></div>
+                % if self.attr.duty:
+                <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+                % endif
+                <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
+                <span class="ns_msg"></span>
+                % if self.attr.duty:
+                <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+                % endif
+            </div>
+        </div>
+        % elif (policy >> 8 & 1) > 0:
+        <div class="ns_box ${self.attr.color}" style="border: none;">
+            <h3>${self.attr.accountTitle}</h3>
+            <div class="ns_rz_wrapper">
+                <div class="ns_rz_group"><input type="text" placeholder="账号：" name="user" /></div>
+                <div class="ns_rz_group"><input type="password" placeholder="密码：" name="password" /></div>
+                % if self.attr.duty:
+                <label id="autoLogin" data-name="nsName_${self.attr.nsName}"><input type="checkbox" />记住账号</label>
+                % endif
+                <button type="button" id="login" data-url="${self.attr.locationUrl}">登录</button>
+                <span class="ns_msg"></span>
+                % if self.attr.duty:
+                <label id="autoDuty"><input type="checkbox" checked />我已阅读并同意<a href="javascript:;">无线上网业务</a>免责声明</label>
+                % endif
+            </div>
+        </div>
+        % endif
+
+        % if self.attr.duty:
+        <div class="ns_ctx">
+            <h3>无线上网业务</h3>
+            <p>1.请保护好您的个人信息与资料，请勿访问非法网站，勿发布违法信息,如有违反造成的损失和法律责任，由您自行承担。</p>
+            <p>2.输入手机号，点击“获取密码”系统将下发密码短信至您的手机，输入密码后，点击“登录”即可上网。使用固定账号请咨询上网场所负责人获取账号密码。</p>
+        </div>
+        % endif
+
+        % if self.attr.qrcode:
+        <div class="ns_box" style="border-top:2px solid #f5f5f5;border-bottom:none">
+            <h3>广东女院APP下载</h3>
+            <a href="https://itunes.apple.com/us/app/id1127133673" class="ns_qrcode">
+                <img src="/images/nsimgs/app_ios_school.png" />
+            </a>
+        </div>
+        % endif
+    </div>
+
+    <%block name="footer" />
+
+    <%include file="hidwx.html" />
+</body>
+<script type="text/javascript">
+    $(function(){
+        var u = navigator.userAgent;
+        if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            $('.ns_qrcode').attr('href', 'https://itunes.apple.com/us/app/id1127133673');
+            $('.ns_qrcode img').attr('src', '/images/nsimgs/app_ios_school.png');
+        }else{
+            $('.ns_qrcode').attr('href', 'http://58.248.228.170:9898/downloads/android/nzxy.apk');
+            $('.ns_qrcode img').attr('src', '/images/nsimgs/app_andriod_school.png');
+        }
+        $('#weixinAuthor').click(function(){
+            Wechat_GotoRedirect('${appid}', '${extend}', '${timestamp}', '${sign}', '${shopid}', '${authUrl}', '${user_mac}', '${ssid}', '${ap_mac}');
+        });
+    });
+    document.addEventListener('visibilitychange', putNoResponse, false);
+    document.body.addEventListener('touchstart', function(){});
+
+    % if self.attr.autoAccount:
+    function autoAccount(){
+        var obj={
+            user: '55532',
+            password: '987012',
+            openid: '${openid}',
+            ac_ip: '${ac_ip}',
+            vlanId: '${vlan}',
+            ssid: '${ssid}',
+            user_ip: '${user_ip}',
+            user_mac: '${user_mac}',
+            ap_mac: '${ap_mac}',
+            firsturl: '${firsturl}',
+            urlparam: '${urlparam}',
+            appid: '${appid}',
+            shopid: '${shopid}'
+        };
+        $.ajax({
+            method: "POST",
+            url: "/account",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            timeout: 30000,
+            success: function (data) {
+                window.location.href= urlChange('${firsturl}', '${urlparam}');
+            },
+            complete: function(xmlhttp, status){
+                console.log(xmlhttp);
+                if(status=='timeout'){
+                    alert('认证超时，请重新认证！');
+                }
+            },
+            error: function (error) {
+                try{
+                    alert('验证失败：'+error.responseJSON.Msg);
+                }catch(e) {
+                    alert('验证失败，请重新认证！');
+                }
+            }
+        });
+    }
+    % endif
+</script>
+</html>
+<%!
+    color = 'G_orange';
+    duty = False;
+    nsName = 'auto';
+    accountTitle = u'账户认证';
+    qrcode = False;
+    autoAccount = False;
+    locationUrl = '';
+%>
