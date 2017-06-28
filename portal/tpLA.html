@@ -337,17 +337,6 @@
                 </div>
             </div>
             % endif
-            % if (policy >> 9 & 1) > 0:
-            <div class="ns_yjsw">
-                <h3>微信扫一扫上网</h3>
-                <div class="ns_box">
-                    <div class="main__content">
-                        <div class="main__content-qrcode" id="qrcode_zone" style="text-align:center;margin:20px auto;width:170px;position:relative" data-logo="${logo}" data-size="50"></div>
-                        <div class="main__content-info">使用微信扫描二维码</div>
-                    </div>
-                </div>
-            </div>
-            % endif
         </div>
 
         % if len(self.attr.ads)>0:
